@@ -26,12 +26,13 @@ const I18N = {
     infoTitle:"基本信息",
     infoDesc:"以下信息用于理解不同参与者背景下的回答差异。",
     ageLabel:"年龄",
+    agePlaceholder:"请填写阿拉伯数字",
     genderLabel:"性别",
     nationalityLabel:"国籍",
     selectOne:"请选择",
     genderFemale:"女性",
     genderMale:"男性",
-    genderNonBinary:"非二元",
+    genderOther:"其他",
     preferNot:"不愿透露",
     selfDescribe:"自我描述",
     countryChina:"中国",
@@ -109,12 +110,13 @@ const I18N = {
     infoTitle:"Basic Information",
     infoDesc:"These questions help us understand participant background differences.",
     ageLabel:"Age",
+    agePlaceholder:"Enter numerals only",
     genderLabel:"Gender",
     nationalityLabel:"Nationality",
     selectOne:"Select one",
     genderFemale:"Female",
     genderMale:"Male",
-    genderNonBinary:"Non-binary",
+    genderOther:"Other",
     preferNot:"Prefer not to say",
     selfDescribe:"Self-describe",
     countryChina:"China",
@@ -179,7 +181,45 @@ const I18N = {
     thankMsg:"Your response has been successfully submitted."
   }
 };
+const COUNTRY_CODES = [
+  "AF","AX","AL","DZ","AS","AD","AO","AI","AQ","AG","AR","AM","AW","AU","AT","AZ",
+  "BS","BH","BD","BB","BY","BE","BZ","BJ","BM","BT","BO","BQ","BA","BW","BV","BR",
+  "IO","BN","BG","BF","BI","CV","KH","CM","CA","KY","CF","TD","CL","CN","CX","CC",
+  "CO","KM","CG","CD","CK","CR","CI","HR","CU","CW","CY","CZ","DK","DJ","DM","DO",
+  "EC","EG","SV","GQ","ER","EE","SZ","ET","FK","FO","FJ","FI","FR","GF","PF","TF",
+  "GA","GM","GE","DE","GH","GI","GR","GL","GD","GP","GU","GT","GG","GN","GW","GY",
+  "HT","HM","VA","HN","HK","HU","IS","IN","ID","IR","IQ","IE","IM","IL","IT","JM",
+  "JP","JE","JO","KZ","KE","KI","KP","KR","KW","KG","LA","LV","LB","LS","LR","LY",
+  "LI","LT","LU","MO","MG","MW","MY","MV","ML","MT","MH","MQ","MR","MU","YT","MX",
+  "FM","MD","MC","MN","ME","MS","MA","MZ","MM","NA","NR","NP","NL","NC","NZ","NI",
+  "NE","NG","NU","NF","MK","MP","NO","OM","PK","PW","PS","PA","PG","PY","PE","PH",
+  "PN","PL","PT","PR","QA","RE","RO","RU","RW","BL","SH","KN","LC","MF","PM","VC",
+  "WS","SM","ST","SA","SN","RS","SC","SL","SG","SX","SK","SI","SB","SO","ZA","GS",
+  "SS","ES","LK","SD","SR","SJ","SE","CH","SY","TW","TJ","TZ","TH","TL","TG","TK",
+  "TO","TT","TN","TR","TM","TC","TV","UG","UA","AE","GB","US","UM","UY","UZ","VU",
+  "VE","VN","VG","VI","WF","EH","YE","ZM","ZW"
+];
+
 function t(key) { return I18N[lang][key] || I18N.zh[key] || key; }
+function countryName(code) {
+  try {
+    return new Intl.DisplayNames([lang === "zh" ? "zh-CN" : "en"], { type: "region" }).of(code) || code;
+  } catch {
+    return code;
+  }
+}
+function renderCountryOptions() {
+  const select = document.getElementById("nationality");
+  if (!select) return;
+  const current = select.value;
+  const options = COUNTRY_CODES
+    .map(code => ({ code, label: countryName(code) }))
+    .sort((a, b) => a.label.localeCompare(b.label, lang === "zh" ? "zh-CN" : "en"))
+    .map(({ code, label }) => `<option value="${code}">${label}</option>`)
+    .join("");
+  select.innerHTML = `<option value="">${t("selectOne")}</option>${options}`;
+  if (current) select.value = current;
+}
 function setLang(nextLang) {
   lang = nextLang;
   localStorage.setItem("survey_language", lang);
@@ -187,6 +227,8 @@ function setLang(nextLang) {
   document.getElementById("langZh").classList.toggle("active", lang === "zh");
   document.getElementById("langEn").classList.toggle("active", lang === "en");
   document.querySelectorAll("[data-i18n]").forEach(el => { el.textContent = t(el.dataset.i18n); });
+  document.getElementById("age").placeholder = t("agePlaceholder");
+  renderCountryOptions();
   document.getElementById("btnToMapsText").textContent = t("continueBtn");
   r1();
   syncIntentSelectionUI();
@@ -215,8 +257,8 @@ const INTENTS = [
 // ============================================================
 // SVG BODY MAP — COORDINATE SYSTEM 220 × 540
 // ============================================================
-// CRITICAL: large regions (face, torso) come FIRST, small overlays
-// (eyes, nose, mouth, ears) come AFTER so they render on top.
+// CRITICAL: large regions come first, smaller overlays come after
+// so they render on top when a replacement SVG uses layered regions.
 // Bilateral regions: clicking either side rates both sides.
 
 // --- FRONT regions (order matters: base → overlays) ---
@@ -249,7 +291,24 @@ const F_BASE = [
                                                           polyR:[[148,494],[182,494],[188,532],[164,538],[148,530]] },
 ];
 
-const F_REGIONS = F_BASE;
+function withRegionOverrides(base, overrides) {
+  return base.map(region => ({ ...region, ...(overrides[region.id] || {}) }));
+}
+
+const F_REGIONS_MALE = F_BASE;
+const F_REGIONS_FEMALE = withRegionOverrides(F_BASE, {
+  f_shoulders: {
+    poly:[[50,110],[88,110],[88,126],[60,134],[48,130]],
+    polyR:[[134,110],[172,110],[174,130],[162,134],[134,126]]
+  },
+  f_chest: { poly:[[62,132],[160,132],[156,204],[132,218],[90,218],[66,204]] },
+  f_stomach: { poly:[[70,208],[152,208],[148,286],[122,302],[100,302],[74,286]] },
+  f_private: { poly:[[70,292],[152,292],[154,322],[112,330],[68,322]] },
+  f_thighs: {
+    poly:[[50,326],[102,326],[102,420],[72,430],[44,424],[42,332]],
+    polyR:[[120,326],[172,326],[180,424],[150,430],[120,420]]
+  }
+});
 
 // --- BACK regions ---
 const B_BASE = [
@@ -264,19 +323,30 @@ const B_BASE = [
                                                                  polyR:[[138,454],[178,454],[184,540],[160,542],[138,540]] },
 ];
 
-const B_REGIONS = B_BASE;
+const B_REGIONS_MALE = B_BASE;
+const B_REGIONS_FEMALE = withRegionOverrides(B_BASE, {
+  b_rear_shoulders: { poly:[[54,112],[168,112],[168,180],[54,180]] },
+  b_back: { poly:[[60,186],[162,186],[158,290],[64,290]] },
+  b_buttocks: { poly:[[50,296],[172,296],[176,346],[134,360],[88,360],[46,346]] },
+  b_thighs: {
+    poly:[[44,352],[102,352],[102,450],[74,456],[40,450]],
+    polyR:[[120,352],[178,352],[182,450],[148,456],[120,450]]
+  }
+});
 
 // Combined metadata
 const ALL_REGIONS = [
-  ...F_REGIONS.map(r => ({ id:r.id, label:r.label.split(" / ")[0], side:"front" })),
-  ...B_REGIONS.map(r => ({ id:r.id, label:r.label.split(" / ")[0], side:"back" })),
+  ...F_REGIONS_MALE.map(r => ({ id:r.id, label:r.label.split(" / ")[0], side:"front" })),
+  ...B_REGIONS_MALE.map(r => ({ id:r.id, label:r.label.split(" / ")[0], side:"back" })),
 ];
 
 // ============================================================
 // SVG OUTLINE PATHS
 // ============================================================
-const OUTLINE_F = "M90,12 C78,12 70,20 70,38 C70,60 74,74 82,82 L88,86 L88,100 C72,102 48,106 32,118 C22,128 24,154 26,180 C27,200 24,226 24,248 C24,268 26,286 30,312 C32,342 30,366 28,380 L28,380 C50,372 78,364 102,360 L120,360 C144,364 172,372 194,380 L194,380 C192,366 190,342 192,312 C196,286 198,268 198,248 C198,226 195,200 196,180 C198,154 200,128 190,118 C174,106 150,102 134,100 L134,86 L140,82 C148,74 152,60 152,38 C152,22 144,12 132,12 Z";
-const OUTLINE_B = "M90,8 C78,8 70,16 72,34 C74,54 78,70 82,80 L88,84 L88,96 C72,98 48,104 38,116 C32,124 34,156 34,188 C34,228 32,260 34,290 C34,320 36,344 36,360 L36,360 C56,352 80,344 102,340 L120,340 C142,344 166,352 186,360 L186,360 C186,344 188,320 188,290 C190,260 188,228 188,188 C188,156 190,124 184,116 C174,104 150,98 134,96 L134,84 L140,80 C148,72 150,54 150,34 C150,16 142,8 132,8 Z M38,366 L38,366 C56,362 78,358 100,354 L122,354 C144,358 166,362 184,366 L186,404 C188,454 186,494 184,536 C162,530 142,526 122,524 L100,524 C80,526 60,530 38,536 C36,494 34,454 36,404 Z";
+const OUTLINE_F_MALE = "M90,12 C78,12 70,20 70,38 C70,60 74,74 82,82 L88,86 L88,100 C72,102 48,106 32,118 C22,128 24,154 26,180 C27,200 24,226 24,248 C24,268 26,286 30,312 C32,342 30,366 28,380 L28,380 C50,372 78,364 102,360 L120,360 C144,364 172,372 194,380 L194,380 C192,366 190,342 192,312 C196,286 198,268 198,248 C198,226 195,200 196,180 C198,154 200,128 190,118 C174,106 150,102 134,100 L134,86 L140,82 C148,74 152,60 152,38 C152,22 144,12 132,12 Z";
+const OUTLINE_B_MALE = "M90,8 C78,8 70,16 72,34 C74,54 78,70 82,80 L88,84 L88,96 C72,98 48,104 38,116 C32,124 34,156 34,188 C34,228 32,260 34,290 C34,320 36,344 36,360 L36,360 C56,352 80,344 102,340 L120,340 C142,344 166,352 186,360 L186,360 C186,344 188,320 188,290 C190,260 188,228 188,188 C188,156 190,124 184,116 C174,104 150,98 134,96 L134,84 L140,80 C148,72 150,54 150,34 C150,16 142,8 132,8 Z M38,366 L38,366 C56,362 78,358 100,354 L122,354 C144,358 166,362 184,366 L186,404 C188,454 186,494 184,536 C162,530 142,526 122,524 L100,524 C80,526 60,530 38,536 C36,494 34,454 36,404 Z";
+const OUTLINE_F_FEMALE = "M92,12 C80,12 72,20 72,38 C72,60 76,74 84,82 L90,86 L90,100 C76,102 54,106 38,118 C28,128 28,154 30,180 C31,200 28,226 28,248 C28,268 26,286 30,312 C34,342 32,366 30,380 L30,380 C50,368 78,360 102,354 L120,354 C144,360 172,368 192,380 L192,380 C190,366 188,342 192,312 C196,286 194,268 194,248 C194,226 191,200 192,180 C194,154 194,128 184,118 C168,106 146,102 132,100 L132,86 L138,82 C146,74 150,60 150,38 C150,20 142,12 130,12 Z";
+const OUTLINE_B_FEMALE = "M92,8 C80,8 72,16 74,34 C76,54 80,70 84,80 L90,84 L90,96 C76,98 54,104 42,116 C36,124 38,156 38,188 C38,228 36,260 38,290 C38,320 40,344 38,360 L38,360 C58,350 82,342 102,336 L120,336 C140,342 164,350 184,360 L184,360 C182,344 184,320 184,290 C186,260 184,228 184,188 C184,156 186,124 180,116 C168,104 146,98 132,96 L132,84 L138,80 C146,72 148,54 148,34 C148,16 140,8 128,8 Z M34,366 L34,366 C56,358 80,352 100,348 L122,348 C142,352 166,358 188,366 L188,404 C190,454 188,494 186,536 C164,530 142,526 122,524 L100,524 C80,526 58,530 36,536 C34,494 32,454 34,404 Z";
 
 // ============================================================
 // UTIL
@@ -429,6 +499,27 @@ function drawSVG(svgId, regions, outlinePath) {
   });
 }
 
+function currentBodyProfile() {
+  return demographics.gender === "female" ? "female" : "male";
+}
+
+function activeBodyMap() {
+  if (currentBodyProfile() === "female") {
+    return {
+      frontRegions: F_REGIONS_FEMALE,
+      backRegions: B_REGIONS_FEMALE,
+      frontOutline: OUTLINE_F_FEMALE,
+      backOutline: OUTLINE_B_FEMALE
+    };
+  }
+  return {
+    frontRegions: F_REGIONS_MALE,
+    backRegions: B_REGIONS_MALE,
+    frontOutline: OUTLINE_F_MALE,
+    backOutline: OUTLINE_B_MALE
+  };
+}
+
 function highlightPair(svgId, rid, on) {
   document.getElementById(svgId).querySelectorAll(`[data-rid="${rid}"]`).forEach(el => {
     el.classList.toggle("hover-pair", on);
@@ -475,8 +566,9 @@ function goMaps() {
   order.forEach(id => { if (!(id in data)) data[id] = {}; });
   idx = 0;
   showStep("s2");
-  drawSVG("svgF", F_REGIONS, OUTLINE_F);
-  drawSVG("svgB", B_REGIONS, OUTLINE_B);
+  const map = activeBodyMap();
+  drawSVG("svgF", map.frontRegions, map.frontOutline);
+  drawSVG("svgB", map.backRegions, map.backOutline);
   load();
 }
 function load() {
@@ -583,6 +675,7 @@ function regionsPayload() {
 
 function buildSurveyPayload() {
   save();
+  const nationalityCode = fieldVal("nationality");
   return {
     participant_id: getParticipantId(),
     timestamp: new Date().toISOString(),
@@ -591,7 +684,7 @@ function buildSurveyPayload() {
     consent_given: document.getElementById("consentBox")?.checked || false,
     language: lang,
     age_group: fieldVal("age"),
-    country: fieldVal("nationality"),
+    country: nationalityCode,
     gender: fieldVal("gender"),
     scaleDescription: "1=Acceptable / willing to be touched, 0=Neutral or no intention (default), -1=Unacceptable / unwilling to be touched",
     selected_intents: selectedIntentPayload(),
@@ -599,9 +692,11 @@ function buildSurveyPayload() {
     regions: regionsPayload(),
     metadata: {
       demographics,
+      nationalityName: nationalityCode ? countryName(nationalityCode) : null,
+      bodyMapProfile: currentBodyProfile(),
       timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || null,
       viewport: { width: window.innerWidth, height: window.innerHeight },
-      source: "bodymap_questionnaire_v3_static_html"
+      source: "bodymap_questionnaire_v5_static_html"
     }
   };
 }
