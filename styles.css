@@ -35,6 +35,7 @@
   .progress-fill { height: 100%; background: var(--accent); transition: width 0.35s; border-radius: 2px; }
   .progress-text { font-size: 0.7rem; color: var(--dim); margin-top: 5px; text-align: right; }
 
+  /* ── STEP 1 ── */
   .panel {
     background: var(--card); border:1px solid var(--border); border-radius: var(--radius);
     padding:18px; margin-bottom:16px;
@@ -72,6 +73,7 @@
   .intent-card.sel .dot { border-color: var(--accent); background: var(--accent); }
   .intent-card.sel .dot::after { content: "✓"; color: var(--bg); font-size: 11px; font-weight: 700; }
 
+  /* ── STEP 2 ── */
   .badge { display:inline-block;background:var(--accent);color:var(--bg);font-size:0.78rem;font-weight:600;padding:4px 14px;border-radius:20px;margin-bottom:8px; }
   .intent-context {
     background:var(--card); border:1px solid var(--border); border-radius:8px;
@@ -84,33 +86,49 @@
   .map-panel { text-align: center; }
   .map-panel h4 { font-size: 0.82rem; color: var(--dim); margin-bottom: 4px; font-weight: 500; letter-spacing: 0.03em; }
 
+  /* Paint tools */
   .color-legend {
-    display:flex; align-items:center; justify-content:center; gap:10px; flex-wrap:wrap;
+    display:grid; grid-template-columns:minmax(130px, auto) 1fr minmax(130px, auto);
+    align-items:start; gap:12px;
     background:rgba(20,20,20,0.82); border:1px solid var(--border); border-radius:10px;
-    padding:10px 12px; margin:8px auto 18px; max-width:720px;
+    padding:10px 12px; margin:8px auto 18px; max-width:860px;
   }
-  .color-legend .leg-item { display:flex; align-items:center; gap:8px; font-size:0.7rem; color:var(--dim); }
-  .color-legend .leg-swatch { width:16px; height:16px; border-radius:3px; flex-shrink:0; }
-  .color-legend .bucket {
+  .color-controls { display:flex; align-items:center; justify-content:center; gap:10px; flex-wrap:wrap; }
+  .toolbar-action {
+    background:#101010; border:1px solid var(--border); color:var(--text);
+    border-radius:8px; padding:9px 10px; cursor:pointer; font-size:0.74rem;
+    min-height:40px; align-self:center;
+  }
+  .toolbar-action:hover { border-color:#555; }
+  .toolbar-action strong { font-weight:800; color:#fff; }
+  .toolbar-action.reset-map { color:#ef4444; border-color:rgba(239,68,68,0.8); }
+  .toolbar-action.reset-map:hover { background:rgba(239,68,68,0.15); }
+  .toolbar-action.back-intents { color:#ddd; }
+  .toolbar-action.back-intents span { color:var(--dim); margin-right:2px; }
+  .toolbar-action.back-intents strong { color:var(--text); }
+  .color-controls .leg-item { display:flex; align-items:center; gap:8px; font-size:0.7rem; color:var(--dim); }
+  .color-controls .leg-swatch { width:16px; height:16px; border-radius:3px; flex-shrink:0; }
+  .color-controls .bucket {
     display:flex; align-items:center; gap:9px;
     background:#101010; border:2px solid var(--border); color:var(--text);
     border-radius:8px; padding:9px 10px; cursor:pointer; font-size:0.74rem;
   }
-  .color-legend .bucket.active { border-color:#fff; box-shadow:0 0 0 2px rgba(255,255,255,0.08); }
-  .color-legend .leg-swatch.l2p { background:rgba(22,163,74,0.76); }
-  .color-legend .leg-swatch.l0  { background:#181818; border:1px solid #444; }
-  .color-legend .leg-swatch.l2n { background:rgba(220,38,38,0.72); }
-  .color-legend .leg-title { font-size:0.75rem; font-weight:600; color:var(--text); margin-right:4px; }
+  .color-controls .bucket.active { border-color:#fff; box-shadow:0 0 0 2px rgba(255,255,255,0.08); }
+  .color-controls .leg-swatch.l2p { background:rgba(22,163,74,0.76); }
+  .color-controls .leg-swatch.l0  { background:#181818; border:1px solid #444; }
+  .color-controls .leg-swatch.l2n { background:rgba(220,38,38,0.72); }
+  .color-controls .leg-title { font-size:0.75rem; font-weight:600; color:var(--text); margin-right:4px; }
   .tool-hint { flex-basis:100%; text-align:center; font-size:0.66rem; color:var(--dim); line-height:1.25; }
   .current-tool { flex-basis:100%; text-align:center; font-size:0.72rem; color:#bbb; }
 
+  /* SVG */
   .map-panel svg { cursor: pointer; }
   .map-panel svg .region { transition: fill 0.1s, stroke 0.1s; }
   .map-panel svg .region:hover { filter:brightness(1.35); stroke:#fff; stroke-width:1.6; }
   .map-panel svg .region.hover-pair { filter:brightness(1.2); stroke:#fff; stroke-width:1.2; stroke-dasharray:2,2; }
-  .s0  { fill:#181818; stroke:#333; stroke-width:0.8; }
-  .sp1 { fill:rgba(22,163,74,0.62);  stroke:#16a34a; stroke-width:1.2; }
-  .sn1 { fill:rgba(220,38,38,0.58);  stroke:#dc2626; stroke-width:1.2; }
+  .s0  { fill:#181818; stroke:#333; stroke-width:0.8; }                     /*  0 = neutral (default) */
+  .sp1 { fill:rgba(22,163,74,0.62);  stroke:#16a34a; stroke-width:1.2; }   /*  1 = acceptable */
+  .sn1 { fill:rgba(220,38,38,0.58);  stroke:#dc2626; stroke-width:1.2; }   /* -1 = unacceptable */
   .map-panel svg .silhouette { fill:none; stroke:#444; stroke-width:2; }
 
   .region-tooltip {
@@ -119,8 +137,8 @@
     border:1px solid #555; display:none; white-space:nowrap;
   }
 
+  /* ── Nav ── */
   .nav { display:flex; gap:12px; justify-content:center; margin-top:24px; align-items:center; flex-wrap:wrap; }
-  .nav-secondary { margin-top:12px; }
   .btn { padding:10px 26px; border-radius:8px; font-size:0.86rem; font-weight:600; cursor:pointer; transition:all 0.18s; border:none; }
   .btn-p { background:var(--accent); color:var(--bg); }
   .btn-p:hover { filter:brightness(1.15); }
@@ -134,6 +152,7 @@
   .btn-warn:hover { background:rgba(239,68,68,0.15); }
   .counter { color:var(--dim); font-size:0.82rem; min-width:110px; text-align:center; }
 
+  /* ── STEP 3 ── */
   .rev-grid { display:grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap:10px; }
   .rev-card { background:var(--card); border:1px solid var(--border); border-radius:8px; padding:12px; }
   .rev-card .r-name { font-weight:600; font-size:0.86rem; }
@@ -150,6 +169,7 @@
 
   @media (max-width: 760px) {
     .maps-row { flex-direction:column; align-items:center; }
-    .color-legend { padding:8px 10px; }
+    .color-legend { grid-template-columns:1fr; padding:8px 10px; max-width:520px; }
+    .toolbar-action { align-self:auto; }
     .intent-grid { grid-template-columns:1fr; }
   }
