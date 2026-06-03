@@ -4,171 +4,204 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Social Touch Acceptability Survey — RQ1</title>
-<style>
-  :root { --bg:#0a0a0a; --card:#141414; --border:#2a2a2a; --text:#f0f0f0; --dim:#777; --accent:#5b9bff; --radius:10px; }
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body { background:var(--bg); color:var(--text); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif; line-height:1.6; min-height:100vh; }
-  .container { max-width:1060px; margin:0 auto; padding:32px 20px; }
-  .header { text-align:center; margin-bottom:28px; }
-  .header h1 { font-size:1.45rem; font-weight:600; margin-bottom:4px; }
-  .header .sub { color:var(--dim); font-size:.82rem; }
-  .divider { width:50px; height:3px; background:var(--accent); margin:12px auto; }
-  .en-line { display:block; color:var(--dim); font-size:.72rem; font-weight:400; margin-top:2px; }
-  .step { display:none; }
-  .step.active { display:block; }
-  .step-title { font-size:1.1rem; font-weight:600; margin-bottom:4px; }
-  .step-desc { color:var(--dim); font-size:.8rem; margin-bottom:20px; }
-  .progress-wrap { margin-bottom:24px; }
-  .progress-bar { height:3px; background:var(--border); border-radius:2px; overflow:hidden; }
-  .progress-fill { height:100%; background:var(--accent); transition:width .35s; border-radius:2px; }
-  .progress-text { font-size:.7rem; color:var(--dim); margin-top:5px; text-align:right; }
-  .panel { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:18px; margin-bottom:16px; }
-  .panel p { color:#aaa; font-size:.84rem; margin-bottom:10px; }
-  .consent-check { display:flex; gap:10px; align-items:flex-start; color:#ddd; font-size:.84rem; margin-top:14px; }
-  .consent-check input { margin-top:4px; }
-  .form-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; }
-  .field label { display:block; font-size:.76rem; color:var(--dim); margin-bottom:5px; }
-  .field input,.field select { width:100%; background:#0f0f0f; color:var(--text); border:1px solid var(--border); border-radius:8px; padding:10px 11px; font-size:.84rem; }
-  .field input:focus,.field select:focus { outline:none; border-color:var(--accent); }
-  .intent-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(290px,1fr)); gap:10px; }
-  .select-row { display:flex; gap:8px; justify-content:flex-end; margin-bottom:8px; }
-  .select-row button { background:none; border:none; color:var(--accent); font-size:.76rem; cursor:pointer; }
-  .intent-card { background:var(--card); border:2px solid var(--border); border-radius:var(--radius); padding:14px 16px; cursor:pointer; transition:all .18s; user-select:none; position:relative; }
-  .intent-card:hover { border-color:#444; }
-  .intent-card.sel { border-color:var(--accent); background:#111b2a; }
-  .intent-card .name { font-size:.9rem; font-weight:600; }
-  .intent-card .en { display:block; font-size:.7rem; color:var(--dim); margin-top:2px; }
-  .intent-card .desc { font-size:.74rem; color:#999; margin-top:8px; line-height:1.35; padding-right:22px; }
-  .intent-card .dot { position:absolute; top:12px; right:14px; width:20px; height:20px; border-radius:50%; border:2px solid var(--border); display:flex; align-items:center; justify-content:center; transition:all .18s; }
-  .intent-card.sel .dot { border-color:var(--accent); background:var(--accent); }
-  .intent-card.sel .dot::after { content:"✓"; color:var(--bg); font-size:11px; font-weight:700; }
-  .badge { display:inline-block; background:var(--accent); color:var(--bg); font-size:.78rem; font-weight:600; padding:4px 14px; border-radius:20px; margin-bottom:8px; }
-  .maps-row { display:flex; gap:26px; justify-content:center; flex-wrap:wrap; align-items:flex-start; }
-  .maps-row,.map-panel,.color-legend,.nav { user-select:none; -webkit-user-select:none; }
-  .map-panel { text-align:center; }
-  .map-panel h4 { font-size:.82rem; color:var(--dim); margin-bottom:4px; font-weight:500; letter-spacing:.03em; }
-  .color-legend { display:flex; align-items:center; justify-content:center; gap:10px; flex-wrap:wrap; background:rgba(20,20,20,.82); border:1px solid var(--border); border-radius:10px; padding:10px 12px; margin:8px auto 18px; max-width:720px; }
-  .color-legend .leg-item { display:flex; align-items:center; gap:8px; font-size:.7rem; color:var(--dim); }
-  .color-legend .leg-swatch { width:16px; height:16px; border-radius:3px; flex-shrink:0; }
-  .color-legend .bucket { display:flex; align-items:center; gap:9px; background:#101010; border:2px solid var(--border); color:var(--text); border-radius:8px; padding:9px 10px; cursor:pointer; font-size:.74rem; }
-  .color-legend .bucket.active { border-color:#fff; box-shadow:0 0 0 2px rgba(255,255,255,.08); }
-  .color-legend .leg-swatch.l2p { background:rgba(22,163,74,.76); }
-  .color-legend .leg-swatch.l0 { background:#181818; border:1px solid #444; }
-  .color-legend .leg-swatch.l2n { background:rgba(220,38,38,.72); }
-  .color-legend .leg-title { font-size:.75rem; font-weight:600; color:var(--text); margin-right:4px; }
-  .tool-hint { flex-basis:100%; text-align:center; font-size:.66rem; color:var(--dim); line-height:1.25; }
-  .current-tool { flex-basis:100%; text-align:center; font-size:.72rem; color:#bbb; }
-  .map-panel svg { cursor:pointer; }
-  .map-panel svg .region { transition:fill .1s,stroke .1s; }
-  .map-panel svg .region:hover { filter:brightness(1.35); stroke:#fff; stroke-width:1.6; }
-  .map-panel svg .region.hover-pair { filter:brightness(1.2); stroke:#fff; stroke-width:1.2; stroke-dasharray:2,2; }
-  .s0 { fill:#181818; stroke:#333; stroke-width:.8; }
-  .sp1 { fill:rgba(22,163,74,.62); stroke:#16a34a; stroke-width:1.2; }
-  .sn1 { fill:rgba(220,38,38,.58); stroke:#dc2626; stroke-width:1.2; }
-  .map-panel svg .silhouette { fill:none; stroke:#444; stroke-width:2; }
-  .region-tooltip { position:fixed; background:#1a1a1a; color:#fff; font-size:.72rem; padding:5px 10px; border-radius:4px; pointer-events:none; z-index:999; border:1px solid #555; display:none; white-space:nowrap; }
-  .nav { display:flex; gap:12px; justify-content:center; margin-top:24px; align-items:center; flex-wrap:wrap; }
-  .btn { padding:10px 26px; border-radius:8px; font-size:.86rem; font-weight:600; cursor:pointer; transition:all .18s; border:none; }
-  .btn-p { background:var(--accent); color:var(--bg); }
-  .btn-p:hover { filter:brightness(1.15); }
-  .btn-p:disabled { background:#333; color:#666; cursor:not-allowed; }
-  .btn-s { background:transparent; border:1px solid var(--border); color:var(--text); }
-  .btn-s:hover { border-color:#555; }
-  .btn-e { background:#22c55e; color:var(--bg); }
-  .btn-e:hover { filter:brightness(1.15); }
-  .btn-warn { background:transparent; border:1px solid #ef4444; color:#ef4444; font-size:.78rem; }
-  .btn-warn:hover { background:rgba(239,68,68,.15); }
-  .counter { color:var(--dim); font-size:.82rem; min-width:110px; text-align:center; }
-  .rev-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:10px; }
-  .rev-card { background:var(--card); border:1px solid var(--border); border-radius:8px; padding:12px; }
-  .rev-card .r-name { font-weight:600; font-size:.86rem; }
-  .rev-card .r-stats { font-size:.72rem; color:var(--dim); margin-top:4px; }
-  .result-panel { max-width:720px; margin:0 auto; background:var(--card); border:1px solid var(--border); border-radius:8px; padding:18px; }
-  .result-kicker { font-size:.76rem; font-weight:700; margin-bottom:6px; text-transform:uppercase; letter-spacing:.08em; }
-  .result-panel.ok { border-color:rgba(34,197,94,.5); }
-  .result-panel.ok .result-kicker { color:#22c55e; }
-  .result-panel.err { border-color:rgba(239,68,68,.5); }
-  .result-panel.err .result-kicker { color:#ef4444; }
-  @media (max-width:760px) { .maps-row { flex-direction:column; align-items:center; } .color-legend { padding:8px 10px; } .intent-grid { grid-template-columns:1fr; } }
-</style>
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <div class="container">
-  <div class="header"><h1>机器人社交接触可接受性问卷</h1><div class="sub">Social Touch Acceptability Survey · Robot-Initiated Physical Contact</div><div class="divider"></div></div>
-  <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="pFill" style="width:0%"></div></div><div class="progress-text" id="pText">Step 1</div></div>
-  <div class="step active" id="s0"><div class="step-title">知情同意 <span class="en-line">Consent — Before You Begin</span></div><div class="step-desc">请在开始问卷前阅读以下说明。 / Please read the following information before starting the survey.</div><div class="panel"><p>本问卷旨在了解：当机器人主动通过身体接触传达不同社交意图时，人们对不同身体区域被触碰的接受程度。</p><p>Your responses will be used for academic research only. The survey does not ask for your name or direct contact information. You may stop at any time before submitting your response.</p><p>问卷涉及身体部位与社交接触判断。如果你对此感到不适，可以随时停止填写。</p><label class="consent-check"><input type="checkbox" id="consentBox" onchange="updConsent()"><span>我已阅读以上说明，并同意参与本研究。<br>I have read the information above and agree to participate in this study.</span></label></div><div class="nav"><button class="btn btn-p" id="btnConsent" disabled onclick="goInfo()">继续 / Continue →</button></div></div>
-  <div class="step" id="sInfo"><div class="step-title">基本信息 <span class="en-line">Basic Information</span></div><div class="step-desc">以下信息用于理解不同参与者背景下的回答差异。 / These questions help us understand participant background differences.</div><div class="panel"><div class="form-grid"><div class="field"><label for="age">年龄 / Age</label><input id="age" type="number" min="18" max="100" placeholder="e.g., 22"></div><div class="field"><label for="gender">性别 / Gender</label><select id="gender"><option value="">请选择 / Select one</option><option value="female">女性 / Female</option><option value="male">男性 / Male</option><option value="non_binary">非二元 / Non-binary</option><option value="prefer_not_to_say">不愿透露 / Prefer not to say</option><option value="self_describe">自我描述 / Self-describe</option></select></div><div class="field"><label for="culture">文化背景 / Cultural background</label><input id="culture" type="text" placeholder="e.g., Chinese, East Asian, ..."></div></div></div><div class="nav"><button class="btn btn-s" onclick="showStep('s0')">← 返回 / Back</button><button class="btn btn-p" onclick="goIntents()">继续 / Continue →</button></div></div>
-  <div class="step" id="s1"><div class="step-title">社交意图选择 <span class="en-line">Social Intents — Which are appropriate for robot touch?</span></div><div class="step-desc">以下列出 10 类社交意图。请选择你认为机器人可以通过身体接触向人传达的意图。<br>Select all social intents that you believe a robot should be allowed to convey through physical touch.</div><div class="select-row"><button onclick="selAll(true)">全选 / Select All</button><button onclick="selAll(false)">清空 / Clear All</button></div><div class="intent-grid" id="intentGrid"></div><div class="nav"><button class="btn btn-p" id="btnToMaps" disabled onclick="goMaps()">继续 / Continue → (<span id="selCount">0</span> selected)</button></div></div>
-  <div class="step" id="s2"><div class="step-title">身体地图标注 <span class="en-line">Body Map — Where is this touch acceptable?</span></div><div class="step-desc"><span class="badge" id="badge"></span><br>请选择一种油漆桶，然后连续点击身体区域进行标注。同色再次点击可取消该区域标注。<br>Choose a paint bucket, then click body regions. Click the same color again to clear a region.</div><div class="color-legend"><div class="leg-title">油漆桶 / Paint Bucket</div><button class="bucket active" id="bucketAccept" onclick="setPaint(1)"><span class="leg-swatch l2p"></span> 愿意被触碰 / Acceptable</button><button class="bucket" id="bucketReject" onclick="setPaint(-1)"><span class="leg-swatch l2n"></span> 不愿意被触碰 / Unacceptable</button><div class="leg-item"><span class="leg-swatch l0"></span> 未标记 / Neutral</div><div class="current-tool" id="currentTool">当前：愿意被触碰 / Current: Acceptable</div><div class="tool-hint">同色再次点击可取消；切换另一种颜色可覆盖。 / Same color clears; another bucket overwrites.</div></div><div class="maps-row"><div class="map-panel"><h4>FRONT</h4><svg id="svgF" viewBox="0 0 220 540" width="250" height="614"></svg></div><div class="map-panel"><h4>BACK</h4><svg id="svgB" viewBox="0 0 220 540" width="250" height="614"></svg></div></div><div class="nav"><button class="btn btn-warn" onclick="resetCur()">↺ 重置当前 / Reset Current</button><button class="btn btn-s" onclick="prev()">← 上一个 / Prev</button><span class="counter" id="counter"></span><button class="btn btn-p" id="btnNext" onclick="next()">下一个 / Next →</button><button class="btn btn-e" id="btnDone" style="display:none" onclick="done()">检查与提交 / Review & Submit →</button></div></div>
-  <div class="step" id="s3"><div class="step-title">检查与提交 <span class="en-line">Review & Submit</span></div><div class="step-desc">请检查你的回答，然后提交至研究数据库。 / Check your responses, then submit them to the research database.</div><div class="rev-grid" id="revGrid"></div><div class="nav"><button class="btn btn-s" onclick="back()">← 返回地图 / Back to Maps</button><button class="btn btn-e" id="btnSubmit" onclick="submitToSupabase()">提交问卷 / Submit response</button></div></div>
-  <div class="step" id="s4"><div class="result-panel" id="resultPanel"><div class="result-kicker" id="resultKicker"></div><div class="step-title" id="resultTitle"></div><div class="step-desc" id="resultMessage"></div><div class="nav"><button class="btn btn-s" id="btnRetry" onclick="backToReview()" style="display:none">返回检查 / Back to review</button></div></div></div>
+
+  <div class="topbar">
+    <div class="lang-switch" aria-label="Language">
+      <button class="lang-btn active" id="langZh" onclick="setLang('zh')">中文</button>
+      <button class="lang-btn" id="langEn" onclick="setLang('en')">English</button>
+    </div>
+  </div>
+
+  <div class="header">
+    <h1 data-i18n="appTitle">机器人社交接触可接受性问卷</h1>
+    <div class="sub" data-i18n="appSub">机器人主动身体接触中的身体区域可接受性标注</div>
+    <div class="divider"></div>
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-bar"><div class="progress-fill" id="pFill" style="width:0%"></div></div>
+    <div class="progress-text" id="pText">Step 1</div>
+  </div>
+
+  <!-- ================================================================ -->
+  <!-- STEP 0: CONSENT                                                   -->
+  <!-- ================================================================ -->
+  <div class="step active" id="s0">
+    <div class="step-title" data-i18n="consentTitle">知情同意</div>
+    <div class="step-desc" data-i18n="consentDesc">请在开始问卷前阅读以下说明。</div>
+    <div class="panel">
+      <p data-i18n="consentP1">本问卷旨在了解：当机器人主动通过身体接触传达不同社交意图时，人们对不同身体区域被触碰的接受程度。</p>
+      <p data-i18n="consentP2">你的回答仅用于学术研究。本问卷不会收集你的姓名或直接联系方式，你可以在提交前随时退出。</p>
+      <p data-i18n="consentP3">问卷涉及身体部位与社交接触判断。如果你对此感到不适，可以随时停止填写。</p>
+      <label class="consent-check">
+        <input type="checkbox" id="consentBox" onchange="updConsent()">
+        <span data-i18n="consentCheck">我已阅读以上说明，并同意参与本研究。</span>
+      </label>
+    </div>
+    <div class="nav">
+      <button class="btn btn-p" id="btnConsent" disabled onclick="goInfo()" data-i18n="continueBtn">继续 →</button>
+    </div>
+  </div>
+
+  <!-- ================================================================ -->
+  <!-- STEP 1: BASIC INFO                                                -->
+  <!-- ================================================================ -->
+  <div class="step" id="sInfo">
+    <div class="step-title" data-i18n="infoTitle">基本信息</div>
+    <div class="step-desc" data-i18n="infoDesc">以下信息用于理解不同参与者背景下的回答差异。</div>
+    <div class="panel">
+      <div class="form-grid">
+        <div class="field" id="fieldAge">
+          <label for="age" data-i18n="ageLabel">年龄</label>
+          <input id="age" type="number" min="18" max="100" required placeholder="22">
+        </div>
+        <div class="field" id="fieldGender">
+          <label for="gender" data-i18n="genderLabel">性别</label>
+          <select id="gender" required>
+            <option value="" data-i18n="selectOne">请选择</option>
+            <option value="female" data-i18n="genderFemale">女性</option>
+            <option value="male" data-i18n="genderMale">男性</option>
+            <option value="non_binary" data-i18n="genderNonBinary">非二元</option>
+            <option value="prefer_not_to_say" data-i18n="preferNot">不愿透露</option>
+            <option value="self_describe" data-i18n="selfDescribe">自我描述</option>
+          </select>
+        </div>
+        <div class="field" id="fieldNationality">
+          <label for="nationality" data-i18n="nationalityLabel">国籍</label>
+          <select id="nationality" required>
+            <option value="" data-i18n="selectOne">请选择</option>
+            <option value="China" data-i18n="countryChina">中国</option>
+            <option value="United Kingdom" data-i18n="countryUK">英国</option>
+            <option value="Germany" data-i18n="countryGermany">德国</option>
+            <option value="France" data-i18n="countryFrance">法国</option>
+            <option value="Italy" data-i18n="countryItaly">意大利</option>
+            <option value="Spain" data-i18n="countrySpain">西班牙</option>
+            <option value="Netherlands" data-i18n="countryNetherlands">荷兰</option>
+            <option value="Sweden" data-i18n="countrySweden">瑞典</option>
+            <option value="Denmark" data-i18n="countryDenmark">丹麦</option>
+            <option value="Norway" data-i18n="countryNorway">挪威</option>
+            <option value="Finland" data-i18n="countryFinland">芬兰</option>
+            <option value="Poland" data-i18n="countryPoland">波兰</option>
+            <option value="Portugal" data-i18n="countryPortugal">葡萄牙</option>
+            <option value="Greece" data-i18n="countryGreece">希腊</option>
+            <option value="Other" data-i18n="countryOther">其他</option>
+            <option value="prefer_not_to_say" data-i18n="preferNot">不愿透露</option>
+          </select>
+        </div>
+      </div>
+      <div class="error-text" id="infoError" data-i18n="infoError">请完整填写年龄、性别和国籍后继续。</div>
+    </div>
+    <div class="nav">
+      <button class="btn btn-s" onclick="showStep('s0')" data-i18n="backBtn">← 返回</button>
+      <button class="btn btn-p" onclick="goIntents()" data-i18n="continueBtn">继续 →</button>
+    </div>
+  </div>
+
+  <!-- ================================================================ -->
+  <!-- STEP 2: INTENTS                                                   -->
+  <!-- ================================================================ -->
+  <div class="step" id="s1">
+    <div class="step-title" data-i18n="intentTitle">社交意图选择</div>
+    <div class="step-desc" data-i18n="intentDesc">以下列出 10 类社交意图。请选择你认为机器人可以通过身体接触向人传达的意图。</div>
+    <div class="select-row">
+      <button onclick="selAll(true)" data-i18n="selectAll">全选</button>
+      <button onclick="selAll(false)" data-i18n="clearAll">清空</button>
+    </div>
+    <div class="intent-grid" id="intentGrid"></div>
+    <div class="nav">
+      <button class="btn btn-p" id="btnToMaps" disabled onclick="goMaps()">
+        <span id="btnToMapsText">继续 →</span> (<span id="selCount">0</span>)
+      </button>
+    </div>
+  </div>
+
+  <!-- ================================================================ -->
+  <!-- STEP 3                                                            -->
+  <!-- ================================================================ -->
+  <div class="step" id="s2">
+    <div class="step-title" data-i18n="mapTitle">身体地图标注</div>
+    <div class="step-desc" data-i18n="mapDesc">请为当前社交意图标注你是否愿意被机器人触碰各身体区域。</div>
+    <div class="intent-context">
+      <div class="intent-name" id="mapIntentName"></div>
+      <div class="intent-desc" id="mapIntentDesc"></div>
+    </div>
+
+    <!-- PAINT BUCKETS -->
+    <div class="color-legend">
+      <div class="leg-title" data-i18n="colorToolTitle">颜色</div>
+      <button class="bucket active" id="bucketAccept" onclick="setPaint(1)">
+        <span class="leg-swatch l2p"></span> <span data-i18n="acceptable">愿意被触碰</span>
+      </button>
+      <button class="bucket" id="bucketReject" onclick="setPaint(-1)">
+        <span class="leg-swatch l2n"></span> <span data-i18n="unacceptable">不愿意被触碰</span>
+      </button>
+      <div class="leg-item"><span class="leg-swatch l0"></span> <span data-i18n="neutral">未标记</span></div>
+      <div class="current-tool" id="currentTool"></div>
+      <div class="tool-hint" data-i18n="colorHint">同色再次点击可取消；切换另一种颜色可覆盖。</div>
+    </div>
+
+    <div class="maps-row">
+      <!-- FRONT -->
+      <div class="map-panel">
+        <h4>FRONT</h4>
+        <svg id="svgF" viewBox="0 0 220 540" width="250" height="614"></svg>
+      </div>
+
+      <!-- BACK -->
+      <div class="map-panel">
+        <h4>BACK</h4>
+        <svg id="svgB" viewBox="0 0 220 540" width="250" height="614"></svg>
+      </div>
+    </div>
+
+    <div class="nav">
+      <button class="btn btn-s" id="btnPrevMap" onclick="prev()"></button>
+      <span class="counter" id="counter"></span>
+      <button class="btn btn-p" id="btnNext" onclick="next()"></button>
+      <button class="btn btn-e" id="btnDone" style="display:none" onclick="done()"></button>
+    </div>
+    <div class="nav nav-secondary">
+      <button class="btn btn-s" onclick="backToIntentSelection()" data-i18n="backToIntentSelection">返回意图选择</button>
+      <button class="btn btn-warn" onclick="resetCur()" data-i18n="resetCurrent">↺ 重置当前地图</button>
+    </div>
+  </div>
+
+  <!-- ================================================================ -->
+  <!-- STEP 4                                                            -->
+  <!-- ================================================================ -->
+  <div class="step" id="s3">
+    <div class="step-title" data-i18n="reviewTitle">检查与提交</div>
+    <div class="step-desc" data-i18n="reviewDesc">请检查你的回答，然后提交至研究数据库。</div>
+    <div class="rev-grid" id="revGrid"></div>
+    <div class="nav">
+      <button class="btn btn-s" onclick="back()" data-i18n="backToMaps">← 返回地图</button>
+      <button class="btn btn-e" id="btnSubmit" onclick="submitToSupabase()" data-i18n="submitResponse">提交问卷</button>
+    </div>
+  </div>
+
+  <!-- ================================================================ -->
+  <!-- RESULT                                                            -->
+  <!-- ================================================================ -->
+  <div class="step" id="s4">
+    <div class="result-panel" id="resultPanel">
+      <div class="result-kicker" id="resultKicker"></div>
+      <div class="step-title" id="resultTitle"></div>
+      <div class="step-desc" id="resultMessage"></div>
+      <div class="nav">
+        <button class="btn btn-s" id="btnRetry" onclick="backToReview()" style="display:none" data-i18n="backToReview">返回检查</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tooltip -->
   <div class="region-tooltip" id="tooltip"></div>
+
 </div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-const SUPABASE_URL="https://fbcyuboctnbkjhcwdpli.supabase.co";
-const SUPABASE_PUBLISHABLE_KEY="sb_publishable_dIJktlVfSqsPZEGNNU9BQA_i880dn2e";
-const supabaseClient=window.supabase?window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY):null;
-const INTENTS=[
-{id:"affection",zh:"亲昵/喜爱",en:"Affection",desc:"表达温暖、喜爱或亲近感。 / Expressing warmth, fondness, or closeness."},
-{id:"comfort",zh:"安慰/安抚",en:"Comfort",desc:"在压力、悲伤或不安时提供情感支持与 reassurance。 / Providing emotional support and reassurance during distress."},
-{id:"salutation",zh:"问候/致意",en:"Salutation",desc:"在相遇、离开或建立互动时表达礼貌性社交连接。 / Marking greeting, departure, or polite social connection."},
-{id:"appreciation",zh:"欣赏/赞扬",en:"Appreciation",desc:"表达认可、赞赏或对他人表现的积极评价。 / Expressing recognition, praise, or positive evaluation."},
-{id:"encouragement",zh:"鼓励/激励",en:"Encouragement",desc:"帮助对方建立信心、继续行动或面对挑战。 / Supporting confidence, persistence, or coping with challenges."},
-{id:"inclusion",zh:"归属/团结",en:"Inclusion",desc:"表达共同体感、团结感或“你属于这里”的信号。 / Signaling togetherness, belonging, or group inclusion."},
-{id:"emphasis",zh:"强调/获取注意",en:"Emphasis",desc:"突出正在发生的交流内容，或引导对方注意。 / Highlighting communication or directing attention."},
-{id:"gratitude",zh:"感谢/感激",en:"Gratitude",desc:"表达感谢、感激或对他人帮助的正向回应。 / Expressing thanks, gratitude, or positive response to help."},
-{id:"playful",zh:"嬉戏/玩闹",en:"Playful",desc:"表达轻松、幽默、亲切的玩笑式互动氛围。 / Expressing lighthearted, humorous, or playful interaction."},
-{id:"dominance",zh:"支配/权力展示",en:"Dominance",desc:"表达权威、控制、地位差异或使对方服从的意图。 / Expressing authority, control, status difference, or compliance pressure."}
-];
-const F_REGIONS=[
-{id:"f_scalp",label:"头顶 / Scalp",poly:[[85,10],[137,10],[146,34],[80,34]]},{id:"f_face",label:"面部 / Face",poly:[[76,36],[148,36],[150,72],[140,88],[82,88],[72,72]]},{id:"f_neck",label:"颈部 / Neck",poly:[[84,88],[138,88],[138,104],[84,104]]},{id:"f_shoulders",label:"肩部 / Shoulders",poly:[[46,108],[88,108],[88,124],[58,134],[44,130]],polyR:[[134,108],[176,108],[178,130],[164,134],[134,124]]},{id:"f_upper_arms",label:"上臂 / Upper Arms",poly:[[22,130],[60,130],[58,186],[40,200],[18,189]],polyR:[[162,130],[200,130],[204,189],[182,200],[162,186]]},{id:"f_forearms",label:"前臂 / Forearms",poly:[[20,192],[58,192],[56,244],[38,256],[14,246]],polyR:[[164,192],[202,192],[208,246],[184,256],[164,244]]},{id:"f_palms",label:"手掌 / Palms",poly:[[18,248],[56,248],[54,272],[40,280],[12,272]],polyR:[[166,248],[204,248],[210,272],[182,280],[166,272]]},{id:"f_fingers",label:"手指 / Fingers",poly:[[22,278],[48,278],[46,294],[34,300],[18,294]],polyR:[[174,278],[200,278],[204,294],[188,300],[174,294]]},{id:"f_chest",label:"胸部 / Chest",poly:[[60,132],[162,132],[162,204],[132,218],[90,218],[60,204]]},{id:"f_stomach",label:"腹部 / Abdomen",poly:[[64,208],[158,208],[158,286],[120,302],[102,302],[64,286]]},{id:"f_private",label:"私密区域 / Private Area",poly:[[72,292],[150,292],[150,322],[112,330],[72,322]]},{id:"f_thighs",label:"大腿 / Thighs",poly:[[54,326],[102,326],[102,420],[72,430],[46,424],[46,332]],polyR:[[120,326],[168,326],[176,424],[150,430],[120,420]]},{id:"f_knees",label:"膝盖 / Knees",poly:[[50,426],[78,426],[76,446],[58,450],[44,446]],polyR:[[144,426],[172,426],[178,446],[164,450],[148,446]]},{id:"f_calves",label:"小腿 / Calves",poly:[[44,450],[84,450],[84,490],[66,498],[38,492],[38,456]],polyR:[[148,450],[178,450],[184,490],[156,498],[138,492],[138,456]]},{id:"f_feet",label:"足部 / Feet",poly:[[40,494],[74,494],[76,530],[58,538],[34,532],[36,500]],polyR:[[148,494],[182,494],[188,532],[164,538],[148,530]]}
-];
-const B_REGIONS=[
-{id:"b_head",label:"后脑 / Back of Head",poly:[[78,8],[144,8],[144,68],[78,68]]},{id:"b_neck",label:"后颈 / Back of Neck",poly:[[90,72],[132,72],[132,106],[90,106]]},{id:"b_rear_shoulders",label:"后肩部 / Rear Shoulders",poly:[[50,112],[172,112],[172,180],[50,180]]},{id:"b_back",label:"背部 / Back",poly:[[54,186],[168,186],[168,290],[54,290]]},{id:"b_buttocks",label:"臀部 / Buttocks",poly:[[56,296],[166,296],[166,346],[132,358],[90,358],[56,346]]},{id:"b_thighs",label:"大腿后侧 / Back of Thighs",poly:[[48,352],[102,352],[102,450],[74,456],[44,450]],polyR:[[120,352],[174,352],[178,450],[148,456],[120,450]]},{id:"b_lower_legs",label:"小腿+足部 / Calves & Feet",poly:[[44,454],[86,454],[84,540],[62,542],[38,540],[40,460]],polyR:[[138,454],[178,454],[184,540],[160,542],[138,540]]}
-];
-const ALL_REGIONS=[...F_REGIONS.map(r=>({id:r.id,label:r.label.split(" / ")[0],side:"front"})),...B_REGIONS.map(r=>({id:r.id,label:r.label.split(" / ")[0],side:"back"}))];
-const OUTLINE_F="M90,12 C78,12 70,20 70,38 C70,60 74,74 82,82 L88,86 L88,100 C72,102 48,106 32,118 C22,128 24,154 26,180 C27,200 24,226 24,248 C24,268 26,286 30,312 C32,342 30,366 28,380 L28,380 C50,372 78,364 102,360 L120,360 C144,364 172,372 194,380 L194,380 C192,366 190,342 192,312 C196,286 198,268 198,248 C198,226 195,200 196,180 C198,154 200,128 190,118 C174,106 150,102 134,100 L134,86 L140,82 C148,74 152,60 152,38 C152,22 144,12 132,12 Z";
-const OUTLINE_B="M90,8 C78,8 70,16 72,34 C74,54 78,70 82,80 L88,84 L88,96 C72,98 48,104 38,116 C32,124 34,156 34,188 C34,228 32,260 34,290 C34,320 36,344 36,360 L36,360 C56,352 80,344 102,340 L120,340 C142,344 166,352 186,360 L186,360 C186,344 188,320 188,290 C190,260 188,228 188,188 C188,156 190,124 184,116 C174,104 150,98 134,96 L134,84 L140,80 C148,72 150,54 150,34 C150,16 142,8 132,8 Z M38,366 L38,366 C56,362 78,358 100,354 L122,354 C144,358 166,362 184,366 L186,404 C188,454 186,494 184,536 C162,530 142,526 122,524 L100,524 C80,526 60,530 38,536 C36,494 34,454 36,404 Z";
-function polyD(pts){return"M"+pts.map(p=>p.join(",")).join("L")+"Z"}
-let sel=new Set(),order=[],idx=0,data={},cur={},paint=1,demographics={};
-const total=ALL_REGIONS.length;
-function showStep(id){document.querySelectorAll(".step").forEach(s=>s.classList.remove("active"));document.getElementById(id).classList.add("active");prog();window.scrollTo({top:0,behavior:"smooth"})}
-function updConsent(){document.getElementById("btnConsent").disabled=!document.getElementById("consentBox").checked}
-function goInfo(){showStep("sInfo")}
-function goIntents(){demographics={age:document.getElementById("age").value.trim(),gender:document.getElementById("gender").value,culturalBackground:document.getElementById("culture").value.trim()};showStep("s1")}
-function setPaint(v){paint=v;document.getElementById("bucketAccept").classList.toggle("active",v===1);document.getElementById("bucketReject").classList.toggle("active",v===-1);document.getElementById("currentTool").textContent=v===1?"当前：愿意被触碰 / Current: Acceptable":"当前：不愿意被触碰 / Current: Unacceptable"}
-function r1(){document.getElementById("intentGrid").innerHTML=INTENTS.map(i=>`<div class="intent-card" id="c-${i.id}" onclick="tog('${i.id}')"><div class="dot"></div><div class="name">${i.zh}<span class="en">${i.en}</span></div><div class="desc">${i.desc}</div></div>`).join("")}
-function tog(id){sel.has(id)?sel.delete(id):sel.add(id);document.getElementById("c-"+id).classList.toggle("sel");updBtn()}
-function selAll(v){INTENTS.forEach(i=>{v?sel.add(i.id):sel.delete(i.id);const c=document.getElementById("c-"+i.id);if(c)v?c.classList.add("sel"):c.classList.remove("sel")});updBtn()}
-function updBtn(){const b=document.getElementById("btnToMaps");b.disabled=sel.size===0;document.getElementById("selCount").textContent=sel.size}
-function drawSVG(svgId,regions,outlinePath){const svg=document.getElementById(svgId);svg.innerHTML="";const op=document.createElementNS("http://www.w3.org/2000/svg","path");op.setAttribute("d",outlinePath);op.setAttribute("class","silhouette");svg.appendChild(op);regions.forEach(r=>{const polys=r.polyR?[r.poly,r.polyR]:[r.poly];polys.forEach(pts=>{const shape=document.createElementNS("http://www.w3.org/2000/svg","path");shape.setAttribute("d",polyD(pts));shape.setAttribute("data-rid",r.id);shape.setAttribute("data-bilateral",r.polyR?"1":"0");shape.setAttribute("class","region s0");const t=document.createElementNS("http://www.w3.org/2000/svg","title");t.textContent=r.label;shape.appendChild(t);shape.addEventListener("mouseenter",e=>{showTT(r.label,e);if(r.polyR)highlightPair(svgId,r.id,true)});shape.addEventListener("mouseleave",()=>{hideTT();if(r.polyR)highlightPair(svgId,r.id,false)});shape.addEventListener("mousedown",e=>e.preventDefault());shape.addEventListener("click",e=>{e.preventDefault();cur[r.id]=cur[r.id]===paint?0:paint;updCol()});svg.appendChild(shape)})})}
-function highlightPair(svgId,rid,on){document.getElementById(svgId).querySelectorAll(`[data-rid="${rid}"]`).forEach(el=>el.classList.toggle("hover-pair",on))}
-function stateClass(v){if(v===0)return"s0";if(v===1)return"sp1";if(v===-1)return"sn1";return"s0"}
-function updCol(){["svgF","svgB"].forEach(id=>{document.getElementById(id).querySelectorAll(".region").forEach(el=>{const rid=el.getAttribute("data-rid");el.setAttribute("class",`region ${stateClass(cur[rid]||0)}`)})})}
-function showTT(text,e){const tt=document.getElementById("tooltip");tt.textContent=text;tt.style.display="block";tt.style.left=e.clientX+14+"px";tt.style.top=e.clientY-30+"px"}
-function hideTT(){document.getElementById("tooltip").style.display="none"}
-function goMaps(){order=[...sel];if(order.length===0)return;order.forEach(id=>{if(!(id in data))data[id]={}});idx=0;showStep("s2");drawSVG("svgF",F_REGIONS,OUTLINE_F);drawSVG("svgB",B_REGIONS,OUTLINE_B);load()}
-function load(){const id=order[idx],it=INTENTS.find(i=>i.id===id);document.getElementById("badge").textContent=`${it.zh} (${it.en})`;document.getElementById("counter").textContent=`${idx+1} / ${order.length}`;cur={...(data[id]||{})};updCol();document.getElementById("btnNext").style.display=idx<order.length-1?"":"none";document.getElementById("btnDone").style.display=idx===order.length-1?"":"none";prog()}
-function save(){if(order[idx])data[order[idx]]={...cur}}
-function next(){save();if(idx<order.length-1){idx++;load()}}
-function prev(){save();if(idx>0){idx--;load()}else showStep("s1")}
-function resetCur(){cur={};updCol()}
-function done(){save();showStep("s3");r3()}
-function back(){showStep("s2");load()}
-function prog(){const f=document.getElementById("pFill"),t=document.getElementById("pText");if(document.getElementById("s0").classList.contains("active")){f.style.width="8%";t.textContent="Consent"}else if(document.getElementById("sInfo").classList.contains("active")){f.style.width="20%";t.textContent="Basic information"}else if(document.getElementById("s1").classList.contains("active")){f.style.width="35%";t.textContent="Select social intents"}else if(document.getElementById("s2").classList.contains("active")){const pct=35+Math.round((idx+1)/order.length*50);f.style.width=pct+"%";t.textContent=`Body map ${idx+1}/${order.length}`}else if(document.getElementById("s3").classList.contains("active")){f.style.width="95%";t.textContent="Review & Submit"}else{f.style.width="100%";t.textContent="Submission status"}}
-function r3(){document.getElementById("revGrid").innerHTML=order.map(id=>{const it=INTENTS.find(i=>i.id===id),d=data[id]||{},entries=Object.entries(d),accept=entries.filter(([,v])=>v===1).length,reject=entries.filter(([,v])=>v===-1).length,neutral=total-accept-reject;return`<div class="rev-card"><div class="r-name">${it.zh} <small style="color:var(--dim)">${it.en}</small></div><div class="r-stats">愿意 / Accept: ${accept} &nbsp;|&nbsp; 不愿意 / Reject: ${reject} &nbsp;|&nbsp; 中立 / Neutral: ${neutral}</div></div>`}).join("")}
-function fallbackUuid(){const h=n=>Array.from({length:n},()=>Math.floor(Math.random()*16).toString(16)).join("");return`${h(8)}-${h(4)}-4${h(3)}-${(8+Math.floor(Math.random()*4)).toString(16)}${h(3)}-${h(12)}`}
-function getParticipantId(){let id=localStorage.getItem("participant_id");if(!id){id=crypto.randomUUID?crypto.randomUUID():fallbackUuid();localStorage.setItem("participant_id",id)}return id}
-function fieldVal(id){const el=document.getElementById(id);return el&&el.value?el.value.trim():null}
-function normalizedBodyData(){const out={};order.forEach(intentId=>{out[intentId]={};ALL_REGIONS.forEach(region=>{out[intentId][region.id]=data[intentId]?.[region.id]??0})});return out}
-function selectedIntentPayload(){return order.map(id=>{const it=INTENTS.find(i=>i.id===id);return{id,zh:it.zh,en:it.en}})}
-function regionsPayload(){return ALL_REGIONS.map(r=>({id:r.id,label:r.label,side:r.side}))}
-function buildSurveyPayload(){save();return{participant_id:getParticipantId(),timestamp:new Date().toISOString(),study_version:"2.0",consent_version:"2026-06-01",consent_given:document.getElementById("consentBox")?.checked||false,language:navigator.language||null,age_group:fieldVal("age"),country:fieldVal("culture"),gender:fieldVal("gender"),scaleDescription:"1=Acceptable / willing to be touched, 0=Neutral or no intention (default), -1=Unacceptable / unwilling to be touched",selected_intents:selectedIntentPayload(),body_data:normalizedBodyData(),regions:regionsPayload(),metadata:{demographics,timezone:Intl.DateTimeFormat().resolvedOptions().timeZone||null,viewport:{width:window.innerWidth,height:window.innerHeight},source:"github_pages_static_html"}}}
-function showSubmissionResult(ok,title,message){const panel=document.getElementById("resultPanel");panel.className=`result-panel ${ok?"ok":"err"}`;document.getElementById("resultKicker").textContent=ok?"Response submitted":"Submission error";document.getElementById("resultTitle").textContent=title;document.getElementById("resultMessage").textContent=message;document.getElementById("btnRetry").style.display=ok?"none":"";showStep("s4")}
-function backToReview(){const btn=document.getElementById("btnSubmit");btn.disabled=false;btn.textContent="提交问卷 / Submit response";showStep("s3")}
-async function submitToSupabase(){const btn=document.getElementById("btnSubmit"),payload=buildSurveyPayload();if(!supabaseClient){showSubmissionResult(false,"提交失败 / Your response was not submitted.","提交组件未能加载。请检查网络后重试。 / The submission library did not load. Please check your connection and try again.");return}if(!payload.consent_given){showSubmissionResult(false,"需要知情同意 / Consent is required.","请返回开始页面并勾选知情同意后再提交。 / Please go back to the start page and confirm consent before submitting.");return}btn.disabled=true;btn.textContent="提交中... / Submitting...";const{error}=await supabaseClient.from("survey_responses").insert({participant_id:payload.participant_id,study_version:payload.study_version,consent_version:payload.consent_version,consent_given:payload.consent_given,language:payload.language,age_group:payload.age_group,country:payload.country,gender:payload.gender,selected_intents:payload.selected_intents,body_data:payload.body_data,regions:payload.regions,metadata:payload.metadata});if(error){console.error(error);btn.disabled=false;btn.textContent="提交问卷 / Submit response";showSubmissionResult(false,"提交失败 / Your response was not submitted.","请检查网络后重试。如果问题持续出现，请联系研究团队。 / Please check your connection and try again. If the problem continues, contact the research team.");return}localStorage.setItem("survey_submitted","1");btn.textContent="已提交 / Submitted";showSubmissionResult(true,"感谢参与 / Thank you for taking part.","你的回答已成功提交。 / Your response has been successfully submitted.")}
-r1();updBtn();prog();
-</script>
+<script src="app.js"></script>
 </body>
 </html>
