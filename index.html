@@ -88,14 +88,14 @@
   <!-- ================================================================ -->
   <div class="step" id="s1">
     <div class="step-title" data-i18n="intentTitle">社交意图选择</div>
-    <div class="step-desc" data-i18n="intentDesc">以下列出 16 类社交意图。请选择你认为机器人可以通过身体接触向人传达的意图。</div>
+    <div class="step-desc" data-i18n="intentDesc">以下列出 16 类可能通过触碰表达的社交意图。请根据你的直觉，选择你认为“社交机器人可以通过主动触碰人的身体来表达”的意图。这里不需要考虑具体触碰哪个身体部位，下一步会继续询问。</div>
     <div class="select-row">
       <button onclick="selAll(true)" data-i18n="selectAll">全选</button>
       <button onclick="selAll(false)" data-i18n="clearAll">清空</button>
     </div>
     <div class="intent-grid" id="intentGrid"></div>
     <div class="nav">
-      <button class="btn btn-p" id="btnToMaps" disabled onclick="goMaps()">
+      <button class="btn btn-p" id="btnToMaps" disabled onclick="goContext()">
         <span id="btnToMapsText">继续 →</span> (<span id="selCount">0</span>)
       </button>
     </div>
@@ -103,6 +103,29 @@
 
   <!-- ================================================================ -->
   <!-- STEP 3                                                            -->
+  <!-- ================================================================ -->
+  <div class="step" id="sContext">
+    <div class="context-heading">
+      <div class="step-title" data-i18n="contextTitle">关系亲近度与互动语境</div>
+      <div class="intent-context">
+        <span class="intent-name" id="contextIntentName"></span>
+        <span class="intent-desc" id="contextIntentDesc"></span>
+      </div>
+    </div>
+    <div class="step-desc" data-i18n="contextDesc">请针对当前意图回答下面两道题。这里的“关系亲近度”指你与机器人之间的熟悉、信任和私人化互动程度；“互动语境”指这种触碰意图最可能出现的高层互动场景。</div>
+    <div class="context-list" id="contextList"></div>
+    <div class="error-text" id="contextError" data-i18n="contextError">请为每个已选意图选择关系亲近度和互动语境后继续。</div>
+    <div class="nav">
+      <button class="btn btn-s" onclick="backToIntentSelectionFromContext()" data-i18n="backToIntentSelection">← 返回意图选择</button>
+      <button class="btn btn-s" id="btnPrevContext" onclick="prevContext()"></button>
+      <span class="counter" id="contextCounter"></span>
+      <button class="btn btn-p" id="btnNextContext" onclick="nextContext()"></button>
+      <button class="btn btn-e" id="btnContextDone" style="display:none" onclick="goMaps()"></button>
+    </div>
+  </div>
+
+  <!-- ================================================================ -->
+  <!-- STEP 4                                                            -->
   <!-- ================================================================ -->
   <div class="step" id="s2">
     <div class="map-heading">
@@ -115,8 +138,8 @@
 
     <!-- PAINT BUCKETS -->
     <div class="color-legend">
-      <button class="toolbar-action back-intents" onclick="backToIntentSelection()">
-        <span data-i18n="backToIntentPrefix">返回</span><strong data-i18n="intentSelectionNoun">意图选择</strong>
+      <button class="toolbar-action back-intents" onclick="backToContextQuestions()">
+        <span data-i18n="backToContextPrefix">返回</span><strong data-i18n="contextQuestionsNoun">关系/场景</strong>
       </button>
       <div class="color-controls">
         <div class="leg-title" data-i18n="colorToolTitle">颜色</div>
