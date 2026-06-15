@@ -146,24 +146,31 @@
   .scale-label { font-size:0.68rem; line-height:1.2; color:#aaa; }
   .scale-option.selected .scale-label { color:#e5efff; }
   .ios-diagram {
-    position:relative; width:92px; height:54px; margin:3px auto 4px;
+    position:relative; width:108px; height:56px; margin:3px auto 4px;
     display:block;
   }
   .ios-circle {
-    position:absolute; top:6px; width:42px; height:42px; border-radius:50%;
+    position:absolute; top:6px; width:44px; height:44px; border-radius:50%;
     display:grid; place-items:center; font-size:0.8rem; font-weight:850;
     border:2px solid rgba(255,255,255,0.62); color:rgba(255,255,255,0.88);
     background:rgba(10,10,10,0.72);
   }
-  .ios-human { left:3px; }
+  .ios-human { left:8px; }
   .ios-robot { background:rgba(20,38,68,0.72); color:#d8e7ff; }
-  .ios-level-1 .ios-robot { left:47px; }
-  .ios-level-2 .ios-robot { left:41px; }
-  .ios-level-3 .ios-robot { left:35px; }
-  .ios-level-4 .ios-robot { left:29px; }
-  .ios-level-5 .ios-robot { left:23px; }
-  .ios-level-6 .ios-robot { left:17px; }
-  .ios-level-7 .ios-robot { left:11px; }
+  .ios-level-1 .ios-human { left:8px; }
+  .ios-level-1 .ios-robot { left:56px; }
+  .ios-level-2 .ios-human { left:13px; }
+  .ios-level-2 .ios-robot { left:51px; }
+  .ios-level-3 .ios-human { left:17px; }
+  .ios-level-3 .ios-robot { left:47px; }
+  .ios-level-4 .ios-human { left:21px; }
+  .ios-level-4 .ios-robot { left:43px; }
+  .ios-level-5 .ios-human { left:25px; }
+  .ios-level-5 .ios-robot { left:39px; }
+  .ios-level-6 .ios-human { left:28px; }
+  .ios-level-6 .ios-robot { left:36px; }
+  .ios-level-7 .ios-human { left:30px; }
+  .ios-level-7 .ios-robot { left:34px; }
   .scale-option.selected .ios-circle {
     border-color:rgba(255,255,255,0.55); color:#fff;
   }

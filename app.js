@@ -64,8 +64,8 @@ const I18N = {
     contextTitle:"关系亲近度与互动语境",
     contextDesc:"请针对当前意图回答下面两道题。这里的“关系亲近度”指你与机器人之间的熟悉、信任和私人化互动程度；“互动语境”指这种触碰意图最可能出现的高层互动场景。",
     relationshipQuestion:"如果机器人要通过触碰向你表达这一意图，你认为它通常至少需要与你达到怎样的关系亲近程度？",
-    contextQuestion:"你认为机器人通过触碰表达这一意图，最可能出现在以下哪一类互动语境中？",
-    contextError:"请先完成当前意图的关系亲近度和互动语境选择。",
+    contextQuestion:"你认为机器人通过触碰表达这一意图，可能出现在以下哪些互动语境中？（可多选）",
+    contextError:"请先完成当前意图的关系亲近度，并至少选择一种互动语境。",
     closeness1:"完全陌生",
     closeness2:"初步接触",
     closeness3:"轻度熟悉",
@@ -190,8 +190,8 @@ const I18N = {
     contextTitle:"Relationship Closeness and Interaction Context",
     contextDesc:"Please answer the two questions below for the current intent. Relationship closeness refers to your familiarity, trust, and personalized interaction with the robot; interaction context refers to the broad setting where this touch intent would most likely occur.",
     relationshipQuestion:"If a robot were to express this intent to you through touch, what minimum level of relationship closeness would usually be needed?",
-    contextQuestion:"In which interaction context would a robot most likely express this intent through touch?",
-    contextError:"Please complete both relationship closeness and interaction context for the current intent.",
+    contextQuestion:"In which interaction contexts might a robot express this intent through touch? (Select all that apply.)",
+    contextError:"Please complete relationship closeness and select at least one interaction context for the current intent.",
     closeness1:"Complete stranger",
     closeness2:"Initial contact",
     closeness3:"Slightly familiar",
@@ -512,8 +512,12 @@ function initIntentMeta() {
     if (!intentMeta[id]) {
       intentMeta[id] = {
         relationship_closeness: null,
-        interaction_context: null,
+        interaction_contexts: [],
       };
+    } else if (!Array.isArray(intentMeta[id].interaction_contexts)) {
+      intentMeta[id].interaction_contexts = intentMeta[id].interaction_context
+        ? [intentMeta[id].interaction_context]
+        : [];
     }
   });
 }
@@ -526,6 +530,12 @@ function contextLabel(contextId) {
 function relationshipLabel(value) {
   const level = RELATIONSHIP_LEVELS.find(item => item.value === Number(value));
   return level ? t(level.labelKey) : "";
+}
+
+function contextLabels(contextIds) {
+  return (Array.isArray(contextIds) ? contextIds : [])
+    .map(contextLabel)
+    .filter(Boolean);
 }
 
 function iosDiagram(level) {
@@ -559,7 +569,7 @@ function renderContextQuestion() {
     </button>`).join("");
   const contextOptions = INTERACTION_CONTEXTS.map(context => `
     <button type="button"
-      class="context-option ${meta.interaction_context === context.id ? "selected" : ""}"
+      class="context-option ${meta.interaction_contexts?.includes(context.id) ? "selected" : ""}"
       onclick="setInteractionContext('${id}', '${context.id}')">
       <span class="context-name">${t(context.labelKey)}</span>
       <span class="context-desc">${t(context.descKey)}</span>
@@ -574,7 +584,7 @@ function renderContextQuestion() {
       </div>
       <div class="context-block">
         <div class="context-question">${t("contextQuestion")}</div>
-        <div class="context-options" role="radiogroup" aria-label="${t("contextQuestion")}">
+        <div class="context-options" role="group" aria-label="${t("contextQuestion")}">
           ${contextOptions}
         </div>
       </div>
@@ -596,7 +606,17 @@ function setRelationship(intentId, value) {
 
 function setInteractionContext(intentId, contextId) {
   if (!intentMeta[intentId]) intentMeta[intentId] = {};
-  intentMeta[intentId].interaction_context = contextId;
+  if (!Array.isArray(intentMeta[intentId].interaction_contexts)) {
+    intentMeta[intentId].interaction_contexts = [];
+  }
+  const contexts = intentMeta[intentId].interaction_contexts;
+  const existingIndex = contexts.indexOf(contextId);
+  if (existingIndex >= 0) {
+    contexts.splice(existingIndex, 1);
+  } else {
+    contexts.push(contextId);
+  }
+  intentMeta[intentId].interaction_context = contexts[0] || null;
   document.getElementById("contextError").classList.remove("show");
   renderContextQuestion();
 }
@@ -605,7 +625,7 @@ function currentContextAnswered() {
   const id = order[contextIdx];
   return !!(
     intentMeta[id]?.relationship_closeness &&
-    intentMeta[id]?.interaction_context
+    intentMeta[id]?.interaction_contexts?.length
   );
 }
 
@@ -618,7 +638,7 @@ function validateCurrentContextQuestion() {
 function validateContextQuestions() {
   const ok = order.every(id =>
     intentMeta[id]?.relationship_closeness &&
-    intentMeta[id]?.interaction_context
+    intentMeta[id]?.interaction_contexts?.length
   );
   document.getElementById("contextError").classList.toggle("show", !ok);
   return ok;
@@ -864,7 +884,7 @@ function r3() {
         ${t("acceptCount")}: ${accept} &nbsp;|&nbsp; ${t("rejectCount")}: ${reject} &nbsp;|&nbsp; ${t("neutralCount")}: ${neutral}
       </div>
       <div class="r-meta">
-        ${relationshipLabel(meta.relationship_closeness)} · ${contextLabel(meta.interaction_context)}
+        ${relationshipLabel(meta.relationship_closeness)} · ${contextLabels(meta.interaction_contexts).join(" / ")}
       </div>
     </div>`;
   }).join("");
@@ -911,8 +931,10 @@ function selectedIntentPayload() {
       definition_en: it.desc.en,
       relationship_closeness: meta.relationship_closeness ?? null,
       relationship_closeness_label: relationshipLabel(meta.relationship_closeness),
-      interaction_context: meta.interaction_context ?? null,
-      interaction_context_label: contextLabel(meta.interaction_context)
+      interaction_contexts: Array.isArray(meta.interaction_contexts) ? meta.interaction_contexts : [],
+      interaction_context_labels: contextLabels(meta.interaction_contexts),
+      interaction_context: Array.isArray(meta.interaction_contexts) ? meta.interaction_contexts.join(",") : null,
+      interaction_context_label: contextLabels(meta.interaction_contexts).join(" / ")
     };
   });
 }
@@ -924,8 +946,10 @@ function intentMetaPayload() {
     out[id] = {
       relationship_closeness: meta.relationship_closeness ?? null,
       relationship_closeness_label: relationshipLabel(meta.relationship_closeness),
-      interaction_context: meta.interaction_context ?? null,
-      interaction_context_label: contextLabel(meta.interaction_context)
+      interaction_contexts: Array.isArray(meta.interaction_contexts) ? meta.interaction_contexts : [],
+      interaction_context_labels: contextLabels(meta.interaction_contexts),
+      interaction_context: Array.isArray(meta.interaction_contexts) ? meta.interaction_contexts.join(",") : null,
+      interaction_context_label: contextLabels(meta.interaction_contexts).join(" / ")
     };
   });
   return out;
