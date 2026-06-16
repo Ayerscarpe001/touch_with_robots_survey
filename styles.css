@@ -97,7 +97,7 @@
   .no-intent-option {
     display:flex; gap:10px; align-items:flex-start;
     background:#101010; border:1px solid var(--border); border-radius:8px;
-    padding:11px 13px; margin:0 0 12px; cursor:pointer;
+    padding:11px 13px; margin:12px 0 0; cursor:pointer;
   }
   .no-intent-option input { margin-top:4px; }
   .no-intent-option strong { display:block; font-size:0.82rem; color:#eee; line-height:1.35; }

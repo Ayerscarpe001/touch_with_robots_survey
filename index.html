@@ -115,6 +115,7 @@
       <button onclick="selAll(true)" data-i18n="selectAll">全选</button>
       <button onclick="selAll(false)" data-i18n="clearAll">清空</button>
     </div>
+    <div class="intent-grid" id="intentGrid"></div>
     <label class="no-intent-option" id="noIntentOption">
       <input type="checkbox" id="noIntentBox" onchange="toggleNoIntent(this.checked)">
       <span>
@@ -122,7 +123,6 @@
         <small data-i18n="noIntentDesc">如果你认为这些社交意图都不适合由机器人通过主动触碰表达，可以选择此项并直接进入检查页。</small>
       </span>
     </label>
-    <div class="intent-grid" id="intentGrid"></div>
     <div class="nav">
       <button class="btn btn-p" id="btnToMaps" disabled onclick="goContext()">
         <span id="btnToMapsText">继续 →</span> (<span id="selCount">0</span>)
