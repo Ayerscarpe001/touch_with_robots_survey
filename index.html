@@ -40,6 +40,7 @@
       <div class="intro-copy panel">
         <p data-i18n="introP1">请将本研究中的机器人想象为一个具有人形上半身结构的社交机器人：它具有类似人体结构的机械手臂和手部，整体身高略低于成年人，主要通过手臂或手部主动触碰人的身体。</p>
         <p data-i18n="introP2">本问卷中的“触碰”指机器人对人身体发起的直接、短暂、柔和、非疼痛、非强制性的身体接触。请先判断机器人是否适合通过这种接触表达某种社交意图，再在后续页面标注你认为可接受或不可接受的身体区域。</p>
+        <p data-i18n="introP3">对每个你选择的社交意图，问卷会依次询问它通常需要怎样的关系亲近度、可能出现在哪些互动语境中，以及你对不同身体部位被触碰的接受程度。</p>
       </div>
     </div>
     <div class="nav">
@@ -54,7 +55,6 @@
     <div class="step-title" data-i18n="consentTitle">知情同意</div>
     <div class="step-desc" data-i18n="consentDesc">请在开始问卷前阅读以下说明。</div>
     <div class="panel">
-      <p data-i18n="consentP1">本问卷旨在了解：当具有人形上半身结构的社交机器人，通过手臂或手部发起直接、短暂、柔和的身体接触来传达不同社交意图时，人们对不同身体区域被触碰的接受程度。</p>
       <p data-i18n="consentP2">你的回答仅用于学术研究。本问卷不会收集你的姓名或直接联系方式，你可以在提交前随时退出。</p>
       <p data-i18n="consentP3">问卷涉及身体部位与社交接触判断。如果你对此感到不适，可以随时停止填写。</p>
       <p data-i18n="consentP4">请确认你已年满 18 岁后再继续填写本问卷。</p>
@@ -139,6 +139,7 @@
         <span class="intent-label" data-i18n="currentIntentLabel">当前意图</span>
         <span class="intent-name" id="contextIntentName"></span>
         <span class="intent-desc" id="contextIntentDesc"></span>
+        <button class="return-intents-inline" type="button" onclick="backToIntentSelectionFromWorkflow()" data-i18n="backToIntentSelection">← 返回意图选择</button>
       </div>
       <div class="intent-progress-list" id="contextIntentProgress" aria-label="Selected intent progress"></div>
     </div>
@@ -162,6 +163,7 @@
         <span class="intent-label" data-i18n="currentIntentLabel">当前意图</span>
         <span class="intent-name" id="mapIntentName"></span>
         <span class="intent-desc" id="mapIntentDesc"></span>
+        <button class="return-intents-inline" type="button" onclick="backToIntentSelectionFromWorkflow()" data-i18n="backToIntentSelection">← 返回意图选择</button>
       </div>
       <div class="intent-progress-list" id="mapIntentProgress" aria-label="Selected intent progress"></div>
     </div>

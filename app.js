@@ -19,10 +19,10 @@ const I18N = {
     introDesc:"在开始问卷前，请先观看下面的简短动画，并根据文字说明理解本研究中“机器人主动社交接触”的含义。",
     introP1:"请将本研究中的机器人想象为一个具有人形上半身结构的社交机器人：它具有类似人体结构的机械手臂和手部，整体身高略低于成年人，主要通过手臂或手部主动触碰人的身体。",
     introP2:"本问卷中的“触碰”指机器人对人身体发起的直接、短暂、柔和、非疼痛、非强制性的身体接触。请先判断机器人是否适合通过这种接触表达某种社交意图，再在后续页面标注你认为可接受或不可接受的身体区域。",
+    introP3:"对每个你选择的社交意图，问卷会依次询问它通常需要怎样的关系亲近度、可能出现在哪些互动语境中，以及你对不同身体部位被触碰的接受程度。",
     introContinue:"我已理解，继续 →",
     consentTitle:"知情同意",
     consentDesc:"请在开始问卷前阅读以下说明。",
-    consentP1:"本问卷旨在了解：当具有人形上半身结构的社交机器人，通过手臂或手部发起直接、短暂、柔和的身体接触来传达不同社交意图时，人们对不同身体区域被触碰的接受程度。",
     consentP2:"你的回答仅用于学术研究。本问卷不会收集你的姓名或直接联系方式，你可以在提交前随时退出。",
     consentP3:"问卷涉及身体部位与社交接触判断。如果你对此感到不适，可以随时停止填写。",
     consentP4:"请确认你已年满 18 岁后再继续填写本问卷。",
@@ -64,7 +64,7 @@ const I18N = {
     noIntentTitle:"以上意图均不适合",
     noIntentDesc:"如果你认为这些社交意图都不适合由机器人通过主动触碰表达，可以选择此项并直接进入检查页。",
     contextTitle:"关系亲近度与互动语境",
-    contextDesc:"每个已选意图都会依次完成关系/语境判断和身体地图标注。请先针对当前意图回答下面两道题。这里的“关系亲近度”指你与机器人之间的熟悉、信任和私人化互动程度；“互动语境”指这种触碰意图最可能出现的高层互动场景。",
+    contextDesc:"请针对当前意图回答下面两道题。这里的“关系亲近度”指你与机器人之间的熟悉、信任和私人化互动程度；“互动语境”指这种触碰意图最可能出现的高层互动场景。",
     relationshipQuestion:"如果机器人要通过触碰向你表达这一意图，你认为它通常至少需要与你达到怎样的关系亲近程度？",
     contextQuestion:"你认为机器人通过触碰表达这一意图，可能出现在以下哪些互动语境中？（可多选）",
     contextError:"请先完成当前意图的关系亲近度，并至少选择一种互动语境。",
@@ -156,10 +156,10 @@ const I18N = {
     introDesc:"Before starting the survey, please watch the short animation below and read the description of what robot-initiated social touch means in this study.",
     introP1:"Please imagine the robot in this study as a social robot with a humanoid upper-body structure. It has mechanical arms and hands shaped similarly to human arms and hands, is slightly shorter than an adult, and mainly initiates touch through its arm or hand.",
     introP2:"In this survey, touch means direct, brief, gentle, non-painful, and non-coercive physical contact initiated by the robot on a person's body. You will first judge whether a robot could express a social intent through this kind of touch, and later mark which body regions you find acceptable or unacceptable.",
+    introP3:"For each social intent you select, the survey will ask what level of relationship closeness it usually requires, which interaction contexts it may occur in, and how acceptable you find being touched on different body regions.",
     introContinue:"I understand, continue →",
     consentTitle:"Consent",
     consentDesc:"Please read the following information before starting the survey.",
-    consentP1:"This survey investigates how acceptable people find being touched on different body regions when a social robot with a humanoid upper-body structure uses its arm or hand to initiate direct, brief, and gentle physical contact to convey different social intents.",
     consentP2:"Your responses will be used for academic research only. The survey does not ask for your name or direct contact information. You may stop at any time before submitting your response.",
     consentP3:"The survey involves judgments about body regions and social touch. You may stop at any time if you feel uncomfortable.",
     consentP4:"Please confirm that you are at least 18 years old before continuing this survey.",
@@ -201,7 +201,7 @@ const I18N = {
     noIntentTitle:"None of these intents are suitable",
     noIntentDesc:"If you think none of these social intents are suitable for a robot to express through active touch, select this option and continue directly to review.",
     contextTitle:"Relationship Closeness and Interaction Context",
-    contextDesc:"For each selected intent, you will complete a relationship/context page followed by a body-map page. Please first answer the two questions below for the current intent. Relationship closeness refers to your familiarity, trust, and personalized interaction with the robot; interaction context refers to the broad setting where this touch intent would most likely occur.",
+    contextDesc:"Please answer the two questions below for the current intent. Relationship closeness refers to your familiarity, trust, and personalized interaction with the robot; interaction context refers to the broad setting where this touch intent would most likely occur.",
     relationshipQuestion:"If a robot were to express this intent to you through touch, what minimum level of relationship closeness would usually be needed?",
     contextQuestion:"In which interaction contexts might a robot express this intent through touch? (Select all that apply.)",
     contextError:"Please complete relationship closeness and select at least one interaction context for the current intent.",
@@ -723,7 +723,9 @@ function renderContextQuestion() {
       </div>
     </section>`;
   document.getElementById("contextCounter").textContent = `${contextIdx+1} / ${order.length}`;
-  document.getElementById("btnPrevContext").textContent = t("prevPage");
+  document.getElementById("btnPrevContext").textContent = contextIdx === 0
+    ? t("backToIntentSelection")
+    : t("prevPage");
   document.getElementById("btnPrevContext").disabled = false;
   document.getElementById("btnNextContext").textContent = t("nextPage");
   document.getElementById("btnNextContext").style.display = "";
@@ -946,6 +948,15 @@ function goContext() {
 function backToIntentSelectionFromContext() {
   showStep("s1");
   prog();
+}
+
+function backToIntentSelectionFromWorkflow() {
+  if (document.getElementById("s2")?.classList.contains("active")) {
+    saveCur();
+  }
+  showStep("s1");
+  prog();
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 function prevPageFromContext() {
