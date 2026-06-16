@@ -64,7 +64,7 @@ const I18N = {
     noIntentTitle:"以上意图均不适合",
     noIntentDesc:"如果你认为这些社交意图都不适合由机器人通过主动触碰表达，可以选择此项并直接进入检查页。",
     contextTitle:"关系亲近度与互动语境",
-    contextDesc:"请针对当前意图回答下面两道题。这里的“关系亲近度”指你与机器人之间的熟悉、信任和私人化互动程度；“互动语境”指这种触碰意图最可能出现的高层互动场景。",
+    contextDesc:"每个已选意图都会依次完成关系/语境判断和身体地图标注。请先针对当前意图回答下面两道题。这里的“关系亲近度”指你与机器人之间的熟悉、信任和私人化互动程度；“互动语境”指这种触碰意图最可能出现的高层互动场景。",
     relationshipQuestion:"如果机器人要通过触碰向你表达这一意图，你认为它通常至少需要与你达到怎样的关系亲近程度？",
     contextQuestion:"你认为机器人通过触碰表达这一意图，可能出现在以下哪些互动语境中？（可多选）",
     contextError:"请先完成当前意图的关系亲近度，并至少选择一种互动语境。",
@@ -107,6 +107,11 @@ const I18N = {
     backToContextPrefix:"返回",
     contextQuestionsNoun:"关系/场景",
     backToContextFull:"← 返回关系/场景",
+    prevPage:"← 上一页",
+    nextPage:"下一页 →",
+    intentProgressDone:"已完成",
+    intentProgressCurrent:"当前",
+    intentProgressPending:"待填写",
     prevContext:"← 上一个意图",
     nextContext:"下一个意图 →",
     contextToMaps:"进入身体地图 →",
@@ -196,7 +201,7 @@ const I18N = {
     noIntentTitle:"None of these intents are suitable",
     noIntentDesc:"If you think none of these social intents are suitable for a robot to express through active touch, select this option and continue directly to review.",
     contextTitle:"Relationship Closeness and Interaction Context",
-    contextDesc:"Please answer the two questions below for the current intent. Relationship closeness refers to your familiarity, trust, and personalized interaction with the robot; interaction context refers to the broad setting where this touch intent would most likely occur.",
+    contextDesc:"For each selected intent, you will complete a relationship/context page followed by a body-map page. Please first answer the two questions below for the current intent. Relationship closeness refers to your familiarity, trust, and personalized interaction with the robot; interaction context refers to the broad setting where this touch intent would most likely occur.",
     relationshipQuestion:"If a robot were to express this intent to you through touch, what minimum level of relationship closeness would usually be needed?",
     contextQuestion:"In which interaction contexts might a robot express this intent through touch? (Select all that apply.)",
     contextError:"Please complete relationship closeness and select at least one interaction context for the current intent.",
@@ -239,6 +244,11 @@ const I18N = {
     backToContextPrefix:"Back to",
     contextQuestionsNoun:"relationship/context",
     backToContextFull:"← Back to relationship/context",
+    prevPage:"← Previous page",
+    nextPage:"Next page →",
+    intentProgressDone:"Completed",
+    intentProgressCurrent:"Current",
+    intentProgressPending:"Pending",
     prevContext:"← Previous intent",
     nextContext:"Next intent →",
     contextToMaps:"Go to body map →",
@@ -413,7 +423,47 @@ const REGION_BY_ID = new Map(ALL_REGIONS.map(region => [region.id, region]));
 // UTIL
 // ============================================================
 function regionLabel(region) {
-  return `${region.zh} / ${region.en}`;
+  return lang === "zh" ? region.zh : region.en;
+}
+
+function intentDisplayName(id) {
+  const intent = INTENTS.find(i => i.id === id);
+  if (!intent) return id;
+  return lang === "zh" ? intent.zh : intent.en;
+}
+
+function isMapComplete(intentId) {
+  const onCurrentMap = document.getElementById("s2")?.classList.contains("active") && order[idx] === intentId;
+  const d = onCurrentMap ? cur : (data[intentId] || {});
+  const hasMarks = Object.values(d).some(value => value === 1 || value === -1);
+  return hasMarks || !!intentMeta[intentId]?.empty_map_confirmed;
+}
+
+function isIntentComplete(intentId) {
+  const meta = intentMeta[intentId] || {};
+  return !!(
+    meta.relationship_closeness &&
+    meta.interaction_contexts?.length &&
+    isMapComplete(intentId)
+  );
+}
+
+function renderIntentProgress(targetId, currentId) {
+  const target = document.getElementById(targetId);
+  if (!target) return;
+  target.innerHTML = order.map(id => {
+    const status = id === currentId
+      ? "current"
+      : (isIntentComplete(id) ? "done" : "pending");
+    const labelKey = status === "current"
+      ? "intentProgressCurrent"
+      : (status === "done" ? "intentProgressDone" : "intentProgressPending");
+    return `
+      <span class="intent-progress-chip ${status}">
+        <span>${intentDisplayName(id)}</span>
+        <span class="status">${t(labelKey)}</span>
+      </span>`;
+  }).join("");
 }
 
 // ============================================================
@@ -641,6 +691,7 @@ function renderContextQuestion() {
   const intentName = lang === "zh" ? it.zh : it.en;
   document.getElementById("contextIntentName").textContent = intentName;
   document.getElementById("contextIntentDesc").textContent = it.desc[lang];
+  renderIntentProgress("contextIntentProgress", id);
   const relationshipOptions = RELATIONSHIP_LEVELS.map(level => `
     <button type="button"
       class="scale-option ${meta.relationship_closeness === level.value ? "selected" : ""}"
@@ -672,11 +723,10 @@ function renderContextQuestion() {
       </div>
     </section>`;
   document.getElementById("contextCounter").textContent = `${contextIdx+1} / ${order.length}`;
-  document.getElementById("btnPrevContext").textContent = t("prevContext");
-  document.getElementById("btnPrevContext").disabled = contextIdx === 0;
-  document.getElementById("btnNextContext").textContent = t("contextToMaps");
+  document.getElementById("btnPrevContext").textContent = t("prevPage");
+  document.getElementById("btnPrevContext").disabled = false;
+  document.getElementById("btnNextContext").textContent = t("nextPage");
   document.getElementById("btnNextContext").style.display = "";
-  document.getElementById("btnContextDone").style.display = "none";
 }
 
 function setRelationship(intentId, value) {
@@ -766,6 +816,7 @@ async function ensureBodyMap3D() {
             }
             updCol();
             updateEmptyMapConfirmUI();
+            renderIntentProgress("mapIntentProgress", intentId);
             if (isTouchLikeInput(event)) showTT(regionLabel(REGION_BY_ID.get(regionId)), event, true);
           },
           onRegionHover: (regionId, event) => {
@@ -807,6 +858,7 @@ function setEmptyMapConfirmation(checked) {
   ensureMeta(id).empty_map_confirmed = checked;
   qualityLog.mapEmptyConfirmations[id] = checked;
   document.getElementById("mapError")?.classList.remove("show");
+  renderIntentProgress("mapIntentProgress", id);
 }
 
 function updateEmptyMapConfirmUI() {
@@ -896,6 +948,19 @@ function backToIntentSelectionFromContext() {
   prog();
 }
 
+function prevPageFromContext() {
+  if (contextIdx === 0) {
+    showStep("s1");
+    return;
+  }
+  idx = contextIdx - 1;
+  showStep("s2");
+  load();
+  ensureBodyMap3D()
+    .then(updCol)
+    .catch(() => {});
+}
+
 function nextContext() {
   if (!validateCurrentContextQuestion()) return;
   idx = contextIdx;
@@ -937,12 +1002,11 @@ function load() {
   cur = { ...(data[id] || {}) };
   updCol();
   updateEmptyMapConfirmUI();
-  document.getElementById("btnPrevMap").textContent = t("prevIntent");
-  document.getElementById("btnPrevMap").disabled = idx === 0;
-  document.getElementById("btnNext").textContent = idx < order.length-1 ? t("nextIntent") : t("reviewSubmit");
-  document.getElementById("btnDone").textContent = t("reviewSubmit");
+  renderIntentProgress("mapIntentProgress", id);
+  document.getElementById("btnPrevMap").textContent = t("prevPage");
+  document.getElementById("btnPrevMap").disabled = false;
+  document.getElementById("btnNext").textContent = idx < order.length-1 ? t("nextPage") : t("reviewSubmit");
   document.getElementById("btnNext").style.display = "";
-  document.getElementById("btnDone").style.display = "none";
   prog();
 }
 function save() {
@@ -963,6 +1027,13 @@ function next() {
   }
 }
 function prev() { save(); if (idx > 0) { idx--; load(); } }
+function prevPageFromMap() {
+  save();
+  contextIdx = idx;
+  showStep("sContext");
+  renderContextQuestion();
+  prog();
+}
 function backToIntentSelection() { save(); showStep("s1"); }
 function backToContextQuestions() {
   save();
@@ -981,6 +1052,7 @@ function resetCur() {
   cur = {};
   updCol();
   updateEmptyMapConfirmUI();
+  renderIntentProgress("mapIntentProgress", id);
 }
 function done() {
   if (!validateCurrentMap()) return;
@@ -1040,11 +1112,11 @@ function r3() {
     const emptyConfirmed = accept + reject === 0 && meta.empty_map_confirmed;
     return `<div class="rev-card">
       <div class="r-name">${lang === "zh" ? it.zh : it.en}</div>
-      <div class="r-stats">
-        ${t("acceptCount")}: ${accept} &nbsp;|&nbsp; ${t("rejectCount")}: ${reject} &nbsp;|&nbsp; ${t("neutralCount")}: ${neutral}
-      </div>
       <div class="r-meta">
         ${relationshipLabel(meta.relationship_closeness)} · ${contextLabels(meta.interaction_contexts).join(" / ")}
+      </div>
+      <div class="r-stats">
+        ${t("acceptCount")}: ${accept} &nbsp;|&nbsp; ${t("rejectCount")}: ${reject} &nbsp;|&nbsp; ${t("neutralCount")}: ${neutral}
       </div>
       ${emptyConfirmed ? `<div class="r-note">${t("emptyMapConfirmedBadge")}</div>` : ""}
     </div>`;

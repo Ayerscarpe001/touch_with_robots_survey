@@ -44,25 +44,45 @@
     display:block; width:100%; height:100%; min-height:clamp(320px, 44vw, 540px); border:0;
   }
   .intro-copy { display:flex; flex-direction:column; justify-content:center; }
-  .map-heading, .context-heading {
-    display:grid; grid-template-columns:auto 1fr; gap:18px; align-items:center;
-    margin-bottom:10px;
+  .intent-workflow-header {
+    display:grid; grid-template-columns:minmax(0, 1fr); gap:10px;
+    margin-bottom:18px;
   }
-  .map-heading .step-title, .context-heading .step-title { margin-bottom:0; white-space:nowrap; }
   .current-intent {
-    display:grid; grid-template-columns:auto auto 1fr; align-items:center; gap:10px;
+    display:grid; grid-template-columns:auto minmax(90px, auto) minmax(0, 1fr); align-items:center; gap:12px;
     background:#101010; border:1px solid var(--border); border-radius:8px;
-    padding:8px 11px; min-width:0;
+    padding:12px 14px; min-width:0;
   }
   .intent-label {
     color:var(--dim); font-size:0.68rem; font-weight:800;
     text-transform:uppercase; letter-spacing:0.05em;
   }
-  .map-heading .intent-name, .context-heading .intent-name {
-    display:inline; font-size:0.96rem; font-weight:780; margin-right:0;
+  .current-intent .intent-name {
+    display:inline; font-size:1.08rem; font-weight:800; margin-right:0;
   }
-  .map-heading .intent-desc, .context-heading .intent-desc {
-    display:inline; color:#aaa; font-size:0.8rem; line-height:1.38;
+  .current-intent .intent-desc {
+    display:inline; color:#aaa; font-size:0.84rem; line-height:1.42;
+  }
+  .intent-progress-list {
+    display:flex; flex-wrap:wrap; gap:7px;
+  }
+  .intent-progress-chip {
+    display:inline-flex; align-items:center; gap:6px;
+    min-height:28px; padding:5px 9px; border-radius:999px;
+    border:1px solid var(--border); background:#101010;
+    color:#aaa; font-size:0.7rem; line-height:1.2;
+  }
+  .intent-progress-chip.current {
+    border-color:var(--accent); background:#111b2a; color:#e8f1ff;
+  }
+  .intent-progress-chip.done {
+    border-color:rgba(34,197,94,0.55); color:#c8f3d7;
+  }
+  .intent-progress-chip.pending {
+    color:#777;
+  }
+  .intent-progress-chip .status {
+    color:var(--dim); font-size:0.66rem;
   }
 
   .progress-wrap { margin-bottom: 24px; }
@@ -311,8 +331,6 @@
     .step-title { font-size:1.18rem; }
     .step-desc { font-size:0.88rem; }
     .intro-layout { grid-template-columns:1fr; }
-    .map-heading, .context-heading { grid-template-columns:1fr; gap:6px; }
-    .map-heading .step-title, .context-heading .step-title { white-space:normal; }
     .current-intent { grid-template-columns:1fr; gap:4px; }
     .body-map-shell { height:clamp(520px, 68vh, 680px); }
     .color-legend { grid-template-columns:1fr; padding:8px 10px; max-width:520px; }
