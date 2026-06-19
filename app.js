@@ -19,7 +19,7 @@ const I18N = {
     introDesc:"在开始问卷前，请先观看下面的简短动画，并根据文字说明理解本研究中“机器人主动社交接触”的含义。",
     introP1:"请将本研究中的机器人想象为一个具有人形上半身结构的社交机器人：它具有类似人体结构的机械手臂和手部，整体身高略低于成年人，主要通过手臂或手部主动触碰人的身体。",
     introP2:"本问卷中的“触碰”指机器人对人身体发起的直接、短暂、柔和、非疼痛、非强制性的身体接触。请先判断机器人是否适合通过这种接触表达某种社交意图，再在后续页面标注你认为可接受或不可接受的身体区域。",
-    introP3:"对每个你选择的社交意图，问卷会依次询问它通常需要怎样的关系亲近度、可能出现在哪些互动语境中，以及你对不同身体部位被触碰的接受程度。",
+    introP3:"对每个你选择的社交意图，问卷会依次询问它通常需要怎样的关系亲近度、可能出现在哪些互动语境中、机器人应在多大程度上参考人际触碰方式，以及你对不同身体部位被触碰的接受程度。",
     introContinue:"我已理解，继续 →",
     consentTitle:"知情同意",
     consentDesc:"请在开始问卷前阅读以下说明。",
@@ -63,11 +63,23 @@ const I18N = {
     clearAll:"清空",
     noIntentTitle:"以上意图均不适合",
     noIntentDesc:"如果你认为这些社交意图都不适合由机器人通过主动触碰表达，可以选择此项并直接进入检查页。",
-    contextTitle:"关系亲近度与互动语境",
-    contextDesc:"请针对当前意图回答下面两道题。这里的“关系亲近度”指你与机器人之间的熟悉、信任和私人化互动程度；“互动语境”指这种触碰意图最可能出现的高层互动场景。",
-    relationshipQuestion:"如果机器人要通过触碰向你表达这一意图，你认为它通常至少需要与你达到怎样的关系亲近程度？",
-    contextQuestion:"你认为机器人通过触碰表达这一意图，可能出现在以下哪些互动语境中？（可多选）",
-    contextError:"请先完成当前意图的关系亲近度，并至少选择一种互动语境。",
+    contextTitle:"关系、语境与表达方式",
+    contextDesc:"请针对当前意图回答下面三道题。“关系亲近度”指你与机器人之间的熟悉、信任和私人化互动程度；“互动语境”指这种触碰意图可能出现的高层互动场景；第3题询问机器人应在多大程度上参考人际触碰方式。",
+    relationshipQuestion:"1、如果机器人要通过触碰向你表达这一意图，你认为它通常至少需要与你达到怎样的关系亲近程度？",
+    contextQuestion:"2、你认为机器人通过触碰表达这一意图，可能出现在以下哪些互动语境中？（可多选）",
+    conventionReferenceTitle:"人际表达参照",
+    conventionQuestion:"3、你认为机器人通过触碰表达这一意图时，应在多大程度上参考人与人之间通常采用的触碰方式？",
+    convention1:"完全不参考",
+    convention1Desc:"采用机器人特有方式",
+    convention2:"较少参考",
+    convention2Desc:"主要采用机器人方式",
+    convention3:"部分参考",
+    convention3Desc:"参考后适当调整",
+    convention4:"较多参考",
+    convention4Desc:"大体接近人际方式",
+    convention5:"高度参考",
+    convention5Desc:"尽量接近人际方式",
+    contextError:"请完成当前意图的三道题：选择关系亲近度、至少一种互动语境和人际表达参考程度。",
     closeness1:"完全陌生",
     closeness2:"初步接触",
     closeness3:"轻度熟悉",
@@ -89,7 +101,7 @@ const I18N = {
     ctxIntimateDesc:"高度私人化、浪漫、伴侣或明确亲密互动设定。",
     currentIntentLabel:"当前意图",
     mapTitle:"身体地图标注",
-    mapDesc:"请针对当前意图，在身体地图上标注：哪些身体区域你愿意被机器人触碰，哪些身体区域你不愿意被机器人触碰。未标注区域将视为无明确意向。",
+    mapDesc:"4、请针对当前意图，在身体地图上标注：哪些身体区域你愿意被机器人触碰，哪些身体区域你不愿意被机器人触碰。未标注区域将视为无明确意向。",
     emptyMapConfirm:"我已查看当前意图的身体地图，但没有任何明确愿意或不愿意标注的身体区域。",
     mapError:"当前身体地图尚未标注。如你确实没有明确意向，请先勾选上方确认项。",
     colorToolTitle:"颜色",
@@ -105,7 +117,7 @@ const I18N = {
     intentSelectionNoun:"意图选择",
     backToIntentSelection:"← 返回意图选择",
     backToContextPrefix:"返回",
-    contextQuestionsNoun:"关系/场景",
+    contextQuestionsNoun:"关系/场景/表达",
     backToContextFull:"← 返回关系/场景",
     prevPage:"← 上一页",
     nextPage:"下一页 →",
@@ -129,7 +141,7 @@ const I18N = {
     progressConsent:"知情同意",
     progressInfo:"基本信息",
     progressIntents:"选择社交意图",
-    progressContext:"关系亲近度与互动语境",
+    progressContext:"关系、语境与表达方式",
     progressMap:"身体地图",
     progressReview:"检查与提交",
     progressStatus:"提交状态",
@@ -137,6 +149,7 @@ const I18N = {
     rejectCount:"不愿意",
     neutralCount:"无意向",
     emptyMapConfirmedBadge:"已确认无明确标注",
+    conventionReferenceLabel:"人际表达参考",
     resultSubmitted:"已提交",
     resultError:"提交错误",
     submitLoading:"提交中...",
@@ -156,7 +169,7 @@ const I18N = {
     introDesc:"Before starting the survey, please watch the short animation below and read the description of what robot-initiated social touch means in this study.",
     introP1:"Please imagine the robot in this study as a social robot with a humanoid upper-body structure. It has mechanical arms and hands shaped similarly to human arms and hands, is slightly shorter than an adult, and mainly initiates touch through its arm or hand.",
     introP2:"In this survey, touch means direct, brief, gentle, non-painful, and non-coercive physical contact initiated by the robot on a person's body. You will first judge whether a robot could express a social intent through this kind of touch, and later mark which body regions you find acceptable or unacceptable.",
-    introP3:"For each social intent you select, the survey will ask what level of relationship closeness it usually requires, which interaction contexts it may occur in, and how acceptable you find being touched on different body regions.",
+    introP3:"For each social intent you select, the survey will ask what relationship closeness it usually requires, which interaction contexts it may occur in, how closely the robot should refer to interpersonal touch conventions, and how acceptable you find being touched on different body regions.",
     introContinue:"I understand, continue →",
     consentTitle:"Consent",
     consentDesc:"Please read the following information before starting the survey.",
@@ -200,11 +213,23 @@ const I18N = {
     clearAll:"Clear all",
     noIntentTitle:"None of these intents are suitable",
     noIntentDesc:"If you think none of these social intents are suitable for a robot to express through active touch, select this option and continue directly to review.",
-    contextTitle:"Relationship Closeness and Interaction Context",
-    contextDesc:"Please answer the two questions below for the current intent. Relationship closeness refers to your familiarity, trust, and personalized interaction with the robot; interaction context refers to the broad setting where this touch intent would most likely occur.",
-    relationshipQuestion:"If a robot were to express this intent to you through touch, what minimum level of relationship closeness would usually be needed?",
-    contextQuestion:"In which interaction contexts might a robot express this intent through touch? (Select all that apply.)",
-    contextError:"Please complete relationship closeness and select at least one interaction context for the current intent.",
+    contextTitle:"Relationship, Context, and Expression",
+    contextDesc:"Please answer the three questions below for the current intent. Relationship closeness concerns familiarity, trust, and personalized interaction; interaction context concerns the broad settings where the intent may occur; Question 3 asks how closely the robot should refer to interpersonal touch conventions.",
+    relationshipQuestion:"1. If a robot were to express this intent to you through touch, what minimum level of relationship closeness would usually be needed?",
+    contextQuestion:"2. In which interaction contexts might a robot express this intent through touch? (Select all that apply.)",
+    conventionReferenceTitle:"Interpersonal reference",
+    conventionQuestion:"3. To what extent should a robot refer to the touch expressions people commonly use with one another when expressing this intent?",
+    convention1:"Not at all",
+    convention1Desc:"Use a robot-specific expression",
+    convention2:"Slightly",
+    convention2Desc:"Mostly use a robot-specific expression",
+    convention3:"Partly",
+    convention3Desc:"Refer to it and adapt",
+    convention4:"Considerably",
+    convention4Desc:"Largely resemble interpersonal touch",
+    convention5:"Very closely",
+    convention5Desc:"Resemble interpersonal touch as closely as possible",
+    contextError:"Please answer all three questions for the current intent: relationship closeness, at least one interaction context, and interpersonal reference.",
     closeness1:"Complete stranger",
     closeness2:"Initial contact",
     closeness3:"Slightly familiar",
@@ -226,7 +251,7 @@ const I18N = {
     ctxIntimateDesc:"Highly private, romantic, partner-like, or explicitly intimate interaction settings.",
     currentIntentLabel:"Current intent",
     mapTitle:"Body Map",
-    mapDesc:"For the current intent, mark on the body map which body regions you would be willing to let the robot touch and which regions you would not be willing to let the robot touch. Unmarked regions will be treated as no clear preference.",
+    mapDesc:"4. For the current intent, mark on the body map which body regions you would be willing to let the robot touch and which regions you would not be willing to let the robot touch. Unmarked regions will be treated as no clear preference.",
     emptyMapConfirm:"I have reviewed the body map for the current intent, but I have no clear acceptable or unacceptable body regions to mark.",
     mapError:"No body region has been marked for the current intent. If you truly have no clear preference, please check the confirmation above first.",
     colorToolTitle:"Color",
@@ -242,7 +267,7 @@ const I18N = {
     intentSelectionNoun:"intent selection",
     backToIntentSelection:"← Back to intent selection",
     backToContextPrefix:"Back to",
-    contextQuestionsNoun:"relationship/context",
+    contextQuestionsNoun:"relationship/context/expression",
     backToContextFull:"← Back to relationship/context",
     prevPage:"← Previous page",
     nextPage:"Next page →",
@@ -266,7 +291,7 @@ const I18N = {
     progressConsent:"Consent",
     progressInfo:"Basic information",
     progressIntents:"Select social intents",
-    progressContext:"Relationship and context",
+    progressContext:"Relationship, context, and expression",
     progressMap:"Body map",
     progressReview:"Review & Submit",
     progressStatus:"Submission status",
@@ -274,6 +299,7 @@ const I18N = {
     rejectCount:"Reject",
     neutralCount:"Neutral",
     emptyMapConfirmedBadge:"Confirmed no clear markings",
+    conventionReferenceLabel:"Interpersonal reference",
     resultSubmitted:"Response submitted",
     resultError:"Submission error",
     submitLoading:"Submitting...",
@@ -367,6 +393,73 @@ const INTENTS = [
   { id:"sexual_intent", zh:"性意图", en:"Sexual Intent", desc:{ zh:"通过触碰表达浪漫吸引、性兴趣或性意图。", en:"Touch intended to express romantic attraction, sexual interest, or sexual intent." } },
 ];
 
+const TOUCH_REFERENCES = {
+  comfort: {
+    zh:"相关人际研究中，与安慰有关的触碰包括握住或扶住对方、轻拍肩背、缓慢抚摸或拥抱。",
+    en:"Interpersonal studies associate comfort with holding or supporting the other person, patting the shoulder or back, slow stroking, and hugging."
+  },
+  calming: {
+    zh:"相关人际研究中，帮助他人平复情绪的触碰包括稳定扶持、拥抱、缓慢抚摸或轻拍；这些动作与安慰存在较多重合。",
+    en:"Interpersonal studies associate calming with steady support, hugging, slow stroking, and gentle patting; these actions overlap substantially with comfort."
+  },
+  affection: {
+    zh:"相关人际研究中，亲近常通过牵手、挽臂、拥抱、抚摸手臂或触碰脸颊表达。",
+    en:"Interpersonal studies associate affection with holding hands, linking arms, hugging, stroking the arm, and touching the cheek."
+  },
+  salutation: {
+    zh:"相关人际研究中，问候或告别常通过握手、握掌、短暂拥抱或轻拍肩臂表达。",
+    en:"Interpersonal studies associate greetings and farewells with handshakes, handclasps, brief hugs, and light pats on the shoulder or arm."
+  },
+  appreciation: {
+    zh:"相关人际研究中，对他人表现或成果的赞赏可能通过握手、击掌、拍肩背或庆祝性拥抱表达。",
+    en:"Interpersonal studies associate appreciation of performance or achievement with handshakes, high-fives, pats on the shoulder or back, and celebratory hugs."
+  },
+  gratitude: {
+    zh:"相关人际研究中，感谢常通过握手、短暂握住对方的手或手臂，并配合轻拍肩背表达。",
+    en:"Interpersonal studies associate gratitude with handshakes, briefly holding the other person's hand or arm, and light pats on the shoulder or back."
+  },
+  encouragement: {
+    zh:"相关人际研究中，鼓励常通过拍肩或拍背、坚定握掌、节奏性轻拍手臂或轻推向前表达。",
+    en:"Interpersonal studies associate encouragement with pats on the shoulder or back, firm handclasps, rhythmic arm pats, and a light forward push."
+  },
+  inclusion: {
+    zh:"相关人际研究中，“我在这里”或共同存在感常通过牵手、挽臂、搭肩、侧抱或身体靠触表达。",
+    en:"Interpersonal studies associate shared presence or “I am here with you” with holding hands, linking arms, an arm around the shoulder, side hugs, and bodily leaning."
+  },
+  playful: {
+    zh:"相关人际研究中，嬉戏可能通过轻戳、捏、挠痒、轻推、抓握、拉脸颊或假装打闹表达。",
+    en:"Interpersonal studies associate playfulness with light pokes, pinches, tickling, gentle pushes, grabbing, cheek pulling, and mock rough-and-tumble actions."
+  },
+  attention_getting: {
+    zh:"相关人际研究中，引起注意常通过短暂点触或轻拍对方的肩、手臂或上背表达。",
+    en:"Interpersonal studies associate attention-getting with a brief touch or light pat on the shoulder, arm, or upper back."
+  },
+  guidance: {
+    zh:"相关人际研究中，引导可能通过扶住肩部或手臂、牵引手部、轻推背部或调整身体方向实现。",
+    en:"Interpersonal studies associate guidance with holding the shoulder or arm, leading by the hand, lightly pushing the back, or adjusting bodily direction."
+  },
+  request: {
+    zh:"相关人际研究中，人们有时会在提出询问、请示或求助时，短暂触碰、轻拍或握住对方的手、手臂或肩部；具体请求通常仍由语言说明。",
+    en:"Interpersonal studies show that people sometimes briefly touch, pat, or hold another person's hand, arm, or shoulder while asking a question, seeking permission, or requesting help; language usually specifies the request."
+  },
+  apology: {
+    zh:"人际研究中，道歉或和解有时伴随握持、轻拍、抚背或拥抱，但尚未发现能够独立、稳定表达致歉的统一触碰动作。",
+    en:"Interpersonal studies show that apologies or reconciliation may be accompanied by holding, patting, back stroking, or hugging, but no single touch action has been shown to convey apology independently and consistently."
+  },
+  refusal: {
+    zh:"人际互动中，拒绝身体接近常表现为推开、移开对方肢体或解除正在发生的接触；这些行为更多是边界反应，而非统一的触碰表达方式。",
+    en:"In interpersonal interaction, refusal of physical approach often involves pushing away, moving the other person's limb, or ending ongoing contact; these are more often boundary responses than a single conventional touch expression."
+  },
+  dominance: {
+    zh:"相关人际研究中，支配或控制常与坚定抓握、推、按压或较有力的拍触相联系，通常作用于手臂、肩部或躯干。",
+    en:"Interpersonal studies associate dominance or control with firm gripping, pushing, pressing, and forceful pats, often directed at the arm, shoulder, or torso."
+  },
+  sexual_intent: {
+    zh:"相关人际研究中，性意图常与持续握持、爱抚或涉及亲密身体区域的接触相联系，并受到关系和情境的强烈限制。",
+    en:"Interpersonal studies associate sexual intent with sustained holding, caressing, or contact involving intimate body regions, under strong relational and contextual constraints."
+  }
+};
+
 const RELATIONSHIP_LEVELS = [
   { value: 1, labelKey: "closeness1" },
   { value: 2, labelKey: "closeness2" },
@@ -375,6 +468,14 @@ const RELATIONSHIP_LEVELS = [
   { value: 5, labelKey: "closeness5" },
   { value: 6, labelKey: "closeness6" },
   { value: 7, labelKey: "closeness7" },
+];
+
+const CONVENTION_LEVELS = [
+  { value: 1, labelKey: "convention1", descKey: "convention1Desc" },
+  { value: 2, labelKey: "convention2", descKey: "convention2Desc" },
+  { value: 3, labelKey: "convention3", descKey: "convention3Desc" },
+  { value: 4, labelKey: "convention4", descKey: "convention4Desc" },
+  { value: 5, labelKey: "convention5", descKey: "convention5Desc" },
 ];
 
 const INTERACTION_CONTEXTS = [
@@ -444,6 +545,7 @@ function isIntentComplete(intentId) {
   return !!(
     meta.relationship_closeness &&
     meta.interaction_contexts?.length &&
+    meta.interpersonal_reference &&
     isMapComplete(intentId)
   );
 }
@@ -511,6 +613,7 @@ function ensureMeta(intentId) {
     intentMeta[intentId] = {
       relationship_closeness: null,
       interaction_contexts: [],
+      interpersonal_reference: null,
       empty_map_confirmed: false,
     };
   }
@@ -648,6 +751,9 @@ function initIntentMeta() {
         ? [intentMeta[id].interaction_context]
         : [];
     }
+    if (!Number.isInteger(meta.interpersonal_reference)) {
+      meta.interpersonal_reference = null;
+    }
     if (typeof meta.empty_map_confirmed !== "boolean") {
       meta.empty_map_confirmed = false;
     }
@@ -668,6 +774,11 @@ function contextLabels(contextIds) {
   return (Array.isArray(contextIds) ? contextIds : [])
     .map(contextLabel)
     .filter(Boolean);
+}
+
+function conventionLabel(value) {
+  const level = CONVENTION_LEVELS.find(item => item.value === Number(value));
+  return level ? `${t(level.labelKey)}（${t(level.descKey)}）` : "";
 }
 
 function iosDiagram(level) {
@@ -707,6 +818,15 @@ function renderContextQuestion() {
       <span class="context-name">${t(context.labelKey)}</span>
       <span class="context-desc">${t(context.descKey)}</span>
     </button>`).join("");
+  const conventionOptions = CONVENTION_LEVELS.map(level => `
+    <button type="button"
+      class="convention-option ${meta.interpersonal_reference === level.value ? "selected" : ""}"
+      onclick="setInterpersonalReference('${id}', ${level.value})">
+      <span class="convention-number">${level.value}</span>
+      <span class="convention-label">${t(level.labelKey)}</span>
+      <span class="convention-desc">${t(level.descKey)}</span>
+    </button>`).join("");
+  const touchReference = TOUCH_REFERENCES[id]?.[lang] || "";
   list.innerHTML = `
     <section class="context-card" id="context-card-${id}">
       <div class="context-block">
@@ -719,6 +839,16 @@ function renderContextQuestion() {
         <div class="context-question">${t("contextQuestion")}</div>
         <div class="context-options" role="group" aria-label="${t("contextQuestion")}">
           ${contextOptions}
+        </div>
+      </div>
+      <div class="context-block convention-block">
+        <div class="touch-reference">
+          <span class="touch-reference-title">${t("conventionReferenceTitle")}</span>
+          <span class="touch-reference-text">${touchReference}</span>
+        </div>
+        <div class="context-question">${t("conventionQuestion")}</div>
+        <div class="convention-scale" role="radiogroup" aria-label="${t("conventionQuestion")}">
+          ${conventionOptions}
         </div>
       </div>
     </section>`;
@@ -752,11 +882,18 @@ function setInteractionContext(intentId, contextId) {
   renderContextQuestion();
 }
 
+function setInterpersonalReference(intentId, value) {
+  ensureMeta(intentId).interpersonal_reference = value;
+  document.getElementById("contextError").classList.remove("show");
+  renderContextQuestion();
+}
+
 function currentContextAnswered() {
   const id = order[contextIdx];
   return !!(
     intentMeta[id]?.relationship_closeness &&
-    intentMeta[id]?.interaction_contexts?.length
+    intentMeta[id]?.interaction_contexts?.length &&
+    intentMeta[id]?.interpersonal_reference
   );
 }
 
@@ -769,7 +906,8 @@ function validateCurrentContextQuestion() {
 function validateContextQuestions() {
   const ok = order.every(id =>
     intentMeta[id]?.relationship_closeness &&
-    intentMeta[id]?.interaction_contexts?.length
+    intentMeta[id]?.interaction_contexts?.length &&
+    intentMeta[id]?.interpersonal_reference
   );
   document.getElementById("contextError").classList.toggle("show", !ok);
   return ok;
@@ -1126,6 +1264,9 @@ function r3() {
       <div class="r-meta">
         ${relationshipLabel(meta.relationship_closeness)} · ${contextLabels(meta.interaction_contexts).join(" / ")}
       </div>
+      <div class="r-reference">
+        ${t("conventionReferenceLabel")}：${conventionLabel(meta.interpersonal_reference)}
+      </div>
       <div class="r-stats">
         ${t("acceptCount")}: ${accept} &nbsp;|&nbsp; ${t("rejectCount")}: ${reject} &nbsp;|&nbsp; ${t("neutralCount")}: ${neutral}
       </div>
@@ -1179,6 +1320,10 @@ function selectedIntentPayload() {
       interaction_context_labels: contextLabels(meta.interaction_contexts),
       interaction_context: Array.isArray(meta.interaction_contexts) ? meta.interaction_contexts.join(",") : null,
       interaction_context_label: contextLabels(meta.interaction_contexts).join(" / "),
+      interpersonal_reference: meta.interpersonal_reference ?? null,
+      interpersonal_reference_label: conventionLabel(meta.interpersonal_reference),
+      interpersonal_touch_reference_zh: TOUCH_REFERENCES[id]?.zh || null,
+      interpersonal_touch_reference_en: TOUCH_REFERENCES[id]?.en || null,
       empty_map_confirmed: !!meta.empty_map_confirmed
     };
   });
@@ -1195,6 +1340,10 @@ function intentMetaPayload() {
       interaction_context_labels: contextLabels(meta.interaction_contexts),
       interaction_context: Array.isArray(meta.interaction_contexts) ? meta.interaction_contexts.join(",") : null,
       interaction_context_label: contextLabels(meta.interaction_contexts).join(" / "),
+      interpersonal_reference: meta.interpersonal_reference ?? null,
+      interpersonal_reference_label: conventionLabel(meta.interpersonal_reference),
+      interpersonal_touch_reference_zh: TOUCH_REFERENCES[id]?.zh || null,
+      interpersonal_touch_reference_en: TOUCH_REFERENCES[id]?.en || null,
       empty_map_confirmed: !!meta.empty_map_confirmed,
       map_interactions: qualityLog.mapInteractions[id] || 0,
       map_resets: qualityLog.mapResets[id] || 0
@@ -1281,7 +1430,7 @@ function buildSurveyPayload() {
   return {
     participant_id: getParticipantId(),
     timestamp: new Date().toISOString(),
-    study_version: "3.0",
+    study_version: "3.1",
     consent_version: "2026-06-01",
     consent_given: document.getElementById("consentBox")?.checked || false,
     language: lang,

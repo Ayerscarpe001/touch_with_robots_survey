@@ -218,6 +218,41 @@
   .context-option {
     min-height:92px; padding:10px; text-align:left; display:flex; flex-direction:column; gap:5px;
   }
+  .convention-block {
+    border-top:1px solid var(--border); padding-top:16px; margin-top:2px;
+  }
+  .touch-reference {
+    display:grid; grid-template-columns:auto minmax(0, 1fr); align-items:start; gap:10px;
+    padding:11px 12px; border-left:3px solid rgba(91,155,255,0.72);
+    background:rgba(91,155,255,0.07); border-radius:0 7px 7px 0;
+  }
+  .touch-reference-title {
+    color:#bfdbfe; font-size:0.7rem; font-weight:800; white-space:nowrap;
+  }
+  .touch-reference-text {
+    color:#b8c3d4; font-size:0.75rem; line-height:1.5;
+  }
+  .convention-scale {
+    display:grid; grid-template-columns:repeat(5, minmax(0, 1fr)); gap:8px;
+  }
+  .convention-option {
+    min-height:116px; padding:11px 8px;
+    display:grid; grid-template-rows:auto auto 1fr; justify-items:center; align-content:start; gap:7px;
+    background:#101010; border:1px solid var(--border); border-radius:8px;
+    color:var(--text); cursor:pointer; text-align:center; transition:all 0.16s ease;
+  }
+  .convention-option:hover { border-color:#555; }
+  .convention-option.selected {
+    border-color:var(--accent); background:#111b2a; box-shadow:0 0 0 1px rgba(91,155,255,0.22);
+  }
+  .convention-number {
+    width:25px; height:25px; display:grid; place-items:center;
+    border-radius:50%; background:#181818; color:#bbb; font-size:0.76rem; font-weight:800;
+  }
+  .convention-option.selected .convention-number { background:var(--accent); color:var(--bg); }
+  .convention-label { color:#eee; font-size:0.76rem; font-weight:760; line-height:1.25; }
+  .convention-desc { color:#888; font-size:0.66rem; line-height:1.35; }
+  .convention-option.selected .convention-desc { color:#b8cae7; }
   .context-name { font-size:0.78rem; font-weight:750; color:#eee; }
   .context-desc { font-size:0.68rem; color:#999; line-height:1.32; }
   .context-option.selected .context-name { color:#fff; }
@@ -329,6 +364,7 @@
   .rev-card .r-name { font-weight:600; font-size:0.86rem; }
   .rev-card .r-stats { font-size:0.72rem; color:var(--dim); margin-top:4px; }
   .rev-card .r-meta { font-size:0.72rem; color:#a7c3ff; margin-top:5px; }
+  .rev-card .r-reference { font-size:0.7rem; color:#c4b5fd; margin-top:5px; line-height:1.35; }
   .rev-card .r-note { font-size:0.7rem; color:#fbbf24; margin-top:5px; }
   .result-panel {
     max-width:720px; margin:0 auto; background:var(--card); border:1px solid var(--border);
@@ -347,6 +383,12 @@
     .current-intent { grid-template-columns:1fr; gap:4px; }
     .body-map-shell { height:clamp(540px, 70vh, 700px); }
     .color-legend { grid-template-columns:1fr; padding:8px 10px; max-width:520px; }
+    .convention-scale { grid-template-columns:1fr; }
+    .convention-option {
+      min-height:0; grid-template-columns:auto minmax(92px, auto) minmax(0, 1fr);
+      grid-template-rows:1fr; justify-items:start; align-items:center; text-align:left;
+    }
+    .touch-reference { grid-template-columns:1fr; gap:4px; }
     .toolbar-action { align-self:auto; }
     .intent-grid { grid-template-columns:1fr; }
     .scale-row { grid-template-columns:repeat(2, minmax(0, 1fr)); }

@@ -24,13 +24,23 @@ The public publishable key is embedded in `index.html`. This is expected for a b
 
 Each submitted row contains:
 
-- `selected_intents`: selected social intent objects.
+- `selected_intents`: selected social intent objects, including relationship closeness, interaction contexts, and the 1–5 interpersonal-reference rating.
 - `body_data`: nested JSON object keyed by intent id and body-region id.
 - `regions`: body-region metadata.
 - `age_group`: participant age input.
 - `country`: cultural background input.
 - `gender`: gender input.
 - `metadata`: viewport, timezone, and duplicated demographics.
+
+The interpersonal-reference item records how closely participants think robot touch should refer to the touch expressions people commonly use with one another:
+
+```text
+1 = not at all; use a robot-specific expression
+2 = slightly
+3 = partly; refer to interpersonal touch and adapt it
+4 = considerably
+5 = very closely; resemble interpersonal touch as closely as possible
+```
 
 Body-map ratings use a three-value scale:
 
