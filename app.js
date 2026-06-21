@@ -16,9 +16,9 @@ const I18N = {
     appTitle:"机器人社交接触可接受性问卷",
     appSub:"机器人主动身体接触中的身体区域可接受性标注",
     introTitle:"研究场景介绍",
-    introDesc:"请依次阅读下面三页简短说明，了解本研究中的机器人、社交触摸及答题流程。",
+    introDesc:"请依次阅读下面三页简短说明，了解本研究中的社交机器人、社交触摸及答题流程。",
     introSlide1Kicker:"01 · 机器人形态",
-    introSlide1Title:"一个抽象的实体社交机器人",
+    introSlide1Title:"一个具有胳膊与手的实体机器人",
     introSlide2Kicker:"02 · 社交触摸",
     introSlide2Title:"机器人主动发起的身体接触",
     introSlide3Kicker:"03 · 答题流程",
@@ -67,7 +67,7 @@ const I18N = {
     countryPortugal:"葡萄牙",
     countryGreece:"希腊",
     countryOther:"其他",
-    infoError:"请完整填写有效年龄、性别和国籍后继续。",
+    infoError:"请完整填写有效年龄、性别和所属国家或地区后继续。",
     intentTitle:"社交意图选择",
     intentDesc:"以下列出 14 类可能通过触碰表达的社交意图。请根据你的直觉，选择你认为“社交机器人可以通过主动触碰人的身体来表达”的意图；如果你认为均不适合，也可以选择下方的单独选项。",
     selectAll:"全选",
@@ -81,13 +81,13 @@ const I18N = {
     conventionReferenceTitle:"人际表达参照",
     conventionQuestion:"3、你认为机器人通过触碰表达这一意图时，应在多大程度上参照人与人之间通常采用的触碰方式？",
     convention1:"完全不参照",
-    convention1Desc:"采用机器人特有方式",
+    convention1Desc:"完全采用机器人特有方式",
     convention2:"较少参照",
-    convention2Desc:"主要采用机器人方式",
+    convention2Desc:"主要采用机器人特有方式",
     convention3:"部分参照",
-    convention3Desc:"参照后适当调整",
+    convention3Desc:"结合人际方式与机器人特有方式",
     convention4:"较多参照",
-    convention4Desc:"大体接近人际方式",
+    convention4Desc:"主要采用人际方式",
     convention5:"完全参照",
     convention5Desc:"尽量与人际方式相同",
     contextError:"请完成当前意图的三道题：选择关系亲近度、至少一种互动语境和人际表达参照程度；如选择“其他”，请填写具体语境。",
@@ -178,9 +178,9 @@ const I18N = {
     appTitle:"Robot Social Touch Acceptability Survey",
     appSub:"Body-region acceptability mapping for robot-initiated physical contact",
     introTitle:"Study Scenario",
-    introDesc:"Please read the following three short pages about the robot, social touch, and the survey process.",
+    introDesc:"Please read the following three short pages about the social robot, social touch, and the survey process.",
     introSlide1Kicker:"01 · Robot form",
-    introSlide1Title:"An abstract embodied social robot",
+    introSlide1Title:"An embodied robot with arms and hands",
     introSlide2Kicker:"02 · Social touch",
     introSlide2Title:"Physical contact initiated by the robot",
     introSlide3Kicker:"03 · Survey process",
@@ -229,7 +229,7 @@ const I18N = {
     countryPortugal:"Portugal",
     countryGreece:"Greece",
     countryOther:"Other",
-    infoError:"Please complete a valid age, gender, and nationality before continuing.",
+    infoError:"Please complete a valid age, gender, and country or region before continuing.",
     intentTitle:"Social Intents",
     intentDesc:"The following list contains 14 social intents that may be expressed through touch. Based on your intuition, select the intents that you think a social robot could express by actively touching a person's body. If none apply, you may select the separate option below.",
     selectAll:"Select all",
@@ -243,13 +243,13 @@ const I18N = {
     conventionReferenceTitle:"Interpersonal reference",
     conventionQuestion:"3. To what extent should a robot follow the touch expressions people commonly use with one another when expressing this intent?",
     convention1:"Not at all",
-    convention1Desc:"Use a robot-specific expression",
+    convention1Desc:"Use an entirely robot-specific expression",
     convention2:"Slightly",
     convention2Desc:"Mostly use a robot-specific expression",
     convention3:"Partly",
-    convention3Desc:"Refer to it and adapt",
+    convention3Desc:"Combine interpersonal and robot-specific expressions",
     convention4:"Considerably",
-    convention4Desc:"Largely resemble interpersonal touch",
+    convention4Desc:"Mostly use an interpersonal expression",
     convention5:"Fully",
     convention5Desc:"Match interpersonal touch as closely as possible",
     contextError:"Please answer all three questions for the current intent. If you select “Other,” describe the interaction context.",
@@ -264,13 +264,13 @@ const I18N = {
     ctxPublicServiceDesc:"Reception, information, guidance, or general services for unspecified users or people in brief contact in public or semi-public settings.",
     ctxCompanionship:"Everyday companionship",
     ctxCompanionshipDesc:"Ongoing co-presence in home or everyday life, including social companionship, leisure interaction, or everyday emotional support.",
-    ctxCare:"Care / health support",
+    ctxCare:"Care / Health support",
     ctxCareDesc:"Medical care, nursing, rehabilitation, psychological support, or eldercare primarily aimed at health, care, or recovery.",
-    ctxLearning:"Learning / training",
+    ctxLearning:"Learning / Training",
     ctxLearningDesc:"Interaction primarily aimed at learning, tutoring, skill practice, behavioral training, or performance feedback.",
     ctxTask:"Task collaboration",
     ctxTaskDesc:"Joint work, navigation, operation, household activity, or another task with a clear external goal.",
-    ctxOther:"Other (please specify)",
+    ctxOther:"Other (Please specify)",
     ctxOtherDesc:"Another interaction context not covered by the options above.",
     ctxOtherPlaceholder:"Briefly describe the interaction context",
     currentIntentLabel:"Current intent",
@@ -1039,10 +1039,8 @@ function renderContextQuestion() {
       </div>
     </section>`;
   document.getElementById("contextCounter").textContent = `${contextIdx+1} / ${order.length}`;
-  document.getElementById("btnPrevContext").textContent = contextIdx === 0
-    ? t("backToIntentSelection")
-    : t("prevPage");
-  document.getElementById("btnPrevContext").disabled = false;
+  document.getElementById("btnPrevContext").textContent = t("prevPage");
+  document.getElementById("btnPrevContext").disabled = contextIdx === 0;
   document.getElementById("btnNextContext").textContent = t("nextPage");
   document.getElementById("btnNextContext").style.display = "";
 }
@@ -1311,10 +1309,7 @@ function backToIntentSelectionFromWorkflow() {
 }
 
 function prevPageFromContext() {
-  if (contextIdx === 0) {
-    showStep("s1");
-    return;
-  }
+  if (contextIdx === 0) return;
   idx = contextIdx - 1;
   showStep("s2");
   load();
@@ -1645,7 +1640,7 @@ function buildSurveyPayload() {
   return {
     participant_id: getParticipantId(),
     timestamp: new Date().toISOString(),
-    study_version: "3.7",
+    study_version: "3.8",
     consent_version: "2026-06-01",
     consent_given: document.getElementById("consentBox")?.checked || false,
     language: lang,
@@ -1675,7 +1670,7 @@ function buildSurveyPayload() {
       timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || null,
       viewport: { width: window.innerWidth, height: window.innerHeight },
       quality: qualityMetadata,
-      source: "bodymap_questionnaire_v14_explicit_robot_people_definitions"
+      source: "bodymap_questionnaire_v15_scale_and_copy_refinement"
     }
   };
 }

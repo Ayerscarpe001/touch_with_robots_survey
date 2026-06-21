@@ -464,7 +464,7 @@
   .btn-p:disabled { background:#333; color:#666; cursor:not-allowed; }
   .btn-s { background:transparent; border:1px solid var(--border); color:var(--text); }
   .btn-s:hover { border-color:#555; }
-  .btn-s:disabled { color:#555; border-color:#222; cursor:not-allowed; }
+  .btn-s:disabled { color:#777; border-color:#2a2a2a; cursor:not-allowed; opacity:0.55; }
   .btn-e { background:#22c55e; color:var(--bg); }
   .btn-e:hover { filter:brightness(1.15); }
   .btn-warn { background:transparent; border:1px solid #ef4444; color:#ef4444; font-size:0.78rem; }
