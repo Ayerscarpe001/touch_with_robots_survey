@@ -477,20 +477,20 @@ function setLang(nextLang) {
 // INTENTS
 // ============================================================
 const INTENTS = [
-  { id:"comfort", zh:"安慰", en:"Comfort", desc:{ zh:"在接收者悲伤、压力、焦虑或脆弱时，通过触碰传达关心、安抚和情感支持，使其感到被理解和被支持。", en:"Touch intended to convey care, soothing, and emotional support when the recipient is sad, stressed, anxious, or vulnerable, helping them feel understood and supported." } },
-  { id:"calming", zh:"冷静", en:"Calming", desc:{ zh:"在接收者紧张、激动、害怕或高唤醒时，通过触碰帮助其平复情绪、降低紧张并恢复稳定。", en:"Touch intended to help the recipient settle down, reduce tension, and regain emotional stability when they are tense, agitated, afraid, or highly aroused." } },
-  { id:"affection", zh:"亲近", en:"Affection", desc:{ zh:"通过触碰表达喜爱、亲近、温柔、依赖、信任或情感上的亲密感。", en:"Touch intended to express fondness, closeness, tenderness, attachment, trust, or emotional affection." } },
-  { id:"salutation", zh:"问候", en:"Salutation", desc:{ zh:"在互动开始或结束时，通过触碰表达欢迎、问候、告别或礼貌性确认。", en:"Touch intended to mark the beginning or ending of an interaction by conveying greeting, farewell, welcome, or polite acknowledgment." } },
-  { id:"appreciation", zh:"赞赏", en:"Appreciation", desc:{ zh:"在接收者表现出值得肯定的行为、能力或成果后，通过触碰表达认可、肯定和赞许。", en:"Touch intended to express recognition, approval, or praise after the recipient has shown a valued action, ability, or achievement." } },
-  { id:"gratitude", zh:"感谢", en:"Gratitude", desc:{ zh:"在接收者帮助了发起者或做出有益行为后，通过触碰表达谢意。", en:"Touch intended to express thanks after the recipient has helped the initiator or done something beneficial." } },
-  { id:"encouragement", zh:"鼓励", en:"Encouragement", desc:{ zh:"在接收者面临压力、挑战、不确定或缺乏信心时，通过触碰传达支持和信心，鼓励其继续行动。", en:"Touch intended to convey support and confidence when the recipient faces pressure, challenge, uncertainty, or self-doubt, encouraging them to continue." } },
+  { id:"comfort", zh:"安慰", en:"Comfort", desc:{ zh:"在人悲伤、压力、焦虑或脆弱时，通过触碰传达关心、抚慰和情感支持，使其感到被理解和支持。", en:"Touch intended to convey care, soothing, and emotional support when the person is sad, stressed, anxious, or vulnerable, helping them feel understood and supported." } },
+  { id:"calming", zh:"冷静", en:"Calming", desc:{ zh:"在人紧张、激动、害怕或高唤醒时，通过触碰帮助其平复情绪、降低紧张并恢复稳定。", en:"Touch intended to help the person settle down, reduce tension, and regain emotional stability when they are tense, agitated, afraid, or highly aroused." } },
+  { id:"affection", zh:"亲近", en:"Affection", desc:{ zh:"通过触碰表达喜爱、亲近、温柔、依恋、信任或情感上的亲密感。", en:"Touch intended to express fondness, closeness, tenderness, attachment, trust, or emotional affection." } },
+  { id:"salutation", zh:"问候", en:"Salutation", desc:{ zh:"在互动开始或结束时，通过触碰表达欢迎、问候、告别或礼貌性确认。", en:"Touch intended to mark the beginning or end of an interaction by conveying greeting, farewell, welcome, or polite acknowledgment." } },
+  { id:"appreciation", zh:"赞赏", en:"Appreciation", desc:{ zh:"在人表现出值得肯定的行为、能力或成果后，通过触碰表达认可、肯定或赞许。", en:"Touch intended to express recognition, approval, or praise after the person has shown a valued action, ability, or achievement." } },
+  { id:"gratitude", zh:"感谢", en:"Gratitude", desc:{ zh:"在人帮助了机器人或做出有益行为后，通过触碰表达谢意。", en:"Touch intended to express thanks after the person has helped the robot or done something beneficial." } },
+  { id:"encouragement", zh:"鼓励", en:"Encouragement", desc:{ zh:"在人面临压力、挑战、不确定或缺乏信心时，通过触碰传达支持和信心，鼓励其继续行动。", en:"Touch intended to convey support and confidence when the person faces pressure, challenge, uncertainty, or self-doubt, encouraging them to continue." } },
   { id:"presence", zh:"同在", en:"Presence", desc:{ zh:"在人感到孤单、疏离或需要陪伴时，通过触碰表达“我在这里”，传达共同存在或陪伴感。", en:"Touch intended to convey “I am here with you,” shared presence, or companionship, especially when the person feels alone, distant, or in need of company." } },
-  { id:"playful", zh:"嬉戏", en:"Playful", desc:{ zh:"在接收者处于轻松或可玩笑的状态时，通过触碰表达玩笑、调皮、逗趣或轻松互动。", en:"Touch intended to express joking, teasing, playfulness, or lighthearted interaction when the recipient is in a relaxed or playful state." } },
-  { id:"attention_getting", zh:"引起注意", en:"Attention-getting", desc:{ zh:"在接收者分心、忽略、忙于他事而未注意，或需要更加关注某事时，通过触碰改变其注意焦点或强调信息的重要性。", en:"Touch intended to redirect or heighten the recipient’s attention when they are distracted, have overlooked something, are occupied with something else, or need to pay closer attention." } },
-  { id:"guidance", zh:"引导", en:"Guidance", desc:{ zh:"在接收者需要协助或调整动作、方向和行为时，通过触碰提供帮助与指引。", en:"Touch intended to guide the recipient’s action, direction, or movement when help or adjustment is needed." } },
-  { id:"request", zh:"请求", en:"Request", desc:{ zh:"在发起者需要接收者回应、确认、允许、帮助或采取某种行动时，通过触碰表达询问、请示或祈求。", en:"Touch intended to express inquiry, ask for permission, seek help, or request the recipient’s response, confirmation, or action when the initiator needs it." } },
-  { id:"apology", zh:"致歉", en:"Apology", desc:{ zh:"在发起者造成误解、冒犯、失误或让接收者不适后，通过触碰表达歉意、修复关系并请求谅解。", en:"Touch intended to express apology, repair the interaction, and seek forgiveness after the initiator has caused misunderstanding, offense, error, or discomfort." } },
-  { id:"refusal", zh:"拒绝", en:"Refusal", desc:{ zh:"在接收者靠近、请求或试图继续互动时，通过触碰表达不同意、保持距离或不愿继续当前互动。", en:"Touch intended to express disagreement, distance, or unwillingness to continue the current interaction when the recipient approaches, requests, or attempts to continue." } },
+  { id:"playful", zh:"嬉戏", en:"Playfulness", desc:{ zh:"在人处于轻松或可玩笑的状态时，通过触碰表达玩笑、调皮、逗趣或轻松互动。", en:"Touch intended to express joking, teasing, playfulness, or lighthearted interaction when the person is in a relaxed or playful state." } },
+  { id:"attention_getting", zh:"引起注意", en:"Attention-getting", desc:{ zh:"在人分心、忽略、忙于他事而未注意，或需要更加关注某事时，通过触碰改变其注意焦点或强调信息的重要性。", en:"Touch intended to redirect or heighten the person’s attention when they are distracted, have overlooked something, are occupied with something else, or need to pay closer attention." } },
+  { id:"guidance", zh:"引导", en:"Guidance", desc:{ zh:"在人需要协助或调整动作、方向或行为时，通过触碰提供帮助与指引。", en:"Touch intended to guide the person’s action, direction, or movement when help or adjustment is needed." } },
+  { id:"request", zh:"请求", en:"Request", desc:{ zh:"在机器人需要人的回应、确认、允许、帮助或某种行动时，通过触碰表达询问、请示或请求。", en:"Touch intended to express inquiry, ask for permission, seek help, or request the person’s response, confirmation, or action." } },
+  { id:"apology", zh:"致歉", en:"Apology", desc:{ zh:"在机器人造成误解、冒犯、失误或让人不适后，通过触碰表达歉意、尝试修复互动并请求谅解。", en:"Touch intended to express apology, repair the interaction, and seek forgiveness after the robot has caused misunderstanding, offense, error, or discomfort." } },
+  { id:"refusal", zh:"拒绝", en:"Refusal", desc:{ zh:"在人靠近、提出请求或试图继续互动时，通过触碰表达不同意、保持边界或不愿继续当前互动。", en:"Touch intended to express disagreement, maintain a boundary, or signal unwillingness to continue the current interaction when the person approaches, makes a request, or attempts to continue." } },
 ];
 
 const TOUCH_REFERENCES = {
@@ -1645,7 +1645,7 @@ function buildSurveyPayload() {
   return {
     participant_id: getParticipantId(),
     timestamp: new Date().toISOString(),
-    study_version: "3.5",
+    study_version: "3.6",
     consent_version: "2026-06-01",
     consent_given: document.getElementById("consentBox")?.checked || false,
     language: lang,
@@ -1661,7 +1661,7 @@ function buildSurveyPayload() {
       ageLabel: fieldVal("age") === "100_plus" ? t("age100Plus") : fieldVal("age"),
       noIntentSelected,
       ageRequirement: "Participants are instructed to continue only if they are at least 18 years old.",
-      intentPoolVersion: "意图池.xlsx / 2026-06-20 / 14 intents",
+      intentPoolVersion: "意图池.xlsx / 2026-06-22 / 14 intents",
       intentIdVersion: "presence replaces legacy inclusion id",
       intentCount: INTENTS.length,
       selectedIntentCount: order.length,
@@ -1675,7 +1675,7 @@ function buildSurveyPayload() {
       timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || null,
       viewport: { width: window.innerWidth, height: window.innerHeight },
       quality: qualityMetadata,
-      source: "bodymap_questionnaire_v12_age_select_other_context"
+      source: "bodymap_questionnaire_v13_robot_person_definitions"
     }
   };
 }
