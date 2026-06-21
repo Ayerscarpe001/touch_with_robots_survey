@@ -1432,6 +1432,7 @@ function prog() {
   const labelEl = document.getElementById("pTextLabel");
   const intentEl = document.getElementById("pTextIntent");
   const setProgressText = (label, currentIntent = null) => {
+    document.getElementById("pText").classList.toggle("workflow", currentIntent !== null);
     labelEl.textContent = label;
     intentEl.textContent = currentIntent === null ? "" : t("progressIntentSummary")
       .replace("{current}", currentIntent)
@@ -1650,7 +1651,7 @@ function buildSurveyPayload() {
   return {
     participant_id: getParticipantId(),
     timestamp: new Date().toISOString(),
-    study_version: "3.10",
+    study_version: "3.11",
     consent_version: "2026-06-01",
     consent_given: document.getElementById("consentBox")?.checked || false,
     language: lang,
@@ -1680,7 +1681,7 @@ function buildSurveyPayload() {
       timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || null,
       viewport: { width: window.innerWidth, height: window.innerHeight },
       quality: qualityMetadata,
-      source: "bodymap_questionnaire_v17_intent_progress_labels"
+      source: "bodymap_questionnaire_v18_scoped_progress_alignment"
     }
   };
 }

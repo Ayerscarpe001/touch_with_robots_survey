@@ -133,11 +133,13 @@
   .progress-bar { height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; }
   .progress-fill { height: 100%; background: var(--accent); transition: width 0.35s; border-radius: 2px; }
   .progress-text {
-    display:flex; justify-content:space-between; align-items:center; gap:12px;
+    display:flex; justify-content:flex-end; align-items:center; gap:12px;
     min-height:1.2em; font-size:0.7rem; color:var(--dim); margin-top:5px;
   }
-  #pTextLabel { text-align:left; }
+  #pTextLabel { text-align:right; }
   #pTextIntent { text-align:right; white-space:nowrap; }
+  .progress-text.workflow { justify-content:space-between; }
+  .progress-text.workflow #pTextLabel { text-align:left; }
 
   /* ── STEP 1 ── */
   .panel {
