@@ -727,6 +727,7 @@ function showStep(id) {
   document.getElementById(id).classList.add("active");
   prog();
   window.scrollTo({ top: 0, behavior: "smooth" });
+  requestAnimationFrame(updateStickyIntentState);
 }
 
 function updConsent() {
@@ -1249,7 +1250,25 @@ function hideTT(immediate = true) {
     });
   }
 }
-window.addEventListener("scroll", hideTT, { passive: true });
+let stickyIntentFrame = null;
+function updateStickyIntentState() {
+  if (stickyIntentFrame) return;
+  stickyIntentFrame = requestAnimationFrame(() => {
+    stickyIntentFrame = null;
+    document.querySelectorAll("[data-sticky-intent]").forEach(header => {
+      const active = header.closest(".step")?.classList.contains("active");
+      const stickyTop = Number.parseFloat(getComputedStyle(header).top) || 0;
+      const stuck = active && window.scrollY > 0 &&
+        header.getBoundingClientRect().top <= stickyTop + 1;
+      header.classList.toggle("is-stuck", stuck);
+    });
+  });
+}
+window.addEventListener("scroll", () => {
+  hideTT();
+  updateStickyIntentState();
+}, { passive: true });
+window.addEventListener("resize", updateStickyIntentState, { passive: true });
 
 // ============================================================
 // NAVIGATION

@@ -169,14 +169,14 @@
   <!-- STEP 3                                                            -->
   <!-- ================================================================ -->
   <div class="step" id="sContext">
-    <div class="intent-workflow-header">
-      <div class="intent-context current-intent">
-        <span class="intent-label" data-i18n="currentIntentLabel">当前意图</span>
-        <span class="intent-name" id="contextIntentName"></span>
-        <span class="intent-desc" id="contextIntentDesc"></span>
-        <button class="return-intents-inline" type="button" onclick="backToIntentSelectionFromWorkflow()" data-i18n="backToIntentSelection">← 返回意图选择</button>
-      </div>
+    <div class="intent-context current-intent" data-sticky-intent>
+      <span class="intent-label" data-i18n="currentIntentLabel">当前意图</span>
+      <span class="intent-name" id="contextIntentName"></span>
+      <span class="intent-desc" id="contextIntentDesc"></span>
+    </div>
+    <div class="intent-progress-row">
       <div class="intent-progress-list" id="contextIntentProgress" aria-label="Selected intent progress"></div>
+      <button class="return-intents-inline" type="button" onclick="backToIntentSelectionFromWorkflow()" data-i18n="backToIntentSelection">← 返回意图选择</button>
     </div>
     <div class="step-title" data-i18n="contextTitle">关系、语境与表达方式</div>
     <div class="step-desc" data-i18n="contextDesc">请针对当前意图回答下面三道题。“关系亲近度”指你与机器人之间的熟悉程度、关系连接程度和互动私人化程度；“互动语境”指这种触碰可能出现的广义互动活动类型；“人际表达参照程度”指机器人表达该意图时参照人与人之间通常采用的触碰方式的程度。</div>
@@ -193,14 +193,14 @@
   <!-- STEP 4                                                            -->
   <!-- ================================================================ -->
   <div class="step" id="s2">
-    <div class="intent-workflow-header">
-      <div class="intent-context current-intent">
-        <span class="intent-label" data-i18n="currentIntentLabel">当前意图</span>
-        <span class="intent-name" id="mapIntentName"></span>
-        <span class="intent-desc" id="mapIntentDesc"></span>
-        <button class="return-intents-inline" type="button" onclick="backToIntentSelectionFromWorkflow()" data-i18n="backToIntentSelection">← 返回意图选择</button>
-      </div>
+    <div class="intent-context current-intent" data-sticky-intent>
+      <span class="intent-label" data-i18n="currentIntentLabel">当前意图</span>
+      <span class="intent-name" id="mapIntentName"></span>
+      <span class="intent-desc" id="mapIntentDesc"></span>
+    </div>
+    <div class="intent-progress-row">
       <div class="intent-progress-list" id="mapIntentProgress" aria-label="Selected intent progress"></div>
+      <button class="return-intents-inline" type="button" onclick="backToIntentSelectionFromWorkflow()" data-i18n="backToIntentSelection">← 返回意图选择</button>
     </div>
     <div class="step-title" data-i18n="mapTitle">身体地图标注</div>
     <div class="step-desc" data-i18n="mapDesc">请针对当前意图，在身体地图上标注：哪些身体区域你愿意被机器人触碰，哪些身体区域你不愿意被机器人触碰。未标注区域将视为无明确意向。</div>
