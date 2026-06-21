@@ -155,6 +155,7 @@ const I18N = {
     progressIntents:"选择社交意图",
     progressContext:"关系、语境与表达方式",
     progressMap:"身体地图",
+    progressIntentSummary:"第 {current} 个意图 / 共选 {total} 个",
     progressReview:"检查与提交",
     progressStatus:"提交状态",
     acceptCount:"愿意",
@@ -317,6 +318,7 @@ const I18N = {
     progressIntents:"Select social intents",
     progressContext:"Relationship, context, and expression",
     progressMap:"Body map",
+    progressIntentSummary:"Intent {current} / {total} selected",
     progressReview:"Review & Submit",
     progressStatus:"Submission status",
     acceptCount:"Accept",
@@ -1426,21 +1428,29 @@ function back() {
   load();
 }
 function prog() {
-  const f = document.getElementById("pFill"); const textEl = document.getElementById("pText");
-  if (document.getElementById("sIntro").classList.contains("active")) { f.style.width="6%"; textEl.textContent=t("progressIntro"); }
-  else if (document.getElementById("s0").classList.contains("active")) { f.style.width="12%"; textEl.textContent=t("progressConsent"); }
-  else if (document.getElementById("sInfo").classList.contains("active")) { f.style.width="22%"; textEl.textContent=t("progressInfo"); }
-  else if (document.getElementById("s1").classList.contains("active")) { f.style.width="35%"; textEl.textContent=t("progressIntents"); }
+  const f = document.getElementById("pFill");
+  const labelEl = document.getElementById("pTextLabel");
+  const intentEl = document.getElementById("pTextIntent");
+  const setProgressText = (label, currentIntent = null) => {
+    labelEl.textContent = label;
+    intentEl.textContent = currentIntent === null ? "" : t("progressIntentSummary")
+      .replace("{current}", currentIntent)
+      .replace("{total}", Math.max(order.length, 1));
+  };
+  if (document.getElementById("sIntro").classList.contains("active")) { f.style.width="6%"; setProgressText(t("progressIntro")); }
+  else if (document.getElementById("s0").classList.contains("active")) { f.style.width="12%"; setProgressText(t("progressConsent")); }
+  else if (document.getElementById("sInfo").classList.contains("active")) { f.style.width="22%"; setProgressText(t("progressInfo")); }
+  else if (document.getElementById("s1").classList.contains("active")) { f.style.width="35%"; setProgressText(t("progressIntents")); }
   else if (document.getElementById("sContext").classList.contains("active")) {
     const pct = 35 + Math.round((contextIdx * 2 + 1)/Math.max(order.length * 2, 1) * 55);
-    f.style.width=pct+"%"; textEl.textContent=`${t("progressContext")} ${contextIdx+1}/${Math.max(order.length, 1)}`;
+    f.style.width=pct+"%"; setProgressText(t("progressContext"), contextIdx + 1);
   }
   else if (document.getElementById("s2").classList.contains("active")) {
     const pct = 35 + Math.round((idx * 2 + 2)/Math.max(order.length * 2, 1) * 55);
-    f.style.width=pct+"%"; textEl.textContent=`${t("progressMap")} ${idx+1}/${order.length}`;
+    f.style.width=pct+"%"; setProgressText(t("progressMap"), idx + 1);
   }
-  else if (document.getElementById("s3").classList.contains("active")) { f.style.width="95%"; textEl.textContent=t("progressReview"); }
-  else { f.style.width="100%"; textEl.textContent=t("progressStatus"); }
+  else if (document.getElementById("s3").classList.contains("active")) { f.style.width="95%"; setProgressText(t("progressReview")); }
+  else { f.style.width="100%"; setProgressText(t("progressStatus")); }
 }
 
 // ============================================================
@@ -1640,7 +1650,7 @@ function buildSurveyPayload() {
   return {
     participant_id: getParticipantId(),
     timestamp: new Date().toISOString(),
-    study_version: "3.9",
+    study_version: "3.10",
     consent_version: "2026-06-01",
     consent_given: document.getElementById("consentBox")?.checked || false,
     language: lang,
@@ -1670,7 +1680,7 @@ function buildSurveyPayload() {
       timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || null,
       viewport: { width: window.innerWidth, height: window.innerHeight },
       quality: qualityMetadata,
-      source: "bodymap_questionnaire_v16_continuous_workflow_pagination"
+      source: "bodymap_questionnaire_v17_intent_progress_labels"
     }
   };
 }
