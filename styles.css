@@ -160,6 +160,9 @@
   .no-intent-option.selected {
     border-color:var(--accent); background:#111b2a; box-shadow:0 0 0 1px rgba(91,155,255,0.18);
   }
+  .no-intent-option.disabled {
+    opacity:0.55; cursor:not-allowed;
+  }
   .intent-card {
     background: var(--card); border: 2px solid var(--border); border-radius: var(--radius);
     padding: 14px 16px; cursor: pointer; transition: all 0.18s; user-select: none; position: relative;

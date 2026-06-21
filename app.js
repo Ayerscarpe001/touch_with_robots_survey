@@ -829,23 +829,36 @@ function selAll(v) {
   updBtn();
 }
 function toggleNoIntent(checked) {
-  noIntentSelected = checked;
-  if (checked) {
-    sel.clear();
-    INTENTS.forEach(i => {
-      const card = document.getElementById("c-"+i.id);
-      card?.classList.remove("sel");
-      card?.setAttribute("aria-checked", "false");
-    });
+  if (sel.size > 0) {
+    const noIntentBox = document.getElementById("noIntentBox");
+    if (noIntentBox) noIntentBox.checked = false;
+    return;
   }
+  noIntentSelected = checked;
   document.getElementById("noIntentOption")?.classList.toggle("selected", checked);
   updBtn();
+}
+function updateNoIntentOptionUI() {
+  const disabled = sel.size > 0;
+  const noIntentBox = document.getElementById("noIntentBox");
+  const noIntentOption = document.getElementById("noIntentOption");
+  if (disabled && noIntentSelected) noIntentSelected = false;
+  if (noIntentBox) {
+    noIntentBox.disabled = disabled;
+    noIntentBox.checked = noIntentSelected;
+  }
+  if (noIntentOption) {
+    noIntentOption.classList.toggle("disabled", disabled);
+    noIntentOption.classList.toggle("selected", noIntentSelected);
+    noIntentOption.setAttribute("aria-disabled", String(disabled));
+  }
 }
 function updBtn() {
   const b = document.getElementById("btnToMaps");
   b.disabled = sel.size === 0 && !noIntentSelected;
   document.getElementById("selCount").textContent = sel.size;
   document.getElementById("btnToMapsText").textContent = t("continueBtn");
+  updateNoIntentOptionUI();
 }
 
 // ============================================================
