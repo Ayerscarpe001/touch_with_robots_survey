@@ -18,14 +18,14 @@ const I18N = {
     introTitle:"研究场景介绍",
     introDesc:"本问卷旨在了解人们对社交机器人主动触摸的接受程度。请依次阅读下面三页简短说明，明确本研究中的社交机器人、社交触摸等概念及答题流程。",
     introSlide1Kicker:"01 · 机器人形态",
-    introSlide1Title:"一个具有胳膊与手的实体机器人",
+    introSlide1Title:"具有手臂与手的机器人",
     introSlide2Kicker:"02 · 社交触摸",
     introSlide2Title:"机器人主动发起的身体接触",
     introSlide3Kicker:"03 · 答题流程",
     introSlide3Title:"围绕每个已选意图依次作答",
-    introP1:"请将本研究中的机器人想象为一个具有人形上半身结构的社交机器人：它具有类似人体结构的机械手臂和手部，整体身高略低于成年人，主要通过手臂或手部主动触碰人的身体。",
-    introP2:"本问卷中的“社交触摸”指机器人对人身体发起的直接、短暂、柔和、非疼痛、非强制性的身体接触。请先判断机器人是否适合通过这种接触表达某种社交意图，再在后续页面标注你认为可接受或不可接受的身体区域。",
-    introP3:"填写时，你需要先选择认为适合由机器人主动传达的社交意图。对每个已选意图，问卷会依次询问关系亲近度、互动语境、人际触摸方式的参照程度，以及不同身体部位被触碰的接受程度。",
+    introP1:"请将问卷中的“机器人”想象为一个具有人形上半身结构的社交机器人。它具有类似人体结构的双臂和双手，整体身高略低于你。",
+    introP2:"问卷中的“社交触摸”指机器人对人身体发起的直接、短暂、柔和、非疼痛、非强制性的身体接触。这种触摸旨在传达具有社会意义的意图，例如表达关心。",
+    introP3:"填写问卷时，请先选择你认为适合由机器人通过主动触摸表达的意图，再对每个已选意图依次回答关系亲近度、互动语境、人际方式参照程度，以及不同身体部位被触碰的接受程度。",
     introRobotAlt:"抽象简笔画社交机器人，具有头部、上身、机械手臂和手部。",
     introFlowAlt:"由意图选择、关系与语境判断、人际方式参照和身体地图标注组成的问卷流程示意图。",
     introPrev:"← 上一页",
@@ -75,21 +75,16 @@ const I18N = {
     noIntentTitle:"以上意图均不适合",
     noIntentDesc:"如果你认为这些社交意图都不适合由机器人通过主动触碰表达，可以选择此项并直接进入检查页。",
     contextTitle:"关系、语境与表达方式",
-    contextDesc:"请针对当前意图回答下面三道题。“关系亲近度”指你与机器人之间的熟悉程度、关系连接程度和互动私人化程度；“互动语境”指这种触碰可能出现的广义互动活动类型；“人际表达参照程度”指机器人表达该意图时参照人与人之间通常采用的触碰方式的程度。",
+    contextDesc:"请针对当前意图回答三道题：所需的关系亲近程度、可能出现的互动语境，以及机器人的触碰方式应与人际表达方式多相似。",
     relationshipQuestion:"1、如果机器人要通过触碰向你表达这一意图，你认为它通常至少需要与你达到怎样的关系亲近程度？",
     contextQuestion:"2、你认为机器人通过触碰表达这一意图，可能出现在以下哪些互动语境中？（可多选）",
-    conventionReferenceTitle:"人际表达参照",
-    conventionQuestion:"3、你认为机器人通过触碰表达这一意图时，应在多大程度上参照人与人之间通常采用的触碰方式？",
+    conventionReferenceTitle:"人际触碰示例",
+    conventionQuestion:"3、机器人通过触碰表达这一意图时，应在多大程度上模仿人们在人际互动中通常采用的触碰方式？",
     convention1:"完全不参照",
-    convention1Desc:"完全采用机器人特有方式",
-    convention2:"较少参照",
-    convention2Desc:"主要采用机器人特有方式",
+    convention2:"稍加参照",
     convention3:"部分参照",
-    convention3Desc:"结合人际方式与机器人特有方式",
-    convention4:"较多参照",
-    convention4Desc:"主要采用人际方式",
+    convention4:"大部分参照",
     convention5:"完全参照",
-    convention5Desc:"尽量与人际方式相同",
     contextError:"请完成当前意图的三道题：选择关系亲近度、至少一种互动语境和人际表达参照程度；如选择“其他”，请填写具体语境。",
     closeness1:"完全陌生",
     closeness2:"初步接触",
@@ -181,14 +176,14 @@ const I18N = {
     introTitle:"Study Scenario",
     introDesc:"This survey examines people's acceptance of touch initiated by social robots. Please read the following three short pages to understand how this study defines the social robot and social touch, as well as the survey process.",
     introSlide1Kicker:"01 · Robot form",
-    introSlide1Title:"An embodied robot with arms and hands",
+    introSlide1Title:"Robot with Arms and Hands",
     introSlide2Kicker:"02 · Social touch",
     introSlide2Title:"Physical contact initiated by the robot",
     introSlide3Kicker:"03 · Survey process",
     introSlide3Title:"Answer each selected intent in sequence",
-    introP1:"Imagine the robot as a social robot with a humanoid upper-body structure. It has mechanical arms and hands resembling human upper limbs, is slightly shorter than an adult, and mainly initiates physical contact through its arms or hands.",
-    introP2:"In this survey, “social touch” means direct, brief, gentle, non-painful, and non-coercive bodily contact initiated by a robot toward a person. First decide whether a robot could appropriately express an intent through this contact, then mark acceptable and unacceptable body regions.",
-    introP3:"First select the intents you consider suitable for a robot to express. For each selected intent, the survey will ask about relationship closeness, interaction context, reference to interpersonal touch conventions, and the acceptability of touch on different body regions.",
+    introP1:"Imagine the “robot” in this survey as a social robot with a humanoid upper-body structure. It has two arms and two hands with a human-like structure and is slightly shorter than you.",
+    introP2:"In this survey, “social touch” refers to direct, brief, gentle, non-painful, and non-coercive bodily contact initiated by a robot toward a person. The touch is intended to convey a socially meaningful intent, such as showing care.",
+    introP3:"First select the intents you consider suitable for a robot to express through active touch. For each selected intent, you will then answer questions about relationship closeness, interaction context, reference to interpersonal expressions, and the acceptability of touch on different body regions.",
     introRobotAlt:"A simple abstract social robot with a head, upper body, mechanical arms, and hands.",
     introFlowAlt:"A survey flow diagram showing intent selection, relationship and context judgments, interpersonal reference, and body-map marking.",
     introPrev:"← Previous",
@@ -238,21 +233,16 @@ const I18N = {
     noIntentTitle:"None of these intents are suitable",
     noIntentDesc:"If you think none of these social intents are suitable for a robot to express through active touch, select this option and continue directly to review.",
     contextTitle:"Relationship, Context, and Expression",
-    contextDesc:"Please answer the three questions below for the current intent. Relationship closeness refers to familiarity, relational connection, and personalized interaction with the robot; interaction context refers to the broad types of interaction activities in which the touch may occur; interpersonal reference refers to how closely the robot should follow the touch expressions people commonly use with one another.",
+    contextDesc:"For the current intent, answer three questions about the required relationship closeness, possible interaction contexts, and how similar the robot's touch should be to interpersonal expressions.",
     relationshipQuestion:"1. If a robot were to express this intent to you through touch, what minimum level of relationship closeness would usually be needed?",
     contextQuestion:"2. In which interaction contexts might a robot express this intent through touch? (Select all that apply.)",
-    conventionReferenceTitle:"Interpersonal reference",
-    conventionQuestion:"3. To what extent should a robot follow the touch expressions people commonly use with one another when expressing this intent?",
+    conventionReferenceTitle:"Interpersonal touch examples",
+    conventionQuestion:"3. To what extent should a robot imitate the touch expressions people typically use with one another when expressing this intent?",
     convention1:"Not at all",
-    convention1Desc:"Use an entirely robot-specific expression",
     convention2:"Slightly",
-    convention2Desc:"Mostly use a robot-specific expression",
     convention3:"Partly",
-    convention3Desc:"Combine interpersonal and robot-specific expressions",
-    convention4:"Considerably",
-    convention4Desc:"Mostly use an interpersonal expression",
+    convention4:"Mostly",
     convention5:"Fully",
-    convention5Desc:"Match interpersonal touch as closely as possible",
     contextError:"Please answer all three questions for the current intent. If you select “Other,” describe the interaction context.",
     closeness1:"Complete stranger",
     closeness2:"Initial contact",
@@ -569,11 +559,11 @@ const RELATIONSHIP_LEVELS = [
 ];
 
 const CONVENTION_LEVELS = [
-  { value: 1, labelKey: "convention1", descKey: "convention1Desc" },
-  { value: 2, labelKey: "convention2", descKey: "convention2Desc" },
-  { value: 3, labelKey: "convention3", descKey: "convention3Desc" },
-  { value: 4, labelKey: "convention4", descKey: "convention4Desc" },
-  { value: 5, labelKey: "convention5", descKey: "convention5Desc" },
+  { value: 1, labelKey: "convention1" },
+  { value: 2, labelKey: "convention2" },
+  { value: 3, labelKey: "convention3" },
+  { value: 4, labelKey: "convention4" },
+  { value: 5, labelKey: "convention5" },
 ];
 
 const INTERACTION_CONTEXTS = [
@@ -736,11 +726,16 @@ function recordMapReset(intentId) {
 }
 
 function showStep(id) {
+  const activeElement = document.activeElement;
+  if (activeElement instanceof HTMLElement &&
+      activeElement.matches("input, textarea, select")) {
+    activeElement.blur();
+  }
   recordStepTransition(id);
   document.querySelectorAll(".step").forEach(s => s.classList.remove("active"));
   document.getElementById(id).classList.add("active");
   prog();
-  window.scrollTo({ top: 0, behavior: "smooth" });
+  window.scrollTo({ top: 0, behavior: "auto" });
   requestAnimationFrame(updateStickyIntentState);
 }
 
@@ -805,7 +800,7 @@ function r1() {
       <div class="dot"></div>
       <div class="intent-icon-wrap">${intentIconMarkup(i.id)}</div>
       <div class="intent-copy">
-        <div class="name">${lang === "zh" ? i.zh : i.en}<span class="en">${lang === "zh" ? i.en : i.zh}</span></div>
+        <div class="name">${lang === "zh" ? i.zh : i.en}</div>
         <div class="desc">${i.desc[lang]}</div>
       </div>
     </div>`).join("");
@@ -1023,7 +1018,6 @@ function renderContextQuestion() {
       onclick="setInterpersonalReference('${id}', ${level.value})">
       <span class="convention-number">${level.value}</span>
       <span class="convention-label">${t(level.labelKey)}</span>
-      <span class="convention-desc">${t(level.descKey)}</span>
     </button>`).join("");
   const touchReference = TOUCH_REFERENCES[id]?.[lang] || "";
   list.innerHTML = `
@@ -1329,7 +1323,7 @@ function goContext() {
   showStep("sContext");
   renderContextQuestion();
   prog();
-  window.scrollTo({ top: 0, behavior: "smooth" });
+  window.scrollTo({ top: 0, behavior: "auto" });
 }
 
 function backToIntentSelectionFromContext() {
@@ -1343,7 +1337,7 @@ function backToIntentSelectionFromWorkflow() {
   }
   showStep("s1");
   prog();
-  window.scrollTo({ top: 0, behavior: "smooth" });
+  window.scrollTo({ top: 0, behavior: "auto" });
 }
 
 function prevPageFromContext() {
@@ -1366,7 +1360,7 @@ function nextContext() {
     .catch(() => {
       // The visible status message is set in ensureBodyMap.
     });
-  window.scrollTo({ top: 0, behavior: "smooth" });
+  window.scrollTo({ top: 0, behavior: "auto" });
 }
 
 function goPreviousIntentFromContext() {
@@ -1687,7 +1681,7 @@ function buildSurveyPayload() {
   return {
     participant_id: getParticipantId(),
     timestamp: new Date().toISOString(),
-    study_version: "3.14",
+    study_version: "3.15",
     consent_version: "2026-06-01",
     consent_given: document.getElementById("consentBox")?.checked || false,
     language: lang,
@@ -1718,7 +1712,7 @@ function buildSurveyPayload() {
       timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || null,
       viewport: { width: window.innerWidth, height: window.innerHeight },
       quality: qualityMetadata,
-      source: "bodymap_questionnaire_v21_normalized_male_map"
+      source: "bodymap_questionnaire_v22_reduced_reading_load"
     }
   };
 }

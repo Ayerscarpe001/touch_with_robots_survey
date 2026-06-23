@@ -181,25 +181,24 @@
   }
   .intent-card {
     background: var(--card); border: 2px solid var(--border); border-radius: var(--radius);
-    padding: 14px 16px; cursor: pointer; transition: all 0.18s; user-select: none; position: relative;
-    display:grid; grid-template-columns:68px minmax(0, 1fr); gap:14px; align-items:center; height:100%;
+    padding: 11px 14px; cursor: pointer; transition: all 0.18s; user-select: none; position: relative;
+    display:grid; grid-template-columns:60px minmax(0, 1fr); gap:12px; align-items:center; height:100%;
   }
   .intent-card:hover { border-color: #444; }
   .intent-card.sel { border-color: var(--accent); background: #111b2a; }
   .intent-icon-wrap {
-    width:64px; height:64px; display:grid; place-items:center;
-    color:var(--accent); border-right:1px solid #2b2b2b; padding-right:12px;
+    width:56px; height:56px; display:grid; place-items:center;
+    color:var(--accent); border-right:1px solid #2b2b2b; padding-right:10px;
   }
   .intent-icon {
-    width:52px; height:52px; overflow:visible; fill:none; stroke:currentColor;
+    width:46px; height:46px; overflow:visible; fill:none; stroke:currentColor;
     stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round;
   }
   .intent-icon *, .intent-icon { transform-box:fill-box; transform-origin:center; }
   .intent-copy { min-width:0; padding-right:24px; }
   .intent-card .name { font-size: 0.9rem; font-weight: 600; }
-  .intent-card .en { display:block; font-size: 0.7rem; color: var(--dim); margin-top:2px; }
   .intent-card .desc {
-    font-size: 0.74rem; color:#999; margin-top:7px; line-height:1.4;
+    font-size: 0.74rem; color:#999; margin-top:5px; line-height:1.36;
   }
   .intent-card .dot {
     position: absolute; top: 12px; right: 14px;
@@ -345,8 +344,8 @@
     display:grid; grid-template-columns:repeat(5, minmax(0, 1fr)); gap:8px;
   }
   .convention-option {
-    min-height:116px; padding:11px 8px;
-    display:grid; grid-template-rows:auto auto 1fr; justify-items:center; align-content:start; gap:7px;
+    min-height:82px; padding:11px 8px;
+    display:grid; grid-template-rows:auto auto; justify-items:center; align-content:center; gap:7px;
     background:#101010; border:1px solid var(--border); border-radius:8px;
     color:var(--text); cursor:pointer; text-align:center; transition:all 0.16s ease;
   }
@@ -360,8 +359,6 @@
   }
   .convention-option.selected .convention-number { background:var(--accent); color:var(--bg); }
   .convention-label { color:#eee; font-size:0.76rem; font-weight:760; line-height:1.25; }
-  .convention-desc { color:#888; font-size:0.66rem; line-height:1.35; }
-  .convention-option.selected .convention-desc { color:#b8cae7; }
   .context-name { font-size:0.78rem; font-weight:750; color:#eee; }
   .context-desc { font-size:0.68rem; color:#999; line-height:1.32; }
   .context-option.selected .context-name { color:#fff; }
@@ -517,15 +514,27 @@
     .color-legend { grid-template-columns:1fr; padding:8px 10px; max-width:520px; }
     .convention-scale { grid-template-columns:1fr; }
     .convention-option {
-      min-height:0; grid-template-columns:auto minmax(92px, auto) minmax(0, 1fr);
+      min-height:62px; grid-template-columns:auto minmax(0, 1fr);
       grid-template-rows:1fr; justify-items:start; align-items:center; text-align:left;
     }
     .touch-reference { grid-template-columns:1fr; gap:4px; }
     .toolbar-action { align-self:auto; }
     .intent-grid { grid-template-columns:1fr; }
-    .intent-card { grid-template-columns:58px minmax(0, 1fr); gap:11px; padding:12px 13px; }
-    .intent-icon-wrap { width:56px; height:56px; }
-    .intent-icon { width:44px; height:44px; }
+    .intent-card { grid-template-columns:50px minmax(0, 1fr); gap:9px; padding:9px 11px; }
+    .intent-icon-wrap { width:48px; height:48px; padding-right:8px; }
+    .intent-icon { width:39px; height:39px; }
+    .intent-copy { padding-right:22px; }
+    .intent-card .name { font-size:0.88rem; }
+    .intent-card .desc { margin-top:3px; font-size:0.72rem; line-height:1.32; }
+    .field input, .field select, .other-context-field input {
+      font-size:16px;
+    }
+    .nav {
+      padding-bottom:max(64px, calc(env(safe-area-inset-bottom) + 48px));
+    }
+    .btn, .intent-card, .context-option, .scale-option, .convention-option {
+      touch-action:manipulation;
+    }
     .scale-row { grid-template-columns:repeat(2, minmax(0, 1fr)); }
     .scale-option { min-height:138px; }
     .context-options { grid-template-columns:1fr; }
