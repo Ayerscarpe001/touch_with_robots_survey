@@ -7,9 +7,9 @@
     <rect x="54" y="154" width="280" height="412" rx="28"/>
     <rect x="102" y="220" width="184" height="230" rx="18"/>
     <path d="M159 278h78M159 335h78M159 392h78"/>
-    <path d="m119 274 13 13 22-27M119 331l13 13 22-27"/>
     <circle cx="134" cy="389" r="11"/>
   </g>
+  <path d="m119 274 13 13 22-27M119 331l13 13 22-27" fill="none" stroke="#5b9bff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
   <text x="194" y="512" fill="#f2f2f2" font-family="Arial, sans-serif" font-size="27" font-weight="700" text-anchor="middle">Select intents</text>
 
   <g fill="none" stroke="#4d82d2" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
@@ -38,8 +38,8 @@
     <rect x="934" y="197" width="31" height="31" rx="4"/>
     <rect x="934" y="247" width="31" height="31" rx="4"/>
     <path d="M987 212h145M987 262h145"/>
-    <path d="m940 212 9 9 15-19"/>
   </g>
+  <path d="m940 212 9 9 15-19" fill="none" stroke="#5b9bff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
   <text x="1038" y="305" fill="#f2f2f2" font-family="Arial, sans-serif" font-size="24" font-weight="700" text-anchor="middle">Interaction context</text>
 
   <g fill="none" stroke="#f2f2f2" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
@@ -68,6 +68,6 @@
   </g>
   <text x="1038" y="548" fill="#f2f2f2" font-family="Arial, sans-serif" font-size="18" font-weight="700" text-anchor="middle">Body-region acceptability</text>
 
-  <path d="M861 382a39 39 0 1 1 8-54" fill="none" stroke="#4d82d2" stroke-width="7" stroke-linecap="round"/>
-  <path d="m851 326 20 1-3 20" fill="none" stroke="#4d82d2" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M866 386A40 40 0 1 1 865 333" fill="none" stroke="#4d82d2" stroke-width="7" stroke-linecap="round"/>
+  <path d="M865 333 858 315" fill="none" stroke="#4d82d2" stroke-width="7" stroke-linecap="round"/>
 </svg>
