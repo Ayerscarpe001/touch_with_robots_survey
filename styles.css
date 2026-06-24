@@ -522,6 +522,25 @@
     .return-intents-inline { padding:6px 8px; font-size:0.62rem; }
     .body-map-shell { height:clamp(540px, 70vh, 700px); }
     .color-legend { grid-template-columns:1fr; padding:8px 10px; max-width:520px; }
+    .color-controls {
+      display:grid;
+      grid-template-columns:auto auto minmax(0, 1fr);
+      gap:8px;
+      align-items:center;
+      width:100%;
+    }
+    .color-controls .leg-title { display:none; }
+    .color-controls .bucket {
+      gap:7px;
+      padding:8px 9px;
+      font-size:0.7rem;
+      white-space:nowrap;
+    }
+    .color-controls .leg-item {
+      justify-self:end;
+      gap:6px;
+      white-space:nowrap;
+    }
     .convention-scale { grid-template-columns:1fr; }
     .convention-option {
       min-height:62px; grid-template-columns:auto minmax(0, 1fr);
