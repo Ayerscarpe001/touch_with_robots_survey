@@ -150,7 +150,7 @@
   <!-- ================================================================ -->
   <div class="step" id="s1">
     <div class="step-title" data-i18n="intentTitle">社交意图选择</div>
-    <div class="step-desc" data-i18n="intentDesc">以下列出 14 类可能通过触碰表达的社交意图。请根据你的直觉，选择你认为“社交机器人可以通过主动触碰人的身体来表达”的意图。</div>
+    <div class="step-desc" data-i18n="intentDesc">请想象一个社交机器人主动、短暂、轻柔地触碰你。下面哪些意图适合用这种方式表达？请选择你认为可以接受的意图；如果都不适合，也可以选择下方的单独选项。</div>
     <div class="select-row">
       <button onclick="selAll(true)" data-i18n="selectAll">全选</button>
       <button onclick="selAll(false)" data-i18n="clearAll">清空</button>
@@ -164,6 +164,7 @@
       </span>
     </label>
     <div class="nav">
+      <button class="btn btn-s" onclick="showStep('sInfo')" data-i18n="backBtn">← 返回</button>
       <button class="btn btn-p" id="btnToMaps" disabled onclick="goContext()">
         <span id="btnToMapsText">继续 →</span> (<span id="selCount">0</span>)
       </button>
@@ -184,7 +185,7 @@
       <button class="return-intents-inline" type="button" onclick="backToIntentSelectionFromWorkflow()" data-i18n="backToIntentSelection">← 返回意图选择</button>
     </div>
     <div class="step-title" data-i18n="contextTitle">关系、语境与表达方式</div>
-    <div class="step-desc" data-i18n="contextDesc">请针对当前意图回答三道题：所需的关系亲近程度、可能出现的互动语境，以及机器人的触碰方式应与人际表达方式多相似。</div>
+    <div class="step-desc" data-i18n="contextDesc">请围绕当前意图回答下面三题：关系亲近度、可能出现的语境，以及机器人是否应参考人际触碰方式。</div>
     <div class="context-list" id="contextList"></div>
     <div class="error-text" id="contextError" data-i18n="contextError">请完成当前意图的三道题：选择关系亲近度、至少一种互动语境和人际表达参照程度。</div>
     <div class="nav">
@@ -208,7 +209,7 @@
       <button class="return-intents-inline" type="button" onclick="backToIntentSelectionFromWorkflow()" data-i18n="backToIntentSelection">← 返回意图选择</button>
     </div>
     <div class="step-title" data-i18n="mapTitle">身体地图标注</div>
-    <div class="step-desc" data-i18n="mapDesc">请针对当前意图，在身体地图上标注：哪些身体区域你愿意被机器人触碰，哪些身体区域你不愿意被机器人触碰。未标注区域将视为无明确意向。</div>
+    <div class="step-desc" data-i18n="mapDesc">请针对当前意图，在身体地图上标出你明确愿意或不愿意被机器人触碰的部位。无需给每个部位都涂色；未标注区域将视为无明确意向。</div>
 
     <!-- PAINT BUCKETS -->
     <div class="color-legend">

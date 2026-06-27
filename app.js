@@ -69,17 +69,17 @@ const I18N = {
     countryOther:"其他",
     infoError:"请完整填写有效年龄、性别和所属国家或地区后继续。",
     intentTitle:"社交意图选择",
-    intentDesc:"以下列出 14 类可能通过触碰表达的社交意图。请根据你的直觉，选择你认为“社交机器人可以通过主动触碰人的身体来表达”的意图；如果你认为均不适合，也可以选择下方的单独选项。",
+    intentDesc:"请想象一个社交机器人主动、短暂、轻柔地触碰你。下面哪些意图适合用这种方式表达？请选择你认为可以接受的意图；如果都不适合，也可以选择下方的单独选项。",
     selectAll:"全选",
     clearAll:"清空",
     noIntentTitle:"以上意图均不适合",
     noIntentDesc:"如果你认为这些社交意图都不适合由机器人通过主动触碰表达，可以选择此项并直接进入检查页。",
     contextTitle:"关系、语境与表达方式",
-    contextDesc:"请针对当前意图回答三道题：所需的关系亲近程度、可能出现的互动语境，以及机器人的触碰方式应与人际表达方式多相似。",
-    relationshipQuestion:"1、如果机器人要通过触碰向你表达这一意图，你认为它通常至少需要与你达到怎样的关系亲近程度？",
-    contextQuestion:"2、你认为机器人通过触碰表达这一意图，可能出现在以下哪些互动语境中？（可多选）",
+    contextDesc:"请围绕当前意图回答下面三题：关系亲近度、可能出现的语境，以及机器人是否应参考人际触碰方式。",
+    relationshipQuestion:"1、机器人通过触碰表达这一意图时，通常至少需要与你有多熟悉？",
+    contextQuestion:"2、这种触碰表达可能出现在哪些互动语境中？（可多选）",
     conventionReferenceTitle:"人际触碰示例",
-    conventionQuestion:"3、机器人通过触碰表达这一意图时，应在多大程度上模仿人们在人际互动中通常采用的触碰方式？",
+    conventionQuestion:"3、机器人表达这一意图时，应在多大程度上参考人际互动中常见的触碰方式？",
     convention1:"完全不参考",
     convention2:"稍加参考",
     convention3:"部分参考",
@@ -94,13 +94,13 @@ const I18N = {
     closeness6:"亲近",
     closeness7:"非常亲近",
     ctxPublicService:"公共服务",
-    ctxPublicServiceDesc:"在公共或半公共环境中，为不特定或短期接触的用户提供接待、信息、引导或一般服务。",
+    ctxPublicServiceDesc:"在公共或半公共环境中，为不特定或短期接触的用户提供接待、信息咨询或一般服务。",
     ctxCompanionship:"日常陪伴",
     ctxCompanionshipDesc:"在家庭或日常生活中持续共处，并提供社交陪伴、休闲互动或日常情感支持。",
     ctxCare:"健康照护",
     ctxCareDesc:"以健康、照护或恢复为主要目标的医疗、护理、康复、心理支持或老人照护互动。",
     ctxLearning:"学习训练",
-    ctxLearningDesc:"以知识学习、教学辅导、技能练习、行为训练或表现反馈为主要目标的互动。",
+    ctxLearningDesc:"以知识学习、教学辅导、技能练习、行为练习或表现反馈为主要目标的互动。",
     ctxTask:"任务协作",
     ctxTaskDesc:"共同完成具有明确外部目标的工作、导航、操作、家务或其他任务。",
     ctxOther:"其他（请补充）",
@@ -108,7 +108,7 @@ const I18N = {
     ctxOtherPlaceholder:"请简要补充具体的互动语境",
     currentIntentLabel:"当前意图",
     mapTitle:"身体地图标注",
-    mapDesc:"4、请针对当前意图，在身体地图上标注：哪些身体区域你愿意被机器人触碰，哪些身体区域你不愿意被机器人触碰。未标注区域将视为无明确意向。",
+    mapDesc:"4、请针对当前意图，在身体地图上标出你明确愿意或不愿意被机器人触碰的部位。无需给每个部位都涂色；未标注区域将视为无明确意向。",
     emptyMapConfirm:"我已查看当前意图的身体地图，但没有任何明确愿意或不愿意标注的身体区域。",
     mapError:"当前身体地图尚未标注。如你确实没有明确意向，请先勾选上方确认项。",
     colorToolTitle:"颜色",
@@ -227,17 +227,17 @@ const I18N = {
     countryOther:"Other",
     infoError:"Please complete a valid age, gender, and country or region before continuing.",
     intentTitle:"Social Intents",
-    intentDesc:"The following list contains 14 social intents that may be expressed through touch. Based on your intuition, select the intents that you think a social robot could express by actively touching a person's body. If none apply, you may select the separate option below.",
+    intentDesc:"Imagine a social robot briefly and gently touching you. Which intents would be suitable for the robot to express in this way? Select the intents you would find acceptable; if none apply, choose the separate option below.",
     selectAll:"Select all",
     clearAll:"Clear all",
     noIntentTitle:"None of these intents are suitable",
     noIntentDesc:"If you think none of these social intents are suitable for a robot to express through active touch, select this option and continue directly to review.",
     contextTitle:"Relationship, Context, and Expression",
-    contextDesc:"For the current intent, answer three questions about the required relationship closeness, possible interaction contexts, and how similar the robot's touch should be to interpersonal expressions.",
-    relationshipQuestion:"1. If a robot were to express this intent to you through touch, what minimum level of relationship closeness would usually be needed?",
-    contextQuestion:"2. In which interaction contexts might a robot express this intent through touch? (Select all that apply.)",
+    contextDesc:"For the current intent, answer three questions about relationship closeness, possible context, and whether the robot should refer to human touch expressions.",
+    relationshipQuestion:"1. How familiar would the robot usually need to be with you to express this intent through touch?",
+    contextQuestion:"2. In which interaction contexts might this touch expression appear? (Select all that apply.)",
     conventionReferenceTitle:"Interpersonal touch examples",
-    conventionQuestion:"3. To what extent should a robot imitate the touch expressions people typically use with one another when expressing this intent?",
+    conventionQuestion:"3. To what extent should the robot refer to touch expressions commonly used between people for this intent?",
     convention1:"Not at all",
     convention2:"Slightly",
     convention3:"Partly",
@@ -252,13 +252,13 @@ const I18N = {
     closeness6:"Close",
     closeness7:"Very close",
     ctxPublicService:"Public service",
-    ctxPublicServiceDesc:"Reception, information, guidance, or general services for unspecified users or people in brief contact in public or semi-public settings.",
+    ctxPublicServiceDesc:"Reception, information, or general services for unspecified users or people in brief contact in public or semi-public settings.",
     ctxCompanionship:"Everyday companionship",
     ctxCompanionshipDesc:"Ongoing co-presence in home or everyday life, including social companionship, leisure interaction, or everyday emotional support.",
     ctxCare:"Care / Health support",
     ctxCareDesc:"Medical care, nursing, rehabilitation, psychological support, or eldercare primarily aimed at health, care, or recovery.",
     ctxLearning:"Learning / Training",
-    ctxLearningDesc:"Interaction primarily aimed at learning, tutoring, skill practice, behavioral training, or performance feedback.",
+    ctxLearningDesc:"Interaction primarily aimed at learning, tutoring, skill practice, behavior practice, or performance feedback.",
     ctxTask:"Task collaboration",
     ctxTaskDesc:"Joint work, navigation, operation, household activity, or another task with a clear external goal.",
     ctxOther:"Other (Please specify)",
@@ -266,7 +266,7 @@ const I18N = {
     ctxOtherPlaceholder:"Briefly describe the interaction context",
     currentIntentLabel:"Current intent",
     mapTitle:"Body Map",
-    mapDesc:"4. For the current intent, mark on the body map which body regions you would be willing to let the robot touch and which regions you would not be willing to let the robot touch. Unmarked regions will be treated as no clear preference.",
+    mapDesc:"4. For the current intent, mark only the body regions where you have a clear acceptable or unacceptable preference. You do not need to color every region; unmarked regions will be treated as no clear preference.",
     emptyMapConfirm:"I have reviewed the body map for the current intent, but I have no clear acceptable or unacceptable body regions to mark.",
     mapError:"No body region has been marked for the current intent. If you truly have no clear preference, please check the confirmation above first.",
     colorToolTitle:"Color",
@@ -658,10 +658,10 @@ function renderIntentProgress(targetId, currentId) {
       ? "intentProgressCurrent"
       : (status === "done" ? "intentProgressDone" : "intentProgressPending");
     return `
-      <span class="intent-progress-chip ${status}">
+      <button type="button" class="intent-progress-chip ${status}" onclick="jumpToWorkflowIntent('${id}')">
         <span>${intentDisplayName(id)}</span>
         <span class="status">${t(labelKey)}</span>
-      </span>`;
+      </button>`;
   }).join("");
 }
 
@@ -678,6 +678,7 @@ let cur = {};
 let paint = 1;
 let demographics = {};
 let noIntentSelected = false;
+let lastWorkflowStep = "sContext";
 const total = ALL_REGIONS.length;
 const surveyStartedAt = new Date();
 let currentStepId = "sIntro";
@@ -1333,6 +1334,10 @@ window.addEventListener("resize", updateStickyIntentState, { passive: true });
 // NAVIGATION
 // ============================================================
 function goContext() {
+  const previousOrder = order;
+  const previousContextIdx = contextIdx;
+  const previousMapIdx = idx;
+  const previousWorkflowStep = lastWorkflowStep;
   order = [...sel];
   if (order.length === 0) {
     if (!noIntentSelected) return;
@@ -1340,6 +1345,7 @@ function goContext() {
     intentMeta = {};
     idx = 0;
     contextIdx = 0;
+    lastWorkflowStep = "sContext";
     showStep("s3");
     r3();
     return;
@@ -1347,11 +1353,26 @@ function goContext() {
   noIntentSelected = false;
   order.forEach(id => { if (!(id in data)) data[id] = {}; });
   initIntentMeta();
-  contextIdx = 0;
-  idx = 0;
-  showStep("sContext");
-  renderContextQuestion();
-  prog();
+  const sameOrder = previousOrder.length === order.length &&
+    previousOrder.every((id, i) => id === order[i]);
+  if (sameOrder) {
+    contextIdx = Math.min(previousContextIdx, order.length - 1);
+    idx = Math.min(previousMapIdx, order.length - 1);
+  } else {
+    contextIdx = Math.min(contextIdx, order.length - 1);
+    idx = Math.min(idx, order.length - 1);
+  }
+  if (previousWorkflowStep === "s2") {
+    showStep("s2");
+    load();
+    ensureBodyMap()
+      .then(updCol)
+      .catch(() => {});
+  } else {
+    showStep("sContext");
+    renderContextQuestion();
+    prog();
+  }
   window.scrollTo({ top: 0, behavior: "auto" });
 }
 
@@ -1362,9 +1383,34 @@ function backToIntentSelectionFromContext() {
 
 function backToIntentSelectionFromWorkflow() {
   if (document.getElementById("s2")?.classList.contains("active")) {
+    lastWorkflowStep = "s2";
     save();
+  } else if (document.getElementById("sContext")?.classList.contains("active")) {
+    lastWorkflowStep = "sContext";
   }
   showStep("s1");
+  prog();
+  window.scrollTo({ top: 0, behavior: "auto" });
+}
+
+function jumpToWorkflowIntent(intentId) {
+  const targetIndex = order.indexOf(intentId);
+  if (targetIndex < 0) return;
+  if (document.getElementById("s2")?.classList.contains("active")) {
+    save();
+    idx = targetIndex;
+    lastWorkflowStep = "s2";
+    load();
+    ensureBodyMap()
+      .then(updCol)
+      .catch(() => {});
+    window.scrollTo({ top: 0, behavior: "auto" });
+    return;
+  }
+  contextIdx = targetIndex;
+  lastWorkflowStep = "sContext";
+  document.getElementById("contextError")?.classList.remove("show");
+  renderContextQuestion();
   prog();
   window.scrollTo({ top: 0, behavior: "auto" });
 }
@@ -1382,6 +1428,7 @@ function prevPageFromContext() {
 function nextContext() {
   if (!validateCurrentContextQuestion()) return;
   idx = contextIdx;
+  lastWorkflowStep = "s2";
   showStep("s2");
   load();
   ensureBodyMap()
@@ -1426,6 +1473,7 @@ function load() {
   document.getElementById("btnNext").textContent = idx < order.length-1 ? t("nextPage") : t("reviewSubmit");
   document.getElementById("btnNext").style.display = "";
   prog();
+  lastWorkflowStep = "s2";
 }
 function save() {
   const id = order[idx];
@@ -1437,6 +1485,7 @@ function next() {
   if (idx < order.length-1) {
     idx++;
     contextIdx = idx;
+    lastWorkflowStep = "sContext";
     document.getElementById("contextError").classList.remove("show");
     showStep("sContext");
     renderContextQuestion();
@@ -1448,6 +1497,7 @@ function prev() { save(); if (idx > 0) { idx--; load(); } }
 function prevPageFromMap() {
   save();
   contextIdx = idx;
+  lastWorkflowStep = "sContext";
   showStep("sContext");
   renderContextQuestion();
   prog();
@@ -1456,6 +1506,7 @@ function backToIntentSelection() { save(); showStep("s1"); }
 function backToContextQuestions() {
   save();
   contextIdx = idx;
+  lastWorkflowStep = "sContext";
   showStep("sContext");
   renderContextQuestion();
   prog();
@@ -1710,7 +1761,7 @@ function buildSurveyPayload() {
   return {
     participant_id: getParticipantId(),
     timestamp: new Date().toISOString(),
-    study_version: "3.18",
+    study_version: "3.19",
     consent_version: "2026-06-01",
     consent_given: document.getElementById("consentBox")?.checked || false,
     language: lang,
@@ -1741,7 +1792,7 @@ function buildSurveyPayload() {
       timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || null,
       viewport: { width: window.innerWidth, height: window.innerHeight },
       quality: qualityMetadata,
-      source: "bodymap_questionnaire_v25_interaction_fixes"
+      source: "bodymap_questionnaire_v26_usability_iteration"
     }
   };
 }
