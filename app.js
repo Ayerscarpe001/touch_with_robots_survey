@@ -1242,7 +1242,7 @@ function renderContextQuestion() {
     </section>`;
   document.getElementById("contextCounter").textContent = `${contextIdx * 2 + 1} / ${order.length * 2}`;
   document.getElementById("btnPrevContext").textContent = t("prevPage");
-  document.getElementById("btnPrevContext").disabled = contextIdx === 0;
+  document.getElementById("btnPrevContext").disabled = false;
   document.getElementById("btnNextContext").textContent = t("nextPage");
   document.getElementById("btnNextContext").style.display = "";
 }
@@ -1606,7 +1606,10 @@ function jumpToWorkflowIntent(intentId) {
 }
 
 function prevPageFromContext() {
-  if (contextIdx === 0) return;
+  if (contextIdx === 0) {
+    showStep("s1");
+    return;
+  }
   idx = contextIdx - 1;
   showStep("s2");
   load();
