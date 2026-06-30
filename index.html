@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Social Touch Acceptability Survey — RQ1</title>
+<title>Social Robot-Initiated Touch Survey</title>
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -17,8 +17,8 @@
   </div>
 
   <div class="header">
-    <h1 data-i18n="appTitle">机器人社交接触可接受性问卷</h1>
-    <div class="sub" data-i18n="appSub">机器人主动身体接触中的身体区域可接受性标注</div>
+    <h1 data-i18n="appTitle">社交机器人主动触碰调查问卷</h1>
+    <div class="sub" data-i18n="appSub">机器人主动触碰中的意图、关系语境与身体区域接受度标注</div>
     <div class="divider"></div>
   </div>
 
@@ -35,7 +35,7 @@
   <!-- ================================================================ -->
   <div class="step active" id="sIntro">
     <div class="step-title" data-i18n="introTitle">研究场景介绍</div>
-    <div class="step-desc" data-i18n="introDesc">本问卷旨在了解人们对社交机器人主动触摸的接受程度。请依次阅读下面三页简短说明，明确本研究中的社交机器人、社交触摸等概念及答题流程。</div>
+    <div class="step-desc" data-i18n="introDesc">本问卷旨在了解人们对社交机器人主动触碰的接受程度。请依次阅读下面三页简短说明，明确本研究中的社交机器人、社交触碰等概念及答题流程。</div>
     <div class="intro-carousel" id="introCarousel">
       <section class="intro-slide active" data-intro-slide="0">
         <div class="intro-media">
@@ -54,9 +54,9 @@
           </video>
         </div>
         <div class="intro-copy">
-          <div class="intro-slide-kicker" data-i18n="introSlide2Kicker">02 · 社交触摸</div>
-          <h2 data-i18n="introSlide2Title">机器人主动发起的身体接触</h2>
-          <p data-i18n="introP2">问卷中的“社交触摸”指机器人对人身体发起的直接、短暂、柔和、非疼痛、非强制性的身体接触。这种触摸旨在传达具有社会意义的意图，例如表达关心。</p>
+          <div class="intro-slide-kicker" data-i18n="introSlide2Kicker">02 · 社交触碰</div>
+          <h2 data-i18n="introSlide2Title">机器人主动发起的身体触碰</h2>
+          <p data-i18n="introP2">问卷中的“社交触碰”指机器人对人身体发起的直接、短暂、柔和、非疼痛、非强制性的身体触碰。这种触碰旨在传达具有社会意义的意图，例如表达关心。</p>
         </div>
       </section>
       <section class="intro-slide" data-intro-slide="2" hidden>
@@ -68,7 +68,7 @@
         <div class="intro-copy">
           <div class="intro-slide-kicker" data-i18n="introSlide3Kicker">03 · 答题流程</div>
           <h2 data-i18n="introSlide3Title">问卷填写流程</h2>
-          <p data-i18n="introP3">填写过程中，问卷会先询问“你能接受社交机器人通过主动触摸表达哪些意图”，随后，将会围绕你选择的每种意图，循环询问一组相关问题。</p>
+          <p data-i18n="introP3">填写过程中，问卷会先询问“你能接受社交机器人通过主动触碰表达哪些意图”，随后，将会围绕你选择的每种意图，循环询问一组相关问题。</p>
         </div>
       </section>
       <div class="intro-carousel-nav">
@@ -94,7 +94,7 @@
     <div class="step-desc" data-i18n="consentDesc">请在开始问卷前阅读以下说明。</div>
     <div class="panel">
       <p data-i18n="consentP2">你的回答仅用于学术研究。本问卷不会收集你的姓名或直接联系方式，你可以在提交前随时退出。</p>
-      <p data-i18n="consentP3">问卷涉及身体部位与社交接触判断。如果你对此感到不适，可以随时停止填写。</p>
+      <p data-i18n="consentP3">问卷涉及身体部位与社交触碰判断。如果你对此感到不适，可以随时停止填写。</p>
       <p data-i18n="consentP4">请确认你已年满 18 岁后再继续填写本问卷。</p>
       <label class="consent-check">
         <input type="checkbox" id="consentBox" onchange="updConsent()" autocomplete="off">
@@ -150,7 +150,7 @@
   <!-- ================================================================ -->
   <div class="step" id="s1">
     <div class="step-title" data-i18n="intentTitle">社交意图选择</div>
-    <div class="step-desc" data-i18n="intentDesc">当社交机器人需要通过主动触摸你来表示某种社交意向、达成某种社交目的时，哪些意图是你可以接受的？请选择所有你能接受的选项。</div>
+    <div class="step-desc" data-i18n="intentDesc">当社交机器人需要通过主动触碰你来表示某种社交意向、达成某种社交目的时，哪些意图是你可以接受的？请选择所有你能接受的选项。</div>
     <div class="select-row">
       <button onclick="selAll(true)" data-i18n="selectAll">全选</button>
       <button onclick="selAll(false)" data-i18n="clearAll">清空</button>

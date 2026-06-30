@@ -13,19 +13,19 @@ const supabaseClient = window.supabase
 let lang = localStorage.getItem("survey_language") || "zh";
 const I18N = {
   zh: {
-    appTitle:"机器人社交接触可接受性问卷",
-    appSub:"机器人主动身体接触中的身体区域可接受性标注",
+    appTitle:"社交机器人主动触碰调查问卷",
+    appSub:"机器人主动触碰中的意图、关系语境与身体区域接受度标注",
     introTitle:"研究场景介绍",
-    introDesc:"本问卷旨在了解人们对社交机器人主动触摸的接受程度。请依次阅读下面三页简短说明，明确本研究中的社交机器人、社交触摸等概念及答题流程。",
+    introDesc:"本问卷旨在了解人们对社交机器人主动触碰的接受程度。请依次阅读下面三页简短说明，明确本研究中的社交机器人、社交触碰等概念及答题流程。",
     introSlide1Kicker:"01 · 机器人形态",
     introSlide1Title:"具有手臂与手的人形机器人",
-    introSlide2Kicker:"02 · 社交触摸",
-    introSlide2Title:"机器人主动发起的身体接触",
+    introSlide2Kicker:"02 · 社交触碰",
+    introSlide2Title:"机器人主动发起的身体触碰",
     introSlide3Kicker:"03 · 答题流程",
     introSlide3Title:"问卷填写流程",
     introP1:"请将问卷中的“社交机器人”想象为一个具有人形上半身结构的机器人，它具有类似人体结构的双臂和双手，整体身高略矮于成年人水平。它能够遵循恰当的行为规范，与人进行社交互动。",
-    introP2:"问卷中的“社交触摸”指机器人对人身体发起的直接、短暂、柔和、非疼痛、非强制性的身体接触。这种触摸旨在传达具有社会意义的意图，例如表达关心。",
-    introP3:"填写过程中，问卷会先询问“你能接受社交机器人通过主动触摸表达哪些意图”，随后，将会围绕你选择的每种意图，循环询问一组相关问题。",
+    introP2:"问卷中的“社交触碰”指机器人对人身体发起的直接、短暂、柔和、非疼痛、非强制性的身体触碰。这种触碰旨在传达具有社会意义的意图，例如表达关心。",
+    introP3:"填写过程中，问卷会先询问“你能接受社交机器人通过主动触碰表达哪些意图”，随后，将会围绕你选择的每种意图，循环询问一组相关问题。",
     introRobotAlt:"抽象简笔画社交机器人，具有头部、上身、机械手臂和手部。",
     introFlowAlt:"先选择可接受的表达内容，再围绕每个选择逐项作答的问卷流程示意图。",
     introPrev:"← 上一页",
@@ -35,7 +35,7 @@ const I18N = {
     consentTitle:"知情同意",
     consentDesc:"请在开始问卷前阅读以下说明。",
     consentP2:"你的回答仅用于学术研究。本问卷不会收集你的姓名或直接联系方式，你可以在提交前随时退出。",
-    consentP3:"问卷涉及身体部位与社交接触判断。如果你对此感到不适，可以随时停止填写。",
+    consentP3:"问卷涉及身体部位与社交触碰判断。如果你对此感到不适，可以随时停止填写。",
     consentP4:"请确认你已年满 18 岁后再继续填写本问卷。",
     consentCheck:"我已认真阅读以上说明，并同意参与本研究。",
     continueBtn:"继续 →",
@@ -69,7 +69,7 @@ const I18N = {
     countryOther:"其他",
     infoError:"请完整填写有效年龄、性别和所属国家或地区后继续。",
     intentTitle:"社交意图选择",
-    intentDesc:"当社交机器人需要通过主动触摸你来表示某种社交意向、达成某种社交目的时，哪些意图是你可以接受的？请选择所有你能接受的选项。",
+    intentDesc:"当社交机器人需要通过主动触碰你来表示某种社交意向、达成某种社交目的时，哪些意图是你可以接受的？请选择所有你能接受的选项。",
     selectAll:"全选",
     clearAll:"清空",
     noIntentTitle:"以上意图均不适合",
@@ -179,10 +179,10 @@ const I18N = {
     followupError:"联系方式提交失败，请稍后重试。"
   },
   en: {
-    appTitle:"Robot Social Touch Acceptability Survey",
-    appSub:"Body-region acceptability mapping for robot-initiated physical contact",
+    appTitle:"Social Robot-Initiated Touch Survey",
+    appSub:"Intent, relationship context, and body-region acceptability in robot-initiated touch",
     introTitle:"Study Scenario",
-    introDesc:"This survey examines people's acceptance of touch initiated by social robots. Please read the following three short pages to understand how this study defines the social robot and social touch, as well as the survey process.",
+    introDesc:"This survey examines people's acceptance of touch initiated by social robots. Please read the following three short pages to understand how this study defines the social robot, social touch, and the survey process.",
     introSlide1Kicker:"01 · Robot form",
     introSlide1Title:"Humanoid Robot with Arms and Hands",
     introSlide2Kicker:"02 · Social touch",
@@ -772,7 +772,7 @@ function collectDraftPayload() {
   const activeStep = currentActiveStepId();
   return {
     saved_at: new Date().toISOString(),
-    study_version: "3.22",
+    study_version: "3.23",
     lang,
     active_step: activeStep === "s4" ? "s3" : activeStep,
     introSlideIndex,
@@ -824,7 +824,7 @@ function restoreSurveyDraft() {
     resetConsentState();
     return false;
   }
-  if (draft.study_version && draft.study_version !== "3.22") {
+  if (draft.study_version && draft.study_version !== "3.23") {
     clearSurveyDraft();
     resetConsentState();
     return false;
@@ -1958,7 +1958,7 @@ function buildSurveyPayload() {
   return {
     participant_id: getParticipantId(),
     timestamp: new Date().toISOString(),
-    study_version: "3.22",
+    study_version: "3.23",
     consent_version: "2026-06-01",
     consent_given: document.getElementById("consentBox")?.checked || false,
     language: lang,
@@ -1989,7 +1989,7 @@ function buildSurveyPayload() {
       timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || null,
       viewport: { width: window.innerWidth, height: window.innerHeight },
       quality: qualityMetadata,
-      source: "bodymap_questionnaire_v29_mobile_map_and_region_options"
+      source: "bodymap_questionnaire_v30_touch_wording_alignment"
     }
   };
 }
@@ -2041,7 +2041,7 @@ async function submitFollowupContact() {
     .from("followup_contacts")
     .insert({
       participant_id: getParticipantId(),
-      study_version: "3.22",
+      study_version: "3.23",
       language: lang,
       contact,
       metadata: {
