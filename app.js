@@ -94,17 +94,17 @@ const I18N = {
     closeness6:"亲近",
     closeness7:"非常亲近",
     ctxPublicService:"公共服务",
-    ctxPublicServiceDesc:"在公共或半公共环境中，机器人为不特定或短期接触的人们提供接待、信息咨询或一般服务。",
+    ctxPublicServiceDesc:"机器人在公共或半公共场所与不特定或短期接触的人们互动，主要提供接待、信息支持、流程协助或一般服务。",
     ctxCompanionship:"日常陪伴",
-    ctxCompanionshipDesc:"机器人在家庭或日常生活中与人们持续共处，并提供社交陪伴、休闲互动或日常情感支持。",
+    ctxCompanionshipDesc:"机器人在家庭或日常生活环境中与人们较持续地共处，主要提供陪伴、日常互动或情感支持。",
     ctxCare:"健康照护",
-    ctxCareDesc:"机器人以健康、照护或恢复为主要目标，与人们展开医疗、护理、康复、心理支持或老人照护等互动。",
+    ctxCareDesc:"机器人在医疗、护理、康复、心理支持或老人照护等环境中与人们互动，主要服务于健康、照护或恢复。",
     ctxLearning:"学习训练",
-    ctxLearningDesc:"机器人以帮助人们进行知识学习、教学辅导、技能练习、行为练习或表现反馈等为主要目标的互动。",
+    ctxLearningDesc:"机器人在学习、教学、训练或练习环境中与人们互动，主要支持知识学习、技能练习、行为练习或表现反馈。",
     ctxTask:"任务协作",
-    ctxTaskDesc:"机器人与人们共同完成具有明确外部目标的工作、导航、操作、家务或其他任务。",
+    ctxTaskDesc:"机器人在工作、导航、操作、家务或其他任务环境中与人们协同活动，主要共同完成明确的外部目标。",
     ctxLeisure:"休闲娱乐",
-    ctxLeisureDesc:"机器人在游戏、运动、放松、玩笑等场景中与人们展开互动。",
+    ctxLeisureDesc:"机器人在游戏、运动、休闲、放松或玩笑互动中与人们互动，主要服务于娱乐体验、轻松互动或愉悦感。",
     ctxOther:"其他（请补充）",
     ctxOtherDesc:"以上选项未能涵盖的其他互动语境。",
     ctxOtherPlaceholder:"请简要补充具体的互动语境",
@@ -263,17 +263,17 @@ const I18N = {
     closeness6:"Close",
     closeness7:"Very close",
     ctxPublicService:"Public service",
-    ctxPublicServiceDesc:"The robot provides reception, information, or general services to unspecified people or people in brief contact in public or semi-public settings.",
+    ctxPublicServiceDesc:"The robot interacts with unspecified people or people in brief contact in public or semi-public places, mainly providing reception, information support, procedural assistance, or general services.",
     ctxCompanionship:"Everyday companionship",
-    ctxCompanionshipDesc:"The robot stays with people in home or everyday life and provides social companionship, leisure interaction, or everyday emotional support.",
+    ctxCompanionshipDesc:"The robot stays with people over time in home or everyday-life settings, mainly providing companionship, everyday interaction, or emotional support.",
     ctxCare:"Care / Health support",
-    ctxCareDesc:"The robot interacts with people in medical care, nursing, rehabilitation, psychological support, eldercare, or other activities primarily aimed at health, care, or recovery.",
+    ctxCareDesc:"The robot interacts with people in medical, nursing, rehabilitation, psychological support, or eldercare settings, mainly serving health, care, or recovery goals.",
     ctxLearning:"Learning / Training",
-    ctxLearningDesc:"The robot interacts with people to support learning, tutoring, skill practice, behavior practice, or performance feedback.",
+    ctxLearningDesc:"The robot interacts with people in learning, teaching, training, or practice settings, mainly supporting knowledge learning, skill practice, behavioral practice, or performance feedback.",
     ctxTask:"Task collaboration",
-    ctxTaskDesc:"The robot and people work together on work, navigation, operation, household activity, or another task with a clear external goal.",
+    ctxTaskDesc:"The robot collaborates with people in work, navigation, operation, household, or other task settings, mainly to complete a clear external goal together.",
     ctxLeisure:"Leisure / Entertainment",
-    ctxLeisureDesc:"The robot interacts with people in games, exercise, relaxation, joking, or other leisure and entertainment settings.",
+    ctxLeisureDesc:"The robot interacts with people in games, exercise, leisure, relaxation, or joking interactions, mainly serving entertainment, lighthearted interaction, or enjoyment.",
     ctxOther:"Other (Please specify)",
     ctxOtherDesc:"Another interaction context not covered by the options above.",
     ctxOtherPlaceholder:"Briefly describe the interaction context",
@@ -779,7 +779,7 @@ function collectDraftPayload() {
   const activeStep = currentActiveStepId();
   return {
     saved_at: new Date().toISOString(),
-    study_version: "3.27",
+    study_version: "3.28",
     lang,
     active_step: activeStep === "s4" ? "s3" : activeStep,
     introSlideIndex,
@@ -831,7 +831,7 @@ function restoreSurveyDraft() {
     resetConsentState();
     return false;
   }
-  if (draft.study_version && draft.study_version !== "3.27") {
+  if (draft.study_version && draft.study_version !== "3.28") {
     clearSurveyDraft();
     resetConsentState();
     return false;
@@ -1198,21 +1198,35 @@ function renderContextQuestion() {
       ${iosDiagram(level.value)}
       <span class="scale-label">${t(level.labelKey)}</span>
     </button>`).join("");
-  const contextOptions = INTERACTION_CONTEXTS.map(context => `
-    <button type="button"
-      class="context-option ${meta.interaction_contexts?.includes(context.id) ? "selected" : ""}"
-      onclick="setInteractionContext('${id}', '${context.id}')">
-      <span class="context-name">${t(context.labelKey)}</span>
-      <span class="context-desc">${t(context.descKey)}</span>
-    </button>`).join("");
-  const otherContextInput = meta.interaction_contexts?.includes("other") ? `
-    <label class="other-context-field" for="other-context-${id}">
-      <span>${t("ctxOther")}</span>
-      <input id="other-context-${id}" type="text" maxlength="160"
-        value="${escapeHtml(meta.interaction_context_other || "")}"
-        placeholder="${escapeHtml(t("ctxOtherPlaceholder"))}"
-        oninput="setOtherContextText('${id}', this.value)">
-    </label>` : "";
+  const contextOptions = INTERACTION_CONTEXTS.map(context => {
+    const selected = meta.interaction_contexts?.includes(context.id);
+    if (context.id === "other") {
+      const otherContextInput = selected ? `
+        <label class="other-context-field" for="other-context-${id}">
+          <input id="other-context-${id}" type="text" maxlength="160"
+            value="${escapeHtml(meta.interaction_context_other || "")}"
+            placeholder="${escapeHtml(t("ctxOtherPlaceholder"))}"
+            oninput="setOtherContextText('${id}', this.value)">
+        </label>` : "";
+      return `
+        <div class="context-option-combo ${selected ? "selected" : ""}">
+          <button type="button"
+            class="context-option ${selected ? "selected" : ""}"
+            onclick="setInteractionContext('${id}', '${context.id}')">
+            <span class="context-name">${t(context.labelKey)}</span>
+            <span class="context-desc">${t(context.descKey)}</span>
+          </button>
+          ${otherContextInput}
+        </div>`;
+    }
+    return `
+      <button type="button"
+        class="context-option ${selected ? "selected" : ""}"
+        onclick="setInteractionContext('${id}', '${context.id}')">
+        <span class="context-name">${t(context.labelKey)}</span>
+        <span class="context-desc">${t(context.descKey)}</span>
+      </button>`;
+  }).join("");
   const conventionOptions = CONVENTION_LEVELS.map(level => `
     <button type="button"
       class="convention-option ${meta.interpersonal_reference === level.value ? "selected" : ""}"
@@ -1234,7 +1248,6 @@ function renderContextQuestion() {
         <div class="context-options" role="group" aria-label="${t("contextQuestion")}">
           ${contextOptions}
         </div>
-        ${otherContextInput}
       </div>
       <div class="context-block convention-block">
         <div class="context-question">${t("conventionQuestion")}</div>
@@ -1966,7 +1979,7 @@ function buildSurveyPayload() {
   return {
     participant_id: getParticipantId(),
     timestamp: new Date().toISOString(),
-    study_version: "3.27",
+    study_version: "3.28",
     consent_version: "2026-06-01",
     consent_given: document.getElementById("consentBox")?.checked || false,
     language: lang,
@@ -1997,7 +2010,7 @@ function buildSurveyPayload() {
       timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || null,
       viewport: { width: window.innerWidth, height: window.innerHeight },
       quality: qualityMetadata,
-      source: "bodymap_questionnaire_v34_definition_context_revision"
+      source: "bodymap_questionnaire_v35_context_definition_and_other_input_layout"
     }
   };
 }
@@ -2049,7 +2062,7 @@ async function submitFollowupContact() {
     .from("followup_contacts")
     .insert({
       participant_id: getParticipantId(),
-      study_version: "3.27",
+      study_version: "3.28",
       language: lang,
       contact,
       metadata: {
