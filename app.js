@@ -176,7 +176,8 @@ const I18N = {
     followupSubmitting:"提交中...",
     followupSubmitted:"联系方式已提交，感谢。",
     followupEmpty:"请先填写联系方式，或直接关闭页面。",
-    followupError:"联系方式提交失败，请稍后重试。"
+    followupError:"联系方式提交失败，请稍后重试。",
+    followupConfigError:"联系方式收集暂未完成数据库配置，请稍后联系研究团队。"
   },
   en: {
     appTitle:"Social Robot-Initiated Touch Research Survey",
@@ -342,7 +343,8 @@ const I18N = {
     followupSubmitting:"Submitting...",
     followupSubmitted:"Contact submitted. Thank you.",
     followupEmpty:"Please enter contact information first, or simply close this page.",
-    followupError:"Contact submission failed. Please try again later."
+    followupError:"Contact submission failed. Please try again later.",
+    followupConfigError:"Follow-up contact collection is not yet configured in the database. Please contact the research team later."
   }
 };
 const COUNTRY_CODES = [
@@ -772,7 +774,7 @@ function collectDraftPayload() {
   const activeStep = currentActiveStepId();
   return {
     saved_at: new Date().toISOString(),
-    study_version: "3.25",
+    study_version: "3.26",
     lang,
     active_step: activeStep === "s4" ? "s3" : activeStep,
     introSlideIndex,
@@ -824,7 +826,7 @@ function restoreSurveyDraft() {
     resetConsentState();
     return false;
   }
-  if (draft.study_version && draft.study_version !== "3.25") {
+  if (draft.study_version && draft.study_version !== "3.26") {
     clearSurveyDraft();
     resetConsentState();
     return false;
@@ -1654,6 +1656,7 @@ function load() {
   const id = order[idx];
   const it = INTENTS.find(i => i.id === id);
   ensureMeta(id);
+  setPaint(1);
   document.getElementById("mapIntentName").textContent = lang === "zh" ? it.zh : it.en;
   document.getElementById("mapIntentDesc").textContent = it.desc[lang];
   document.getElementById("counter").textContent = `${idx * 2 + 2} / ${order.length * 2}`;
@@ -1958,7 +1961,7 @@ function buildSurveyPayload() {
   return {
     participant_id: getParticipantId(),
     timestamp: new Date().toISOString(),
-    study_version: "3.25",
+    study_version: "3.26",
     consent_version: "2026-06-01",
     consent_given: document.getElementById("consentBox")?.checked || false,
     language: lang,
@@ -1989,7 +1992,7 @@ function buildSurveyPayload() {
       timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || null,
       viewport: { width: window.innerWidth, height: window.innerHeight },
       quality: qualityMetadata,
-      source: "bodymap_questionnaire_v32_formal_title_and_intro"
+      source: "bodymap_questionnaire_v33_map_default_paint_and_followup_check"
     }
   };
 }
@@ -2041,7 +2044,7 @@ async function submitFollowupContact() {
     .from("followup_contacts")
     .insert({
       participant_id: getParticipantId(),
-      study_version: "3.25",
+      study_version: "3.26",
       language: lang,
       contact,
       metadata: {
@@ -2053,7 +2056,7 @@ async function submitFollowupContact() {
     console.error(error);
     btn.disabled = false;
     btn.textContent = t("followupSubmit");
-    status.textContent = t("followupError");
+    status.textContent = error.code === "PGRST205" ? t("followupConfigError") : t("followupError");
     status.className = "followup-status err";
     return;
   }
