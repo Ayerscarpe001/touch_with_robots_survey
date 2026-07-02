@@ -74,8 +74,8 @@ const I18N = {
     clearAll:"清空",
     noIntentTitle:"以上意图均不适合",
     noIntentDesc:"如果你认为这些社交意图都不适合由机器人通过主动触碰表达，可以选择此项并继续说明原因。",
-    unselectedTitle:"未选原因记录",
-    unselectedDesc:"所有已选意图均填写完毕，感谢你的作答。最后，我们想了解：对于你未选择的社交意图，主要有哪些顾虑让你觉得它们不适合由机器人主动发起社交触碰来表达？请选择最主要的 1-2 个原因。",
+    unselectedTitle:"未选意图原因收集",
+    unselectedDesc:"感谢你的作答，问卷即将结束。我们想了解最后一个问题：对于你未选择的社交意图，主要有哪些顾虑让你觉得它们不适合由机器人主动发起社交触碰来表达？请选择最主要的 1-2 个原因。",
     unselectedDescNoSelection:"你选择了“以上意图均不适合”。我们想了解：主要有哪些顾虑让你觉得这些意图不适合由机器人主动发起社交触碰来表达？请选择最主要的 1-2 个原因。",
     unselectedSummary:"你未选择 {count} 类社交意图。",
     unselectedReasonTouchUnneeded:"我认为这些意图无需通过身体触碰的方式表达",
@@ -126,6 +126,7 @@ const I18N = {
     mapDesc:"4、请针对当前意图，选择不同颜色，在身体地图上标注出你明确愿意或不愿意被机器人触碰的部位，未点选填色区域将视为无明确意向。",
     emptyMapConfirm:"我已查看当前意图的身体地图，但没有任何明确愿意或不愿意标注的身体区域。",
     mapError:"当前身体地图尚未标注。如你确实没有明确意向，请先勾选上方确认项。",
+    workflowIncompleteError:"仍有未完成的意图答题，请通过上方意图列表补全后继续。",
     colorToolTitle:"颜色",
     acceptable:"愿意被触碰",
     unacceptable:"不愿意被触碰",
@@ -141,6 +142,7 @@ const I18N = {
     backToContextPrefix:"返回",
     contextQuestionsNoun:"关系/场景/参考",
     backToContextFull:"← 返回关系/场景",
+    backToAnswers:"← 返回答题页",
     prevPage:"← 上一页",
     nextPage:"下一页 →",
     intentProgressDone:"已完成",
@@ -154,16 +156,16 @@ const I18N = {
     nextIntent:"下一个意图 →",
     reviewSubmit:"检查与提交 →",
     reviewTitle:"检查与提交",
-    reviewDesc:"请检查你的回答，然后提交至研究数据库。",
+    reviewDesc:"请检查所有已选意图的回答情况，确认后点击提交。",
     noIntentReview:"你选择了“以上意图均不适合由机器人通过主动触碰表达”。本次回答将不会包含身体地图标注。",
-    backToMaps:"← 返回地图",
+    backToMaps:"← 返回答题页",
     submitResponse:"提交问卷",
     backToReview:"返回检查",
     progressIntro:"研究场景介绍",
     progressConsent:"知情同意",
     progressInfo:"基本信息",
     progressIntents:"选择社交意图",
-    progressUnselected:"未选原因记录",
+    progressUnselected:"未选意图原因收集",
     progressContext:"关系距离、场景与人际参考程度",
     progressMap:"身体地图",
     progressIntentSummary:"第 {current} 个意图 / 共选 {total} 个",
@@ -258,7 +260,7 @@ const I18N = {
     noIntentTitle:"None of these intents are suitable",
     noIntentDesc:"If you think none of these social intents are suitable for a robot to express through active touch, select this option and briefly explain why.",
     unselectedTitle:"Reasons for Unselected Intents",
-    unselectedDesc:"Thank you for completing the questions about your selected intents. Finally, for the social intents you did not select, what are your main concerns about why they are not suitable for a robot to express through robot-initiated social touch? Select the 1-2 most important reasons.",
+    unselectedDesc:"Thank you for your responses. The survey is almost complete. For one final question: for the social intents you did not select, what are your main concerns about why they are not suitable for a robot to express through robot-initiated social touch? Select the 1-2 most important reasons.",
     unselectedDescNoSelection:"You selected “None of these intents are suitable.” What are your main concerns about why these intents are not suitable for a robot to express through robot-initiated social touch? Select the 1-2 most important reasons.",
     unselectedSummary:"You did not select {count} social intents.",
     unselectedReasonTouchUnneeded:"I think these intents do not need to be expressed through bodily touch",
@@ -309,6 +311,7 @@ const I18N = {
     mapDesc:"4. For the current intent, choose different colors on the body map to mark the regions where you clearly would or would not want to be touched by the robot. Regions left uncolored will be treated as no clear preference.",
     emptyMapConfirm:"I have reviewed the body map for the current intent, but I have no clear acceptable or unacceptable body regions to mark.",
     mapError:"No body region has been marked for the current intent. If you truly have no clear preference, please check the confirmation above first.",
+    workflowIncompleteError:"Some selected intents are not complete yet. Please use the intent list above to finish them before continuing.",
     colorToolTitle:"Color",
     acceptable:"Acceptable",
     unacceptable:"Unacceptable",
@@ -324,6 +327,7 @@ const I18N = {
     backToContextPrefix:"Back to",
     contextQuestionsNoun:"relationship/scenario/reference",
     backToContextFull:"← Back to relationship/scenario",
+    backToAnswers:"← Back to questions",
     prevPage:"← Previous page",
     nextPage:"Next page →",
     intentProgressDone:"Completed",
@@ -337,9 +341,9 @@ const I18N = {
     nextIntent:"Next intent →",
     reviewSubmit:"Review & Submit →",
     reviewTitle:"Review & Submit",
-    reviewDesc:"Check your responses, then submit them to the research database.",
+    reviewDesc:"Please review all responses for your selected intents, then submit.",
     noIntentReview:"You selected “None of these intents are suitable for a robot to express through active touch.” This response will not include body-map markings.",
-    backToMaps:"← Back to maps",
+    backToMaps:"← Back to questions",
     submitResponse:"Submit response",
     backToReview:"Back to review",
     progressIntro:"Study scenario",
@@ -726,6 +730,10 @@ function isIntentComplete(intentId) {
     meta.interpersonal_reference &&
     isMapComplete(intentId)
   );
+}
+
+function allSelectedIntentsComplete() {
+  return order.length > 0 && order.every(id => isIntentComplete(id));
 }
 
 function renderIntentProgress(targetId, currentId) {
@@ -1573,6 +1581,7 @@ async function ensureBodyMap() {
             updCol();
             updateEmptyMapConfirmUI();
             renderIntentProgress("mapIntentProgress", intentId);
+            updateMapNextButton();
             if (isTouchLikeInput(event)) showTT(regionLabel(REGION_BY_ID.get(regionId)), event, true);
             scheduleDraftSave();
           },
@@ -1618,6 +1627,7 @@ function setEmptyMapConfirmation(checked) {
   qualityLog.mapEmptyConfirmations[id] = checked;
   document.getElementById("mapError")?.classList.remove("show");
   renderIntentProgress("mapIntentProgress", id);
+  updateMapNextButton();
   scheduleDraftSave();
 }
 
@@ -1631,12 +1641,18 @@ function updateEmptyMapConfirmUI() {
   checkbox.disabled = hasMarks;
   document.querySelector(".empty-map-confirm")?.classList.toggle("disabled", hasMarks);
   document.getElementById("mapError")?.classList.remove("show");
+  const mapError = document.getElementById("mapError");
+  if (mapError) mapError.textContent = t("mapError");
 }
 
 function validateCurrentMap() {
   const id = order[idx];
   if (!id || hasCurrentMapMarks() || ensureMeta(id).empty_map_confirmed) return true;
-  document.getElementById("mapError")?.classList.add("show");
+  const mapError = document.getElementById("mapError");
+  if (mapError) {
+    mapError.textContent = t("mapError");
+    mapError.classList.add("show");
+  }
   document.getElementById("emptyMapConfirm")?.focus();
   return false;
 }
@@ -1778,18 +1794,11 @@ function jumpToWorkflowIntent(intentId) {
   if (targetIndex < 0) return;
   if (document.getElementById("s2")?.classList.contains("active")) {
     save();
-    idx = targetIndex;
-    lastWorkflowStep = "s2";
-    load();
-    ensureBodyMap()
-      .then(updCol)
-      .catch(() => {});
-    window.scrollTo({ top: 0, behavior: "auto" });
-    return;
   }
   contextIdx = targetIndex;
   lastWorkflowStep = "sContext";
   document.getElementById("contextError")?.classList.remove("show");
+  showStep("sContext");
   renderContextQuestion();
   prog();
   window.scrollTo({ top: 0, behavior: "auto" });
@@ -1840,6 +1849,18 @@ function prevContext() {
 async function goMaps() {
   nextContext();
 }
+
+function updateMapNextButton() {
+  const nextButton = document.getElementById("btnNext");
+  if (!nextButton || !order.length) return;
+  const isFinalMap = idx === order.length - 1;
+  const hasIncompleteSelectedIntent = isFinalMap && !allSelectedIntentsComplete();
+  nextButton.textContent = isFinalMap && !hasUnselectedIntents() && !hasIncompleteSelectedIntent
+    ? t("reviewSubmit")
+    : t("nextPage");
+  nextButton.classList.toggle("soft-disabled", hasIncompleteSelectedIntent);
+}
+
 function load() {
   const id = order[idx];
   const it = INTENTS.find(i => i.id === id);
@@ -1854,7 +1875,7 @@ function load() {
   renderIntentProgress("mapIntentProgress", id);
   document.getElementById("btnPrevMap").textContent = t("prevPage");
   document.getElementById("btnPrevMap").disabled = false;
-  document.getElementById("btnNext").textContent = t("nextPage");
+  updateMapNextButton();
   document.getElementById("btnNext").style.display = "";
   prog();
   lastWorkflowStep = "s2";
@@ -1876,6 +1897,16 @@ function next() {
     showStep("sContext");
     renderContextQuestion();
   } else {
+    if (!allSelectedIntentsComplete()) {
+      const mapError = document.getElementById("mapError");
+      if (mapError) {
+        mapError.textContent = t("workflowIncompleteError");
+        mapError.classList.add("show");
+      }
+      renderIntentProgress("mapIntentProgress", order[idx]);
+      document.getElementById("btnNext")?.classList.add("soft-disabled");
+      return;
+    }
     done();
   }
 }
@@ -1908,6 +1939,7 @@ function resetCur() {
   updCol();
   updateEmptyMapConfirmUI();
   renderIntentProgress("mapIntentProgress", id);
+  updateMapNextButton();
   scheduleDraftSave();
 }
 function done() {
@@ -1966,7 +1998,7 @@ function prog() {
 function r3() {
   const reviewBackButton = document.querySelector("#s3 .nav .btn-s");
   if (order.length === 0 && noIntentSelected) {
-    if (reviewBackButton) reviewBackButton.textContent = t("prevPage");
+    if (reviewBackButton) reviewBackButton.textContent = t("backToAnswers");
     document.getElementById("revGrid").innerHTML = `
       <div class="rev-card no-intent-review">
         <div class="r-name">${t("noIntentTitle")}</div>
@@ -1974,7 +2006,7 @@ function r3() {
       </div>`;
     return;
   }
-  if (reviewBackButton) reviewBackButton.textContent = t("prevPage");
+  if (reviewBackButton) reviewBackButton.textContent = t("backToAnswers");
   document.getElementById("revGrid").innerHTML = order.map(id => {
     const it = INTENTS.find(i => i.id === id);
     const meta = intentMeta[id] || {};

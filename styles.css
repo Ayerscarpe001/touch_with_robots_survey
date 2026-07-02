@@ -497,6 +497,12 @@
   .btn { padding:10px 26px; border-radius:8px; font-size:0.86rem; font-weight:600; cursor:pointer; transition:all 0.18s; border:none; }
   .btn-p { background:var(--accent); color:var(--bg); }
   .btn-p:hover { filter:brightness(1.15); }
+  .btn-p.soft-disabled {
+    background:#333;
+    color:#777;
+    box-shadow:none;
+  }
+  .btn-p.soft-disabled:hover { filter:none; }
   .btn-p:disabled { background:#333; color:#666; cursor:not-allowed; }
   .btn-s { background:transparent; border:1px solid var(--border); color:var(--text); }
   .btn-s:hover { border-color:#555; }

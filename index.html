@@ -257,8 +257,8 @@
   <!-- STEP 5: UNSELECTED INTENT REASONS                                -->
   <!-- ================================================================ -->
   <div class="step" id="sUnselected">
-    <div class="step-title" data-i18n="unselectedTitle">未选原因记录</div>
-    <div class="step-desc" data-i18n="unselectedDesc">所有已选意图均填写完毕，感谢你的作答。最后，我们想了解：对于你未选择的社交意图，主要有哪些顾虑让你觉得它们不适合由机器人主动发起社交触碰来表达？请选择最主要的 1-2 个原因。</div>
+    <div class="step-title" data-i18n="unselectedTitle">未选意图原因收集</div>
+    <div class="step-desc" data-i18n="unselectedDesc">感谢你的作答，问卷即将结束。我们想了解最后一个问题：对于你未选择的社交意图，主要有哪些顾虑让你觉得它们不适合由机器人主动发起社交触碰来表达？请选择最主要的 1-2 个原因。</div>
     <div class="unselected-panel">
       <div class="unselected-summary" id="unselectedSummary"></div>
       <div class="unselected-reason-list" id="unselectedReasonList"></div>
@@ -276,10 +276,10 @@
   <!-- ================================================================ -->
   <div class="step" id="s3">
     <div class="step-title" data-i18n="reviewTitle">检查与提交</div>
-    <div class="step-desc" data-i18n="reviewDesc">请检查你的回答，然后提交至研究数据库。</div>
+    <div class="step-desc" data-i18n="reviewDesc">请检查所有已选意图的回答情况，确认后点击提交。</div>
     <div class="rev-grid" id="revGrid"></div>
     <div class="nav">
-      <button class="btn btn-s" onclick="back()" data-i18n="prevPage">← 上一页</button>
+      <button class="btn btn-s" onclick="back()" data-i18n="backToAnswers">← 返回答题页</button>
       <button class="btn btn-e" id="btnSubmit" onclick="submitToSupabase()" data-i18n="submitResponse">提交问卷</button>
     </div>
   </div>
