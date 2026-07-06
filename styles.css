@@ -8,6 +8,39 @@
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
     line-height: 1.6; min-height: 100vh;
   }
+  .launch-screen {
+    position:fixed; inset:0; z-index:9999;
+    display:grid; place-items:center; align-content:center; gap:14px;
+    background:var(--bg); color:var(--text);
+    pointer-events:none;
+    opacity:0; visibility:hidden;
+  }
+  body.booting .launch-screen {
+    opacity:1; visibility:visible;
+    animation:launchOut 1320ms cubic-bezier(.22,.61,.36,1) 160ms forwards;
+  }
+  .launch-title {
+    max-width:min(760px, 86vw); text-align:center;
+    font-size:clamp(1.45rem, 4.6vw, 2.28rem); line-height:1.25; font-weight:780;
+    letter-spacing:0;
+    transform-origin:center center;
+    opacity:0;
+  }
+  body.booting .launch-title {
+    animation:launchTitleMove 1320ms cubic-bezier(.22,.61,.36,1) 160ms forwards;
+  }
+  .launch-line {
+    width:54px; height:3px; border-radius:999px; background:var(--accent);
+    opacity:0;
+  }
+  body.booting .launch-line {
+    animation:launchLineOut 980ms ease 220ms forwards;
+  }
+  body.booting .container {
+    opacity:0;
+    transform:translateY(8px);
+    animation:containerIn 520ms ease 1160ms forwards;
+  }
   .container { max-width: 1060px; margin: 0 auto; padding: 32px 20px; }
 
   .topbar { display:flex; justify-content:flex-end; margin-bottom:16px; }
@@ -26,7 +59,7 @@
   .divider { width: 50px; height: 3px; background: var(--accent); margin: 12px auto; }
 
   .step { display: none; }
-  .step.active { display: block; }
+  .step.active { display: block; animation:stepFadeIn 150ms ease both; }
   .step-title { font-size: 1.28rem; font-weight: 750; margin-bottom: 8px; letter-spacing:0; }
   .step-desc {
     color:#d0d0d0; font-size:0.92rem; font-weight:650; line-height:1.55;
@@ -70,6 +103,30 @@
   .intro-dot.active { width:24px; border-radius:999px; background:var(--accent); }
   .intro-dot:focus-visible { outline:2px solid #fff; outline-offset:3px; }
   .intro-page-status { color:var(--dim); font-size:0.66rem; min-height:1em; }
+  @keyframes launchTitleMove {
+    0% { opacity:0; transform:translateY(14px) scale(0.985); }
+    24% { opacity:1; transform:translateY(0) scale(1); }
+    64% { opacity:1; transform:translateY(0) scale(1); }
+    100% {
+      opacity:0;
+      transform:translate(var(--launch-dx, 0px), var(--launch-dy, -42px)) scale(var(--launch-scale, 0.78));
+    }
+  }
+  @keyframes launchLineOut {
+    0%, 54% { opacity:1; transform:scaleX(1); }
+    100% { opacity:0; transform:scaleX(0.64); }
+  }
+  @keyframes launchOut {
+    0%, 76% { opacity:1; visibility:visible; }
+    100% { opacity:0; visibility:hidden; }
+  }
+  @keyframes containerIn {
+    to { opacity:1; transform:translateY(0); }
+  }
+  @keyframes stepFadeIn {
+    from { opacity:0; transform:translateY(4px); }
+    to { opacity:1; transform:translateY(0); }
+  }
   .current-intent {
     position:sticky; top:14px; z-index:40;
     display:grid; grid-template-columns:auto minmax(90px, auto) minmax(0, 1fr); align-items:center; gap:12px;
@@ -753,6 +810,9 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
+    body.booting .launch-screen { display:none; }
+    body.booting .container { opacity:1; transform:none; animation:none; }
+    .step.active { animation:none; }
     .intro-dot, .intent-card, .intent-card .dot { transition:none; }
     .intent-card.is-animating .intent-icon * { animation:none !important; }
   }

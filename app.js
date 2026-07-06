@@ -10,7 +10,16 @@ const supabaseClient = window.supabase
 // ============================================================
 // LANGUAGE
 // ============================================================
-let lang = localStorage.getItem("survey_language") || "zh";
+function preferredInitialLanguage() {
+  const saved = localStorage.getItem("survey_language");
+  if (saved === "zh" || saved === "en") return saved;
+  const languages = Array.isArray(navigator.languages) && navigator.languages.length
+    ? navigator.languages
+    : [navigator.language || ""];
+  return languages.some(code => String(code).toLowerCase().startsWith("zh")) ? "zh" : "en";
+}
+
+let lang = preferredInitialLanguage();
 const I18N = {
   zh: {
     appTitle:"社交机器人主动触碰研究问卷",
@@ -25,7 +34,7 @@ const I18N = {
     introSlide3Title:"问卷填写流程",
     introP1:"请将问卷中的“社交机器人”想象为一个具有人形上半身结构的机器人，它具有类似人体结构的双臂和双手，整体身高略矮于成年人水平。它能够遵循恰当的行为规范，与人进行社交互动。",
     introP2:"问卷中的“社交触碰”指机器人在预先提示并征得许可后，对你身体发起的直接、短暂、柔和、非疼痛、非强制性的身体触碰。这种触碰旨在传达具有某种社交含义的意图，例如表达关心、引起注意等。",
-    introP3:"填写过程中，问卷会先询问“你能接受社交机器人通过主动触碰表达哪些意图”，随后，将会围绕你选择的每种意图，循环询问一组相关问题。",
+    introP3:"填写过程中，问卷会先询问“你能接受社交机器人通过主动触碰表达哪些意图”，随后会围绕你选择的每种意图，循环询问几个相关问题。答案没有对错之分，根据您的真实感受选择即可。",
     introRobotAlt:"抽象简笔画社交机器人，具有头部、上身、机械手臂和手部。",
     introFlowAlt:"先选择可接受的表达内容，再围绕每个选择逐项作答的问卷流程示意图。",
     introPrev:"← 上一页",
@@ -210,7 +219,7 @@ const I18N = {
     introSlide3Title:"Answer each selected item in sequence",
     introP1:"Please imagine the “social robot” in this survey as a robot with a humanoid upper-body structure. It has two arms and two hands with a human-like structure and is slightly shorter than an adult. It can follow appropriate behavioral norms and socially interact with people.",
     introP2:"In this survey, “social touch” refers to direct, brief, gentle, non-painful, and non-coercive bodily contact initiated by a robot after prior notice and permission. This touch is intended to convey a socially meaningful intent, such as showing care or getting attention.",
-    introP3:"During the survey, you will first choose which intents you would accept a social robot expressing through active touch. Then, for each selected intent, you will answer a repeated set of related questions.",
+    introP3:"During the survey, you will first choose which intents you would accept a social robot expressing through active touch. Then, for each selected intent, you will answer a few related questions in sequence. There are no right or wrong answers; please respond based on your real feelings.",
     introRobotAlt:"A simple abstract social robot with a head, upper body, mechanical arms, and hands.",
     introFlowAlt:"A survey flow diagram showing selection first, followed by repeated questions for each selected item.",
     introPrev:"← Previous",
@@ -451,7 +460,78 @@ function renderAgeOptions() {
 }
 
 let introSlideIndex = 0;
-let introVideoHasPlayed = false;
+
+function playIntroTouchVideo(video) {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  video.muted = true;
+  video.playsInline = true;
+  video.setAttribute("muted", "");
+  video.setAttribute("playsinline", "");
+  requestAnimationFrame(() => {
+    try {
+      if (Number.isFinite(video.duration) && video.currentTime > 0.05) {
+        video.currentTime = 0;
+      }
+    } catch {}
+    video.play().catch(() => {});
+  });
+}
+
+const LAUNCH_SEEN_KEY = "touch_with_robots_survey_launch_seen_v1";
+
+function launchSeen() {
+  try {
+    return sessionStorage.getItem(LAUNCH_SEEN_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+
+function markLaunchSeen() {
+  try {
+    sessionStorage.setItem(LAUNCH_SEEN_KEY, "1");
+  } catch {}
+}
+
+function shouldPlayLaunchAnimation(draftRestored) {
+  return !draftRestored
+    && !launchSeen()
+    && currentActiveStepId() === "sIntro"
+    && introSlideIndex === 0
+    && !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
+function prepareLaunchMotion() {
+  const launchTitle = document.querySelector(".launch-title");
+  const headerTitle = document.querySelector(".header h1");
+  if (!launchTitle || !headerTitle) return;
+
+  const launchRect = launchTitle.getBoundingClientRect();
+  const headerRect = headerTitle.getBoundingClientRect();
+  if (!launchRect.width || !headerRect.width) return;
+
+  const launchCenterX = launchRect.left + launchRect.width / 2;
+  const launchCenterY = launchRect.top + launchRect.height / 2;
+  const headerCenterX = headerRect.left + headerRect.width / 2;
+  const headerCenterY = headerRect.top + headerRect.height / 2;
+  const scale = Math.max(0.52, Math.min(0.92, headerRect.width / launchRect.width));
+
+  document.documentElement.style.setProperty("--launch-dx", `${headerCenterX - launchCenterX}px`);
+  document.documentElement.style.setProperty("--launch-dy", `${headerCenterY - launchCenterY}px`);
+  document.documentElement.style.setProperty("--launch-scale", String(scale));
+}
+
+function startLaunchAnimation() {
+  const launch = document.getElementById("launchScreen");
+  if (!launch) return;
+  prepareLaunchMotion();
+  markLaunchSeen();
+  launch.setAttribute("aria-hidden", "true");
+  document.body.classList.add("booting");
+  window.setTimeout(() => {
+    document.body.classList.remove("booting");
+  }, 1700);
+}
 
 function renderIntroCarousel() {
   const slides = Array.from(document.querySelectorAll("[data-intro-slide]"));
@@ -499,9 +579,8 @@ function renderIntroCarousel() {
   if (!video) return;
   if (introSlideIndex !== 1) {
     video.pause();
-  } else if (!introVideoHasPlayed && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    introVideoHasPlayed = true;
-    video.play().catch(() => {});
+  } else {
+    playIntroTouchVideo(video);
   }
 }
 
@@ -2414,6 +2493,9 @@ const draftRestored = restoreSurveyDraft();
 if (!draftRestored) {
   resetConsentState();
   prog();
+}
+if (shouldPlayLaunchAnimation(draftRestored)) {
+  startLaunchAnimation();
 }
 draftReady = true;
 scheduleDraftSave();
