@@ -140,6 +140,43 @@
             <option value="" data-i18n="selectOne">请选择</option>
           </select>
         </div>
+        <div class="field" id="fieldOccupation">
+          <label for="occupation" data-i18n="occupationLabel">当前职业/身份</label>
+          <select id="occupation" required>
+            <option value="" data-i18n="selectOne">请选择</option>
+            <option value="student" data-i18n="occupationStudent">学生</option>
+            <option value="intern_trainee" data-i18n="occupationIntern">实习生/见习人员</option>
+            <option value="professional_researcher" data-i18n="occupationProfessional">专业技术人员/研究人员</option>
+            <option value="engineering_technical_product" data-i18n="occupationEngineering">工程/技术/产品相关从业者</option>
+            <option value="design_creative_media" data-i18n="occupationDesign">设计/创意/媒体相关从业者</option>
+            <option value="education_training" data-i18n="occupationEducation">教育/培训相关从业者</option>
+            <option value="healthcare_caregiving" data-i18n="occupationHealthcare">医疗/健康照护相关从业者</option>
+            <option value="business_management_admin" data-i18n="occupationBusiness">商业/管理/行政相关从业者</option>
+            <option value="service_sales" data-i18n="occupationService">服务/销售相关从业者</option>
+            <option value="self_employed_freelancer" data-i18n="occupationFreelancer">自由职业/个体经营</option>
+            <option value="not_employed" data-i18n="occupationUnemployed">暂未就业</option>
+            <option value="other" data-i18n="occupationOther">其他</option>
+            <option value="prefer_not_to_say" data-i18n="preferNot">不愿透露</option>
+          </select>
+        </div>
+        <div class="field" id="fieldEducation">
+          <label for="education" data-i18n="educationLabel">受教育程度</label>
+          <select id="education" required>
+            <option value="" data-i18n="selectOne">请选择</option>
+            <option value="middle_school_or_below" data-i18n="educationMiddleOrBelow">初中及以下</option>
+            <option value="high_school" data-i18n="educationHighSchool">高中/中专/职高</option>
+            <option value="college_diploma" data-i18n="educationCollegeDiploma">大专/高职</option>
+            <option value="bachelor" data-i18n="educationBachelor">本科</option>
+            <option value="master" data-i18n="educationMaster">硕士研究生</option>
+            <option value="doctorate" data-i18n="educationDoctorate">博士研究生</option>
+            <option value="other" data-i18n="educationOther">其他</option>
+            <option value="prefer_not_to_say" data-i18n="preferNot">不愿透露</option>
+          </select>
+        </div>
+      </div>
+      <div class="field presence-field" id="fieldRobotPresence">
+        <div class="presence-question" data-i18n="robotPresenceQuestion">您对于在日常近距离空间中存在社交机器人的接受度为：</div>
+        <div class="presence-scale" id="robotPresenceScale" role="radiogroup" aria-label="Robot presence acceptance"></div>
       </div>
       <div class="error-text" id="infoError" data-i18n="infoError">请完整填写有效年龄、性别和所属国家或地区后继续。</div>
     </div>

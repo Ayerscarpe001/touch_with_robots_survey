@@ -55,10 +55,39 @@ const I18N = {
     age100Plus:"100 岁及以上",
     genderLabel:"性别",
     nationalityLabel:"国家或地区",
+    occupationLabel:"当前职业/身份",
+    educationLabel:"受教育程度",
     selectOne:"请选择",
     genderFemale:"女性",
     genderMale:"男性",
     genderOther:"其他",
+    occupationStudent:"学生",
+    occupationIntern:"实习生/见习人员",
+    occupationProfessional:"专业技术人员/研究人员",
+    occupationEngineering:"工程/技术/产品相关从业者",
+    occupationDesign:"设计/创意/媒体相关从业者",
+    occupationEducation:"教育/培训相关从业者",
+    occupationHealthcare:"医疗/健康照护相关从业者",
+    occupationBusiness:"商业/管理/行政相关从业者",
+    occupationService:"服务/销售相关从业者",
+    occupationFreelancer:"自由职业/个体经营",
+    occupationUnemployed:"暂未就业",
+    occupationOther:"其他",
+    educationMiddleOrBelow:"初中及以下",
+    educationHighSchool:"高中/中专/职高",
+    educationCollegeDiploma:"大专/高职",
+    educationBachelor:"本科",
+    educationMaster:"硕士研究生",
+    educationDoctorate:"博士研究生",
+    educationOther:"其他",
+    robotPresenceQuestion:"您对于在日常近距离空间中存在社交机器人的接受度为：",
+    robotPresence1:"完全不接受",
+    robotPresence2:"不接受",
+    robotPresence3:"较为不接受",
+    robotPresence4:"中立",
+    robotPresence5:"较为接受",
+    robotPresence6:"接受",
+    robotPresence7:"完全接受",
     preferNot:"不愿透露",
     selfDescribe:"自我描述",
     countryChina:"中国",
@@ -76,7 +105,7 @@ const I18N = {
     countryPortugal:"葡萄牙",
     countryGreece:"希腊",
     countryOther:"其他",
-    infoError:"请完整填写有效年龄、性别和所属国家或地区后继续。",
+    infoError:"请完整填写有效年龄、性别、所属国家或地区、当前职业/身份、受教育程度和社交机器人接受度后继续。",
     intentTitle:"社交意图选择",
     intentDesc:"当机器人需要通过主动触碰你来表达某种社交含义时，你能接受它表达哪些意图？请选择你能接受的所有选项。",
     selectAll:"全选",
@@ -240,10 +269,39 @@ const I18N = {
     age100Plus:"100 years or older",
     genderLabel:"Gender",
     nationalityLabel:"Country or Region",
+    occupationLabel:"Current occupation / status",
+    educationLabel:"Education level",
     selectOne:"Select one",
     genderFemale:"Female",
     genderMale:"Male",
     genderOther:"Other",
+    occupationStudent:"Student",
+    occupationIntern:"Intern / Trainee",
+    occupationProfessional:"Professional / Researcher",
+    occupationEngineering:"Engineering / Technical / Product role",
+    occupationDesign:"Design / Creative / Media role",
+    occupationEducation:"Education / Training role",
+    occupationHealthcare:"Healthcare / Caregiving role",
+    occupationBusiness:"Business / Management / Administrative role",
+    occupationService:"Service / Sales role",
+    occupationFreelancer:"Self-employed / Freelancer",
+    occupationUnemployed:"Not currently employed",
+    occupationOther:"Other",
+    educationMiddleOrBelow:"Middle school or below",
+    educationHighSchool:"High school",
+    educationCollegeDiploma:"College diploma",
+    educationBachelor:"Bachelor’s degree",
+    educationMaster:"Master’s degree",
+    educationDoctorate:"Doctoral degree",
+    educationOther:"Other",
+    robotPresenceQuestion:"How acceptable would it be for you to have a social robot present in your everyday close-range personal space?",
+    robotPresence1:"Completely unacceptable",
+    robotPresence2:"Unacceptable",
+    robotPresence3:"Somewhat unacceptable",
+    robotPresence4:"Neutral",
+    robotPresence5:"Somewhat acceptable",
+    robotPresence6:"Acceptable",
+    robotPresence7:"Completely acceptable",
     preferNot:"Prefer not to say",
     selfDescribe:"Self-describe",
     countryChina:"China",
@@ -261,7 +319,7 @@ const I18N = {
     countryPortugal:"Portugal",
     countryGreece:"Greece",
     countryOther:"Other",
-    infoError:"Please complete a valid age, gender, and country or region before continuing.",
+    infoError:"Please complete a valid age, gender, country or region, occupation/status, education level, and social robot acceptance rating before continuing.",
     intentTitle:"Social Intents",
     intentDesc:"When the robot needs to actively touch you to express a socially meaningful intent, which intents would you accept it expressing? Select all acceptable options.",
     selectAll:"Select all",
@@ -459,6 +517,46 @@ function renderAgeOptions() {
   if (current) select.value = current;
 }
 
+const ROBOT_PRESENCE_LEVELS = [
+  { value: 1, labelKey: "robotPresence1" },
+  { value: 2, labelKey: "robotPresence2" },
+  { value: 3, labelKey: "robotPresence3" },
+  { value: 4, labelKey: "robotPresence4" },
+  { value: 5, labelKey: "robotPresence5" },
+  { value: 6, labelKey: "robotPresence6" },
+  { value: 7, labelKey: "robotPresence7" },
+];
+
+function robotPresenceLabel(value) {
+  const level = ROBOT_PRESENCE_LEVELS.find(item => item.value === Number(value));
+  return level ? t(level.labelKey) : "";
+}
+
+function renderRobotPresenceScale() {
+  const container = document.getElementById("robotPresenceScale");
+  if (!container) return;
+  const current = document.getElementById("robotPresenceAcceptance")?.value || demographics.robot_presence_acceptance || "";
+  container.innerHTML = ROBOT_PRESENCE_LEVELS.map(level => `
+    <button
+      type="button"
+      class="presence-option ${Number(current) === level.value ? "selected" : ""}"
+      onclick="setRobotPresenceAcceptance(${level.value})"
+      aria-pressed="${Number(current) === level.value ? "true" : "false"}"
+    >
+      <span class="presence-number">${level.value}</span>
+      <span class="presence-label">${t(level.labelKey)}</span>
+    </button>
+  `).join("") + `<input type="hidden" id="robotPresenceAcceptance" value="${current}">`;
+}
+
+function setRobotPresenceAcceptance(value) {
+  const hidden = document.getElementById("robotPresenceAcceptance");
+  if (hidden) hidden.value = String(value);
+  demographics.robot_presence_acceptance = String(value);
+  renderRobotPresenceScale();
+  scheduleDraftSave();
+}
+
 let introSlideIndex = 0;
 
 function playIntroTouchVideo(video) {
@@ -610,6 +708,7 @@ function setLang(nextLang) {
   document.querySelectorAll("[data-i18n-placeholder]").forEach(el => { el.placeholder = t(el.dataset.i18nPlaceholder); });
   renderAgeOptions();
   renderCountryOptions();
+  renderRobotPresenceScale();
   document.getElementById("btnToMapsText").textContent = t("continueBtn");
   renderIntroCarousel();
   r1();
@@ -915,6 +1014,9 @@ function collectDraftPayload() {
       age: document.getElementById("age")?.value || demographics.age || "",
       gender: document.getElementById("gender")?.value || demographics.gender || "",
       nationality: document.getElementById("nationality")?.value || demographics.nationality || "",
+      occupation: document.getElementById("occupation")?.value || demographics.occupation || "",
+      education: document.getElementById("education")?.value || demographics.education || "",
+      robot_presence_acceptance: document.getElementById("robotPresenceAcceptance")?.value || demographics.robot_presence_acceptance || "",
     },
     sel: Array.from(sel),
     order,
@@ -976,14 +1078,22 @@ function restoreSurveyDraft() {
     const age = document.getElementById("age");
     const gender = document.getElementById("gender");
     const nationality = document.getElementById("nationality");
+    const occupation = document.getElementById("occupation");
+    const education = document.getElementById("education");
     if (age && draft.demographics?.age) age.value = draft.demographics.age;
     if (gender && draft.demographics?.gender) gender.value = draft.demographics.gender;
     if (nationality && draft.demographics?.nationality) nationality.value = draft.demographics.nationality;
+    if (occupation && draft.demographics?.occupation) occupation.value = draft.demographics.occupation;
+    if (education && draft.demographics?.education) education.value = draft.demographics.education;
     demographics = {
       age: age?.value || draft.demographics?.age || "",
       gender: gender?.value || draft.demographics?.gender || "",
       nationality: nationality?.value || draft.demographics?.nationality || "",
+      occupation: occupation?.value || draft.demographics?.occupation || "",
+      education: education?.value || draft.demographics?.education || "",
+      robot_presence_acceptance: draft.demographics?.robot_presence_acceptance || "",
     };
+    renderRobotPresenceScale();
 
     const validIntentIds = new Set(INTENTS.map(intent => intent.id));
     sel = new Set((Array.isArray(draft.sel) ? draft.sel : []).filter(id => validIntentIds.has(id)));
@@ -1083,6 +1193,9 @@ function goIntents() {
     age: document.getElementById("age").value.trim(),
     gender: document.getElementById("gender").value,
     nationality: document.getElementById("nationality").value,
+    occupation: document.getElementById("occupation").value,
+    education: document.getElementById("education").value,
+    robot_presence_acceptance: document.getElementById("robotPresenceAcceptance")?.value || "",
   };
   showStep("s1");
 }
@@ -1090,11 +1203,17 @@ function validateInfo() {
   const age = document.getElementById("age").value.trim();
   const gender = document.getElementById("gender").value;
   const nationality = document.getElementById("nationality").value;
+  const occupation = document.getElementById("occupation").value;
+  const education = document.getElementById("education").value;
+  const robotPresence = document.getElementById("robotPresenceAcceptance")?.value || "";
   const validAge = age === "100_plus" || (Number(age) >= 18 && Number(age) <= 99);
   const checks = [
     ["fieldAge", validAge],
     ["fieldGender", !!gender],
     ["fieldNationality", !!nationality],
+    ["fieldOccupation", !!occupation],
+    ["fieldEducation", !!education],
+    ["fieldRobotPresence", !!robotPresence],
   ];
   checks.forEach(([id, ok]) => document.getElementById(id).classList.toggle("invalid", !ok));
   const ok = checks.every(([, passed]) => passed);
@@ -2128,6 +2247,11 @@ function fieldVal(id) {
   const el = document.getElementById(id);
   return el && el.value ? el.value.trim() : null;
 }
+function fieldLabel(id) {
+  const el = document.getElementById(id);
+  if (!el || !el.value) return null;
+  return el.options?.[el.selectedIndex]?.textContent?.trim() || el.value;
+}
 
 function normalizedBodyData() {
   const out = {};
@@ -2308,6 +2432,9 @@ function buildSurveyPayload() {
     age_group: fieldVal("age"),
     country: nationalityCode,
     gender: fieldVal("gender"),
+    occupation: fieldVal("occupation"),
+    education: fieldVal("education"),
+    robot_presence_acceptance: Number(fieldVal("robotPresenceAcceptance")) || null,
     scaleDescription: "1=Acceptable / willing to be touched, 0=Unmarked / no clear preference, -1=Unacceptable / unwilling to be touched. Empty maps require explicit confirmation and are recorded in metadata.",
     selected_intents: selectedIntentPayload(),
     body_data: normalizedBodyData(),
@@ -2315,6 +2442,15 @@ function buildSurveyPayload() {
     metadata: {
       demographics,
       ageLabel: fieldVal("age") === "100_plus" ? t("age100Plus") : fieldVal("age"),
+      genderLabel: fieldLabel("gender"),
+      occupationLabel: fieldLabel("occupation"),
+      educationLabel: fieldLabel("education"),
+      robotPresenceAcceptance: Number(fieldVal("robotPresenceAcceptance")) || null,
+      robotPresenceAcceptanceLabel: robotPresenceLabel(fieldVal("robotPresenceAcceptance")),
+      robotPresenceAcceptanceScale: ROBOT_PRESENCE_LEVELS.map(level => ({
+        value: level.value,
+        label: t(level.labelKey)
+      })),
       noIntentSelected,
       ageRequirement: "Participants are instructed to continue only if they are at least 18 years old.",
       intentPoolVersion: "意图池.xlsx / 2026-06-22 / 14 intents",
@@ -2476,7 +2612,7 @@ async function submitToSupabase() {
 // INIT
 // ============================================================
 function bindDraftPersistenceEvents() {
-  ["age", "gender", "nationality", "consentBox"].forEach(id => {
+  ["age", "gender", "nationality", "occupation", "education", "consentBox"].forEach(id => {
     const el = document.getElementById(id);
     if (!el) return;
     el.addEventListener("input", scheduleDraftSave);
