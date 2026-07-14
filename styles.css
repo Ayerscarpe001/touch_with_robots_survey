@@ -635,6 +635,17 @@
   .followup-status.ok { color:#86efac; }
   .followup-status.warn { color:#fbbf24; }
   .followup-status.err { color:#fca5a5; }
+  .surveycircle-note {
+    display:none;
+    margin-top:14px;
+    padding-top:10px;
+    border-top:1px solid rgba(255,255,255,0.05);
+    color:rgba(255,255,255,0.24);
+    font-size:0.62rem;
+    line-height:1.4;
+    text-align:right;
+  }
+  html[lang="en"] .surveycircle-note { display:block; }
 
   .unselected-panel {
     background:var(--card);
