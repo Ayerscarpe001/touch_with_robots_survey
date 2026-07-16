@@ -636,16 +636,29 @@
   .followup-status.warn { color:#fbbf24; }
   .followup-status.err { color:#fca5a5; }
   .surveycircle-note {
-    display:none;
+    display:flex;
+    flex-direction:column;
+    align-items:flex-end;
+    gap:5px;
     margin-top:14px;
-    padding-top:10px;
+    padding-top:12px;
     border-top:1px solid rgba(255,255,255,0.05);
-    color:rgba(255,255,255,0.24);
-    font-size:0.62rem;
-    line-height:1.4;
+    color:rgba(255,255,255,0.48);
+    font-size:0.74rem;
+    line-height:1.45;
     text-align:right;
   }
-  html[lang="en"] .surveycircle-note { display:block; }
+  .survey-code-row {
+    display:grid;
+    grid-template-columns:max-content max-content max-content;
+    column-gap:4px;
+    align-items:baseline;
+    font-weight:650;
+    letter-spacing:0;
+  }
+  .survey-code-source { color:rgba(255,255,255,0.42); }
+  .survey-code-label { color:rgba(255,255,255,0.52); }
+  .survey-code-value { color:rgba(255,255,255,0.58); }
 
   .unselected-panel {
     background:var(--card);
